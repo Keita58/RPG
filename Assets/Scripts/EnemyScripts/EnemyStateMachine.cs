@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStateMachine : MonoBehaviour
@@ -20,7 +21,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         //this.slider.maxValue = this._enemySO.hp;
         //this.slider.value = _enemySO.hp;
-        this.cooldown = false;
+       /* this.cooldown = false;
         this.ChangeState(SkeletonStates.IDLE);
         this.GetComponent<SpriteRenderer>().color = _enemySO.color;
         _animator = GetComponent<Animator>();
@@ -32,7 +33,8 @@ public class EnemyStateMachine : MonoBehaviour
         //_rangAtac.OnEnter += AtacarDetected;
         //_rangAtac.OnStay += AtacarDetected;
         //_rangAtac.OnExit += AtacarUndetected;
-        StartCoroutine(patrullar());
+        StartCoroutine(patrullar());*/
+       StartCoroutine(mirarPersonaje());
     }
     private void Awake()
     {
@@ -46,12 +48,19 @@ public class EnemyStateMachine : MonoBehaviour
 
     public event Action<float> OnDamaged;
 
+    IEnumerator mirarPersonaje()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right);
+        hit.distance = 20;
+        Debug.DrawLine(hit.centroid, hit.centroid + (hit.distance * Vector2.right), Color.red);
+        yield return new WaitForSeconds(1);
+    }
 
     private void Start()
     {
-        ChangeState(SkeletonStates.IDLE);
+       // ChangeState(SkeletonStates.IDLE);
     }
-
+    /*
     private void ChangeState(SkeletonStates newState)
     {
         //tornar al mateix estat o no
@@ -271,7 +280,7 @@ public class EnemyStateMachine : MonoBehaviour
     private void AtacarUndetected(GameObject personatge)
     {
 
-    }
+    }*/
 }
 
 
