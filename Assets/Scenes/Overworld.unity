@@ -1464,7 +1464,7 @@ GameObject:
   - component: {fileID: 119851729}
   - component: {fileID: 119851728}
   - component: {fileID: 119851727}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4918,7 +4918,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3291933047493928793, guid: a871bd3236ca09347bbc05d5a1b8ed74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7628,7 +7628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1740149117}
   - component: {fileID: 1740149118}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Peus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
