@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class Inventari : MonoBehaviour
@@ -7,10 +8,12 @@ public class Inventari : MonoBehaviour
     [SerializeField] GameObject Dibuix;
     [SerializeField] Sprite TancaMenu;
     [SerializeField] Sprite ObreMenu;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        GameObject[] b =GameObject.FindGameObjectsWithTag("hola");
+        Debug.Log(b[0].GetType());
     }
 
     // Update is called once per frame
@@ -32,4 +35,5 @@ public class Inventari : MonoBehaviour
             Dibuix.GetComponent<Image>().sprite = TancaMenu;
         }
     }
+
 }
