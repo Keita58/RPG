@@ -457,6 +457,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54aa1e5313f66f740bd29afd84797aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
+  _CurrentState: 0
+  _StateTime: 0
+  _hp: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStateMachine : MonoBehaviour
@@ -15,7 +16,7 @@ public class EnemyStateMachine : MonoBehaviour
     //[SerializeField] private Hitbox hitbox;
     //[SerializeField] private RangeDetection _rangPerseguir;
     //[SerializeField] private RangeDetection _rangAtac;
-    [SerializeField] private Slider slider;
+    [SerializeField] private UnityEngine.UI.Slider slider;
 
     void OnEnable()
     {
@@ -38,7 +39,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void Awake()
     {
-
+        StartCoroutine(mirarPersonaje());
     }
 
     private enum SkeletonStates { NULL, IDLE, ATTACK, ATTACK2, MOVE, COMBO12, COMBO21 }
@@ -50,12 +51,52 @@ public class EnemyStateMachine : MonoBehaviour
 
     IEnumerator mirarPersonaje()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right);
-        hit.distance = 20;
-        Debug.DrawLine(hit.centroid, hit.centroid + (hit.distance * Vector2.right), Color.red);
-        yield return new WaitForSeconds(1);
-    }
+        while (true)
+        {
 
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right);
+            hit.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector2(this.transform.position.x, this.transform.position.y) + (hit.distance * Vector2.right), Color.red, 5);
+            RaycastHit2D hit2 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.right));
+            hit2.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit2.distance * (Quaternion.Euler(0, 0, 45) * Vector2.right)), Color.red, 5);
+            RaycastHit2D hit3 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.right));
+            hit3.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit3.distance * (Quaternion.Euler(0, 0, 22) * Vector2.right)), Color.red, 5);
+            RaycastHit2D hit4 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.down));
+            hit4.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit4.distance * (Quaternion.Euler(0, 0, 42) * Vector2.down)), Color.red, 5);
+            RaycastHit2D hit5 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.down));
+            hit5.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit5.distance * (Quaternion.Euler(0, 0, 55) * Vector2.down)), Color.red, 5);
+            RaycastHit2D hit6 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 75) * Vector2.down));
+            hit6.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit6.distance * (Quaternion.Euler(0, 0, 75) * Vector2.down)), Color.red, 5);
+            RaycastHit2D hit7 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 55) * Vector2.right));
+            hit7.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit7.distance * (Quaternion.Euler(0, 0, 35) * Vector2.right)), Color.red, 5);
+            RaycastHit2D hit8 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 55) * Vector2.right));
+            hit8.distance = 5;
+            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit8.distance * (Quaternion.Euler(0, 0, 10) * Vector2.right)), Color.red, 5);
+            yield return new WaitForSeconds(1);
+
+        }
+    }
+    /*IEnumerator mirarPersonaje()
+    {
+        while (true)
+        {
+
+            Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 45);
+            yield return new WaitForSeconds(1);
+
+        }
+    }*/
+ /*   private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(new Vector3(this.transform.position.x+1,this.transform.position.y, this.transform.position.z), 1);
+
+    }*/
     private void Start()
     {
        // ChangeState(SkeletonStates.IDLE);
@@ -280,8 +321,8 @@ public class EnemyStateMachine : MonoBehaviour
     private void AtacarUndetected(GameObject personatge)
     {
 
-    }*/
-}
+    }
+}*/
 
 
 }
