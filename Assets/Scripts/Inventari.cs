@@ -12,8 +12,7 @@ public class Inventari : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameObject[] b =GameObject.FindGameObjectsWithTag("hola");
-        Debug.Log(b[0].GetType());
+        
     }
 
     // Update is called once per frame

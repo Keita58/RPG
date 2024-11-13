@@ -10,6 +10,7 @@ public class AtacSO : ScriptableObject
         LLUM,
     }
 
+    string nom;
     int mal;
     Tipus tipus;
     EstadoAlteradoSO estat;

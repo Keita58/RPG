@@ -9,4 +9,5 @@ public class EstadoAlteradoSO : ScriptableObject
     public int modAtk;
     public int modDef;
     public int modSpd;
+    public string nom;
 }
