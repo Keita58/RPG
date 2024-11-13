@@ -7,5 +7,7 @@ public class PlayerSO : ScriptableObject
 {
     public AnimatorController animator;
     public int hp;
-    public int damage;
+    public int damageAtk;
+    public int mana;
+    //poner el inventario y todo.
 }
