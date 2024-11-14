@@ -14,6 +14,6 @@ public class AtacSO : ScriptableObject
     public int mal;
     public Tipus tipus;
     public EstadoAlteradoSO estat;
-
+    public int mana;
 
 }
