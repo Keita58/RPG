@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     Animator animator;
     Rigidbody2D rb;
-    [SerializeField] PlayerSO playerso;
+    //[SerializeField] PlayerSO playerso;
 
     [SerializeField] InputActionAsset actionAsset;
     InputActionAsset inputAction;
@@ -16,12 +16,20 @@ public class Player : MonoBehaviour
 
     [SerializeField] AnimationClip attackClip;
     [SerializeField] AnimationClip hurtClip;
-    int hp = 100;
 
+    int hp = 100;
+    int mana = 100;
+    int dmgAtk = 25;
+    
+    //LISTA ESTADOS ALTERADOS SUFRIDOS
+    //LISTA DE ATAQUES
+    //LISTA DE OBJETOS
+
+    //hacer una clase estado alterado, etc.
 
     private void Awake()
     {
-        playerso.hp = hp;
+        //playerso.hp = hp;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -37,6 +45,7 @@ public class Player : MonoBehaviour
         {
             ChangeState(PlayerStates.RECEIVEDAMAGE);
             //Que empiece con ventaja el enemigo y cambiar de escena y todo eso.
+            //GAMEMANAGER.getINSTANCE().addd(this)
         }
     }
 
@@ -112,8 +121,13 @@ public class Player : MonoBehaviour
                     ChangeState(PlayerStates.IDLE);
                 break;
         }
-
     }
+
+    //Atacar afegir a la llista un nou alterar
+    //private void RebreMal(AttackSO attackSO) 
+    //{
+    //}
+
 
     private void ExitState(PlayerStates exitState)
     {
@@ -149,9 +163,6 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-
-
-    // Update is called once per frame
     void Update()
     {
         UpdateState();
