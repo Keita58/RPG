@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
     int hp = 100;
     int mana = 100;
     int dmgAtk = 25;
+    
+    //LISTA ESTADOS ALTERADOS SUFRIDOS
+    //LISTA DE ATAQUES
+    //LISTA DE OBJETOS
+
     //hacer una clase estado alterado, etc.
 
     private void Awake()
@@ -40,6 +45,7 @@ public class Player : MonoBehaviour
         {
             ChangeState(PlayerStates.RECEIVEDAMAGE);
             //Que empiece con ventaja el enemigo y cambiar de escena y todo eso.
+            //GAMEMANAGER.getINSTANCE().addd(this)
         }
     }
 
@@ -116,6 +122,12 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
+    //Atacar afegir a la llista un nou alterar
+    //private void RebreMal(AttackSO attackSO) 
+    //{
+    //}
+
 
     private void ExitState(PlayerStates exitState)
     {
