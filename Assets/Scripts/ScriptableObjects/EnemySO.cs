@@ -3,9 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySO", menuName = "Scriptable Objects/EnemySO")]
 public class EnemySO : ScriptableObject
 {
-    int id;
-    int hp;
-    int spd;
-    int atk;
-    int mana;
+    public int hp;
+    public int spd;
+    public int def;
+    public AtacSO[] atk;
+    public int mana;
 }
