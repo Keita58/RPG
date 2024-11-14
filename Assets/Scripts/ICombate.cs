@@ -1,14 +1,14 @@
+using System;
 using UnityEngine;
 
-public class ICombate : MonoBehaviour
-{
     public interface IAttack
     {
-
+        public AtacSO atac { set; }
     }
 
     public interface IDamageable
     {
-        void RebreMal()
+        public event Action<AtacSO> onDamaged;
+        void RebreMal(AtacSO atac);
     }
-}
+
