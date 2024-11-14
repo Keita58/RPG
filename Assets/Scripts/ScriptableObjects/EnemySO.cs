@@ -8,4 +8,5 @@ public class EnemySO : ScriptableObject
     public int def;
     public AtacSO[] atk;
     public int mana;
+    public Animator animator;
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 {
     public EnemySO EnemySO;
     private int id;
     private bool selected;
+    Animator animator;
     public int getId()
     {
         return id; 
@@ -23,13 +25,14 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
     EstadosAlterados estadosAlterados;
     public AtacSO atac { set => value = escollit; }
 
-    void OnEnable()
+    void Awake()
     {
         this.hp = this.EnemySO.hp;
         this.atk = this.EnemySO.atk;
         this.def = this.EnemySO.def;
         this.spd = this.EnemySO.spd;
         this.mana = this.EnemySO.mana;
+        this.animator = this.EnemySO.animator;
     }
     private void Start()
     {
@@ -58,16 +61,25 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 
     public void RebreMal(AtacSO atac)
     {
-        if (atac.mal>this.def)
-            this.hp-=atac.mal-this.def;
-        if(atac.estat!=null)
-            this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+        if (atac.mal > this.def)
+        {
+            StartCoroutine(AnimacioMal());
+            this.hp -= atac.mal - this.def;
+            if (atac.estat != null)
+                this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+        }
         if (this.hp <= 0)
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
-    private void OnDisable()
+    IEnumerator AnimacioMal()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(1);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    private void OnDestroy()
     {
         //GameManager.instance.ActivarAtac -= EscollirAtac();
     }
