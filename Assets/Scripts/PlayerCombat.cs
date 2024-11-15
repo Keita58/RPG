@@ -12,44 +12,168 @@ public class PlayerCombat : MonoBehaviour
     List<AtacSO> atacs;
     public event Action<AtacSO> onAttack;
     Animator animator;
+    [SerializeField] AnimationClip atacClip;
+    [SerializeField] AnimationClip hurtClip;
 
-
-    //hacer una funcion que se suscriba que sea rebre mal;
-
+    enum PlayerStates { IDLE, HURT, ATTACK}
+    [SerializeField] PlayerStates actualState;
+    [SerializeField] float stateTime;
+    int hp;
+    int lvl;
+    int mana;
+    int def;
+    int damageAtk;
+    EstadosAlterados estado;
+    [SerializeField] AtacSO[] atacsBase;
 
     private void Awake()
     {
-        this.atacs = playerBase.listaAtaques;
         this.animator = GetComponent<Animator>();
+        this.hp = playerBase.Hp;
+        this.lvl = playerBase.Lvl;
+        this.mana = playerBase.Mana;
+        this.def = playerBase.Def;
+        this.damageAtk = playerBase.DamageAtk;
+    }
+
+    public void RebreMal(AtacSO atac)
+    {
+        if (atac.mal > def)
+        {
+            int hprestat = atac.mal - def;
+            hp -= hprestat;
+        }
+        if (atac.estat != null)
+        {
+            estado.IniciarEstadoAlterado(atac.estat);
+        }
+    }
+
+    public void lvlUP()
+    {
+        lvl++;
+        hp += 10;
+        mana += 10;
+        def += 2;
+        damageAtk += 1;
+        if (lvl == 2)
+        {
+            atacs.Add(atacsBase[0]);
+        }
+        else if (lvl == 5)
+        {
+            atacs.Add(atacsBase[1]);
+        }
+        else if (lvl == 10)
+        {
+            atacs.Add(atacsBase[2]);
+        }
+        else if (lvl == 15)
+        {
+            atacs.Add(atacsBase[3]);
+        }
     }
 
     public void atacar1()
     {
         onAttack.Invoke(atacs.ElementAt(0));
-        animator.Play("atac2");
+        ChangeState(PlayerStates.ATTACK);
+        this.mana-=atacs.ElementAt(0).mana;
+        
     }
 
     public void atacar2()
     {
         onAttack.Invoke(atacs.ElementAt(1));
-        animator.Play("atac2");
-
+        ChangeState(PlayerStates.ATTACK);
+        this.mana -= atacs.ElementAt(1).mana;
     }
 
     public void atacar3()
     {
         onAttack.Invoke(atacs.ElementAt(2));
-        animator.Play("atac2");
+        ChangeState(PlayerStates.ATTACK);
+        this.mana -= atacs.ElementAt(2).mana;
     }
 
     public void atacar4()
     {
         onAttack.Invoke(atacs.ElementAt(3));
-        animator.Play("atac2");
+        ChangeState(PlayerStates.ATTACK);
+        this.mana -= atacs.ElementAt(3).mana;
+    }
+
+    private void ChangeState(PlayerStates newstate)
+    {
+        ExitState(actualState);
+        IniState(newstate);
+    }
+    private void IniState(PlayerStates initState)
+    {
+        actualState = initState;
+        stateTime = 0f;
+
+        switch (actualState)
+        {
+            case PlayerStates.IDLE:
+                animator.Play("Idle");
+                break;
+            case PlayerStates.ATTACK:
+                animator.Play("atac2");
+                break;
+            case PlayerStates.HURT:
+                animator.Play("Hurt");
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void UpdateState()
+    {
+        stateTime += Time.deltaTime;
+
+        switch (actualState)
+        {
+            case PlayerStates.IDLE:
+                break;
+            case PlayerStates.ATTACK:
+                if (stateTime >= atacClip.length)
+                    ChangeState(PlayerStates.IDLE);
+                break;
+            case PlayerStates.HURT:
+                if (stateTime >= hurtClip.length)
+                    ChangeState(PlayerStates.IDLE);
+                break;
+        }
+    }
+
+    private void ExitState(PlayerStates exitState)
+    {
+        switch (exitState)
+        {
+            case PlayerStates.IDLE:
+                break;
+            case PlayerStates.ATTACK:
+                break;
+            case PlayerStates.HURT:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void Start()
+    {
+        IniState(PlayerStates.IDLE);
     }
 
     private void Update()
     {
-        
+        UpdateState();
     }
+
+
+    //hacer una funcion que se suscriba que sea rebre mal;
+
 }

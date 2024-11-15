@@ -1371,8 +1371,9 @@ GameObject:
   - component: {fileID: 1013298262}
   - component: {fileID: 1013298261}
   - component: {fileID: 1013298263}
+  - component: {fileID: 1013298264}
   m_Layer: 0
-  m_Name: Soldier-Attack01_0
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1470,6 +1471,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1013298264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013298260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 190d62c0f0a211e45ba084694ebe4e4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atacClip: {fileID: 7400000, guid: 694483457bb488447af92585b1b566f0, type: 2}
+  hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
+  actualState: 0
+  stateTime: 0
 --- !u!1 &1047797855
 GameObject:
   m_ObjectHideFlags: 0
