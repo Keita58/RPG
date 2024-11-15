@@ -16,10 +16,10 @@ public class Player : MonoBehaviour
 
     [SerializeField] AnimationClip attackClip;
     [SerializeField] AnimationClip hurtClip;
+    [SerializeField] PlayerSO player;
 
-    int hp = 100;
-    int mana = 100;
-    int dmgAtk = 25;
+    int hp;
+    int lvl;
     
     //LISTA ESTADOS ALTERADOS SUFRIDOS
     //LISTA DE ATAQUES
@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         //playerso.hp = hp;
+        this.hp = player.Hp;
+        this.lvl=player.Lvl;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
         inputAction.FindActionMap("Player").FindAction("Attack").performed += OnAttack;
         moviment = inputAction.FindActionMap("Player").FindAction("Move");
         inputAction.FindActionMap("Player").Enable();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
