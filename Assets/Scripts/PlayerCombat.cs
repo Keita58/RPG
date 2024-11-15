@@ -74,33 +74,46 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    public void atacar1()
-    {
-        onAttack.Invoke(atacs.ElementAt(0));
-        ChangeState(PlayerStates.ATTACK);
-        this.mana-=atacs.ElementAt(0).mana;
+    //public void atacar1()
+    //{
+    //    onAttack.Invoke(atacs.ElementAt(0));
+    //    ChangeState(PlayerStates.ATTACK);
+    //    this.mana-=atacs.ElementAt(0).mana;
         
+    //}
+
+    //public void atacar2()
+    //{
+    //    onAttack.Invoke(atacs.ElementAt(1));
+    //    ChangeState(PlayerStates.ATTACK);
+    //    this.mana -= atacs.ElementAt(1).mana;
+    //}
+
+    //public void atacar3()
+    //{
+    //    onAttack.Invoke(atacs.ElementAt(2));
+    //    ChangeState(PlayerStates.ATTACK);
+    //    this.mana -= atacs.ElementAt(2).mana;
+    //}
+
+    //public void atacar4()
+    //{
+    //    onAttack.Invoke(atacs.ElementAt(3));
+    //    ChangeState(PlayerStates.ATTACK);
+    //    this.mana -= atacs.ElementAt(3).mana;
+    //}
+
+    public void IniciarTorn()
+    {
+        //AvisarUIMOSTRAR BOTON
     }
 
-    public void atacar2()
+    public void AcabarTorn()
     {
-        onAttack.Invoke(atacs.ElementAt(1));
-        ChangeState(PlayerStates.ATTACK);
-        this.mana -= atacs.ElementAt(1).mana;
-    }
-
-    public void atacar3()
-    {
-        onAttack.Invoke(atacs.ElementAt(2));
-        ChangeState(PlayerStates.ATTACK);
-        this.mana -= atacs.ElementAt(2).mana;
-    }
-
-    public void atacar4()
-    {
-        onAttack.Invoke(atacs.ElementAt(3));
-        ChangeState(PlayerStates.ATTACK);
-        this.mana -= atacs.ElementAt(3).mana;
+        if (this.hp <= 0)
+        {
+            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
+        }
     }
 
     private void ChangeState(PlayerStates newstate)
