@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManagerArena : MonoBehaviour
 {
-    [SerializeField] PlayerCombat _Jugador;
+    [SerializeField] GameObject _Jugador;
     [SerializeField] PlayerSO _JugadorSO;
     [SerializeField] List<EnemySO> _Enemics;
     [SerializeField] List<GameObject> _OrdreAtac; // Llista de tots els enemics a l'inici
-    private Queue<IAttack> PilaEnemics = new Queue<IAttack>();
+    LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
 
     public static GameManagerArena Instance { get; private set; }
 
@@ -21,11 +22,6 @@ public class GameManagerArena : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
-        _Jugador.onAttack += AtacaJugador;
-        foreach(GameObject enemic in _OrdreAtac)
-        {
-            enemic.GetComponent<EnemyArena>().atacar += AtacaEnemic;
-        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -33,14 +29,25 @@ public class GameManagerArena : MonoBehaviour
         switch (scene.name)
         {
             case "Arena":
-                PilaEnemics = from enemic in _OrdreAtac
-                              orderby enemic descending
-                              select enemic;
                 int numEnemics = Random.Range(0, _Enemics.Count);
 
-                for(int i = 0; i < numEnemics; i++)
+                for (int i = 0; i < numEnemics; i++)
                 {
-                    //_Enemics[i].SetActive(true);
+                    _OrdreAtac[i].SetActive(true);
+
+                }
+
+                var aux = _OrdreAtac.OrderByDescending(enemic => enemic.GetComponent<EnemySO>().spd).ToList();
+                PilaEnemics = new LinkedList<GameObject>(aux);
+
+                for (var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next)
+                {
+                    if(nodeActual.Value.GetComponent<EnemySO>().spd <= _JugadorSO.spd)
+                    {
+                        LinkedListNode<GameObject> aux2 = new LinkedListNode<GameObject>(_Jugador);
+                        PilaEnemics.AddBefore(nodeActual, aux2);
+                        break;
+                    }
                 }
                 break;
         }
@@ -62,6 +69,21 @@ public class GameManagerArena : MonoBehaviour
     }
 
     private void AtacaEnemic(AtacSO atac)
+    {
+
+    }
+
+    public GameObject getJugador()
+    {
+        return _Jugador;
+    }
+
+    public List<GameObject> getEnemics()
+    {
+        return _OrdreAtac;
+    }
+
+    public void AcabarTorn()
     {
 
     }
