@@ -12,11 +12,11 @@ public class PlayerSO : ScriptableObject, IDamageable
     private AtacSO[] atacs;
 
     public List<AtacSO> listaAtaques;
-    public int Hp { get => hp; }
-    public int DamageAtk { get => damageAtk;  }
-    public int Mana { get => mana;  }
-    public int Lvl { get => lvl;}
-    public int Def { get => def; }
+    public int Hp { get => hp; set => hp = value; }
+    public int DamageAtk { get => damageAtk; set => damageAtk = value; }
+    public int Mana { get => mana; set => mana = value; }
+    public int Lvl { get => lvl; set => lvl = value; }
+    public int Def { get => def; set => def = value; }
     EstadosAlterados estado;
 
     public event Action<AtacSO> onDamaged;
