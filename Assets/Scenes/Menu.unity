@@ -1443,7 +1443,7 @@ Transform:
   m_GameObject: {fileID: 1013298260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.78, y: 0.98, z: 0}
+  m_LocalPosition: {x: -6.01, y: 1.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1487,6 +1487,7 @@ MonoBehaviour:
   hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
   actualState: 0
   stateTime: 0
+  atacsBase: []
 --- !u!1 &1047797855
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Animator))]
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour, Tornable
 {
     PlayerSO playerBase;
 
@@ -23,8 +23,11 @@ public class PlayerCombat : MonoBehaviour
     int mana;
     int def;
     int damageAtk;
+    int spd;
     EstadosAlterados estado;
     [SerializeField] AtacSO[] atacsBase;
+    public event Action onMuerto;
+    public event Action onIniciarTurnoUI;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class PlayerCombat : MonoBehaviour
         this.mana = playerBase.Mana;
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
+        this.spd=playerBase.spd;
     }
 
     public void RebreMal(AtacSO atac)
@@ -73,6 +77,16 @@ public class PlayerCombat : MonoBehaviour
             atacs.Add(atacsBase[3]);
         }
     }
+   
+    public void SavePlayer()
+    {
+        playerBase.Mana = this.mana;
+        playerBase.Hp = this.hp;
+        playerBase.spd = this.spd;
+        playerBase.Def = this.def;
+        playerBase.DamageAtk = this.damageAtk;
+        playerBase.Lvl = this.lvl;
+    }
 
     //public void atacar1()
     //{
@@ -103,9 +117,18 @@ public class PlayerCombat : MonoBehaviour
     //    this.mana -= atacs.ElementAt(3).mana;
     //}
 
+
     public void IniciarTorn()
     {
         //AvisarUIMOSTRAR BOTON
+        onIniciarTurnoUI.Invoke();
+
+        //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
+        if (estado != null && estado.Nom=="Ventaja" && estado.Torns>0)
+        {
+            AcabarTorn();
+            estado.Torns--;
+        }
     }
 
     public void AcabarTorn()
@@ -113,7 +136,22 @@ public class PlayerCombat : MonoBehaviour
         if (this.hp <= 0)
         {
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
+            onMuerto.Invoke();
         }
+        else
+        {
+            if (estado != null)
+            {
+                if (estado.Nom == "Veneno" && estado.Torns > 0)
+                {
+                    this.hp -= estado.Hp;
+                    estado.Torns--;
+                }
+            }
+            //GameManagerArena.Instance.BucleJoc();
+
+        }
+       
     }
 
     private void ChangeState(PlayerStates newstate)
