@@ -17,3 +17,4 @@ MonoBehaviour:
   def: 0
   atk: []
   mana: 0
+  animator: {fileID: 9100000, guid: 7b523cc883b30724c8dbf78799489f92, type: 2}
