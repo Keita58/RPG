@@ -1496,12 +1496,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBase: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
+  atacs: []
   atacClip: {fileID: 7400000, guid: 694483457bb488447af92585b1b566f0, type: 2}
   hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
   combatState: 0
   actualState: 0
   stateTime: 0
-  atacsBase: []
+  atacsBase:
+  - {fileID: 11400000, guid: fea5e6efc0112034d80dfcc5531b0cbe, type: 2}
 --- !u!1 &1047797855
 GameObject:
   m_ObjectHideFlags: 0

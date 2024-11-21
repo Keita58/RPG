@@ -3,9 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 
 [RequireComponent(typeof(Animator))]
@@ -13,7 +11,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
 {
     [SerializeField] PlayerSO playerBase;
 
-    List<AtacSO> atacs;
+    [SerializeField]List<AtacSO> atacs;
     public event Action<AtacSO> onAttack;
     Animator animator;
     [SerializeField] AnimationClip atacClip;
@@ -21,7 +19,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     enum CombatStates { WAITING, SELECT_ACTION, ACTION_ATTACK, ACTION_MAGIC, ACTION_OBJECTS, ACTION_RUN }
     [SerializeField] CombatStates combatState;
-    enum PlayerAnimations { IDLE, HURT, ATTACK}
+    enum PlayerAnimations { IDLE, HURT, ATTACK }
     [SerializeField] PlayerAnimations actualState;
     [SerializeField] float stateTime;
     int hp;
@@ -42,23 +40,33 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
+        StartCoroutine(EsperarIActuar(1, IniciarTorn));
+    }
+
+    public void Iniciar(PlayerSO player)
+    {
         this.hp = playerBase.Hp;
         this.lvl = playerBase.Lvl;
         this.mana = playerBase.Mana;
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
-        this.spd=playerBase.Spd;
-
-        StartCoroutine(EsperarIActuar(1, IniciarTorn));
+        this.spd = playerBase.Spd;
     }
 
     public void RebreMal(AtacSO atac)
     {
+        if (this.hp <= 0)
+        {
+            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
+            onMuerto.Invoke();
+        }
+
         if (atac.mal > def)
         {
             int hprestat = atac.mal - def;
             hp -= hprestat;
         }
+
         if (atac.estat != null)
         {
             estado.IniciarEstadoAlterado(atac.estat);
@@ -89,7 +97,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             atacs.Add(atacsBase[3]);
         }
     }
-   
+
     public void SavePlayer()
     {
         playerBase.Mana = this.mana;
@@ -105,7 +113,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     //    onAttack.Invoke(atacs.ElementAt(0));
     //    ChangeState(PlayerStates.ATTACK);
     //    this.mana-=atacs.ElementAt(0).mana;
-        
+
     //}
 
     //public void atacar2()
@@ -133,30 +141,20 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public void IniciarTorn()
     {
         Assert.AreEqual(combatState, CombatStates.WAITING, $"{gameObject}: Iniciant torn quan no s'està esperant.");
-        ChangeState( CombatStates.SELECT_ACTION );
+        ChangeState(CombatStates.SELECT_ACTION);
     }
 
     public void AcabarTorn()
     {
-        if (this.hp <= 0)
+        if (estado != null)
         {
-            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            onMuerto.Invoke();
-        }
-        else
-        {
-            if (estado != null)
+            if (estado.Nom == "Veneno" && estado.Torns > 0)
             {
-                if (estado.Nom == "Veneno" && estado.Torns > 0)
-                {
-                    this.hp -= estado.Hp;
-                    estado.Torns--;
-                }
+                this.hp -= estado.Hp;
+                estado.Torns--;
             }
-            GameManagerArena.Instance.BucleJoc();
-
         }
-       
+        GameManagerArena.Instance.BucleJoc();
     }
 
     IEnumerator EsperarIActuar(float tempsDespera, Action accio)
@@ -175,31 +173,39 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void InitState(CombatStates newstate)
     {
         combatState = newstate;
-        switch(combatState)
+        switch (combatState)
         {
             case CombatStates.WAITING:
                 //GameManagerArena.Instance.BucleJoc();
                 Debug.Log("He acabat el torn");
-                StartCoroutine(EsperarIActuar(3, () => ChangeState(CombatStates.SELECT_ACTION)) );
+                StartCoroutine(EsperarIActuar(3, () => ChangeState(CombatStates.SELECT_ACTION)));
                 break;
             case CombatStates.SELECT_ACTION:
                 //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
                 if (estado != null && estado.Nom == "Ventaja" && estado.Torns > 0)
                 {
-                    estado.Torns--; 
+                    estado.Torns--;
                     //TODO: Mirar què passa
-                    ChangeState( CombatStates.WAITING );
+                    ChangeState(CombatStates.WAITING);
                     break;
                 }
                 else
                 {
                     OnMostrarAccions?.Invoke();
-
                 }
                 //AvisarUIMOSTRAR BOTON
                 break;
             case CombatStates.ACTION_ATTACK:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                List<GameObject> li = GameManagerArena.Instance.getEnemics();
+                ChangeState(PlayerAnimations.ATTACK);
+                foreach (GameObject go in li)
+                {
+                    if (go.GetComponent<EnemyArena>().selected)
+                    {
+                        go.GetComponent<EnemyArena>().RebreMal(atacs.ElementAt(0));
+                    }
+                }
                 break;
             case CombatStates.ACTION_MAGIC:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
@@ -217,7 +223,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void ExitState(CombatStates currentState)
     {
         Assert.AreEqual(combatState, currentState, $"{gameObject}: Estàs cridant un sortir d'estat quan no estàs a aquest estat");
-        switch(currentState)
+        switch (currentState)
         {
             case CombatStates.WAITING:
                 break;
@@ -300,6 +306,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void Start()
     {
         IniState(PlayerAnimations.IDLE);
+        Iniciar(playerBase);
     }
 
     private void Update()
@@ -312,6 +319,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     {
         Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció atack quan no s'està esperant una selecció.");
         ChangeState(CombatStates.ACTION_ATTACK);
+       
     }
 
     internal void AccioMagia()
