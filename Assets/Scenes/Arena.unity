@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 33923056}
   - component: {fileID: 33923055}
   m_Layer: 0
-  m_Name: Capsule (1)
+  m_Name: Enemic 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 159403208}
   - component: {fileID: 159403207}
   m_Layer: 0
-  m_Name: Capsule (4)
+  m_Name: Jugador
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,6 +292,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &520149227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 520149229}
+  - component: {fileID: 520149228}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &520149228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520149227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a905f4028c080ff479da40c04ba7e251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Jugador: {fileID: 159403206}
+  _JugadorSO: {fileID: 0}
+  _Enemics:
+  - {fileID: 11400000, guid: 33e30cc5148300a4ca0e2b365718757a, type: 2}
+  - {fileID: 11400000, guid: 60b8ec976f43eb6439c518693ae6de1e, type: 2}
+  - {fileID: 11400000, guid: 592a27ac1aae0904bb7e12b16fc9ff04, type: 2}
+  - {fileID: 11400000, guid: 6b218158131c93e469371b08f0f8c550, type: 2}
+  _OrdreAtac:
+  - {fileID: 1648050451}
+  - {fileID: 33923054}
+  - {fileID: 593496289}
+  - {fileID: 1668355129}
+  _EnemicPrincipal: {fileID: 11400000, guid: 081adc04e0b0e7a4589023f469d60c85, type: 2}
+--- !u!4 &520149229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520149227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.35402608, y: 0.19009078, z: 2.529084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &593496289
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +360,7 @@ GameObject:
   - component: {fileID: 593496291}
   - component: {fileID: 593496290}
   m_Layer: 0
-  m_Name: Capsule (2)
+  m_Name: Enemic 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,7 +539,7 @@ GameObject:
   - component: {fileID: 1648050453}
   - component: {fileID: 1648050452}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Enemic 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,7 +626,7 @@ GameObject:
   - component: {fileID: 1668355131}
   - component: {fileID: 1668355130}
   m_Layer: 0
-  m_Name: Capsule (3)
+  m_Name: Enemic 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -650,8 +707,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1391641920}
-  - {fileID: 1648050453}
   - {fileID: 159403208}
+  - {fileID: 1648050453}
   - {fileID: 33923056}
   - {fileID: 593496291}
   - {fileID: 1668355131}
+  - {fileID: 520149229}
