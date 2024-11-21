@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 {
     public EnemySO EnemySO;
     private int id;
     private bool selected;
+    public Animator animator;
     public int getId()
     {
         return id; 
@@ -14,6 +16,10 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
         this.id = i;
     }
     private int hp;
+    public int getHp()
+    {
+        return hp;
+    }
     private AtacSO[] atk;
     private int def;
     private int spd;
@@ -21,21 +27,23 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
     private AtacSO escollit;
     public event Action<AtacSO> onDamaged;
     EstadosAlterados estadosAlterados;
+    public event Action<AtacSO> atacar;
     public AtacSO atac { set => value = escollit; }
 
-    void OnEnable()
+    void Awake()
     {
         this.hp = this.EnemySO.hp;
         this.atk = this.EnemySO.atk;
         this.def = this.EnemySO.def;
         this.spd = this.EnemySO.spd;
         this.mana = this.EnemySO.mana;
+        this.animator = this.EnemySO.animator;
     }
     private void Start()
     {
-        //GameManager.instance.ActivarAtac += EscollirAtac();
+
     }
-    private void EscollirAtac()
+    public void EscollirAtac()
     {
         bool sortir = false;
         AtacSO at = null;
@@ -49,25 +57,35 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
             }
         }
         this.escollit = at;
+        atacar.Invoke(at);
     }
     private void OnMouseDown()
     {
         this.selected = true;
-        //GameManager.instance.setId(this.id);
+        //GameManagerArena.instance.setId(this.id);
     }
 
     public void RebreMal(AtacSO atac)
     {
-        if (atac.mal>this.def)
-            this.hp-=atac.mal-this.def;
-        if(atac.estat!=null)
-            this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+        if (atac.mal > this.def)
+        {
+            StartCoroutine(AnimacioMal());
+            this.hp -= atac.mal - this.def;
+            if (atac.estat != null)
+                this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+        }
         if (this.hp <= 0)
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
-    private void OnDisable()
+    IEnumerator AnimacioMal()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(1);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    private void OnDestroy()
     {
         //GameManager.instance.ActivarAtac -= EscollirAtac();
     }
