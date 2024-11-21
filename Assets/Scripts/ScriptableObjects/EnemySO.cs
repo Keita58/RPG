@@ -10,4 +10,8 @@ public class EnemySO : ScriptableObject
     public AtacSO[] atk;
     public int mana;
     public AnimatorController animator;
+    public AnimationClip clipIdle;
+    public AnimationClip clipMove;
+    public AnimationClip clipAttack;
+    public AnimationClip clipAttack2;
 }

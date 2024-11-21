@@ -17,4 +17,8 @@ MonoBehaviour:
   def: 0
   atk: []
   mana: 0
-  animator: {fileID: 9100000, guid: 83687e23e4575f04180a605a9403097f, type: 2}
+  animator: {fileID: 9100000, guid: e222f204553ab6f4e9fef3f8c792762e, type: 2}
+  clipIdle: {fileID: 7400000, guid: f1e96076800bad548988ab6ca50e9331, type: 2}
+  clipMove: {fileID: 7400000, guid: c42310715a0d7cd409f1cf1944706d7f, type: 2}
+  clipAttack: {fileID: 7400000, guid: eb463928fe4c37245a425da1e24ddc34, type: 2}
+  clipAttack2: {fileID: 7400000, guid: d3c935b3dd14ca94f802d4f25d619fad, type: 2}

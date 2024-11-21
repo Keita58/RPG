@@ -1,41 +1,36 @@
-
-using static UnityEngine.Rendering.DebugUI;
 using System;
-using UnityEngine.InputSystem;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStateMachine : MonoBehaviour
 {
-    //[SerializeField] public EnemySO _enemySO;
+    [SerializeField] private EnemySO _enemySO;
     private Animator _animator;
-    //[SerializeField] private Hitbox hitbox;
-    //[SerializeField] private RangeDetection _rangPerseguir;
-    //[SerializeField] private RangeDetection _rangAtac;
-    [SerializeField] private UnityEngine.UI.Slider slider;
+ //    [SerializeField] private Hitbox hitbox;
+ //   [SerializeField] private RangeDetection _rangPerseguir;
+ //   [SerializeField] private RangeDetection _rangAtac;
+   // [SerializeField] private UnityEngine.UI.Slider slider;
 
     void OnEnable()
     {
-        //this.slider.maxValue = this._enemySO.hp;
-        //this.slider.value = _enemySO.hp;
-       /* this.cooldown = false;
-        this.ChangeState(SkeletonStates.IDLE);
-        this.GetComponent<SpriteRenderer>().color = _enemySO.color;
+  //     this.slider.maxValue = this._enemySO.hp;
+    //    this.slider.value = _enemySO.hp;
+         this.cooldown = false;
+         this.ChangeState(SkeletonStates.IDLE);
         _animator = GetComponent<Animator>();
-        this._hp = _enemySO.hp;
-        //this._rangAtac.GetComponent<CircleCollider2D>().radius = this._enemySO.rangeAttack;
-        //_rangPerseguir.OnEnter += PerseguirDetected;
-        //_rangPerseguir.OnStay += PerseguirDetected;
-        //_rangPerseguir.OnExit += PerseguirUndetected;
-        //_rangAtac.OnEnter += AtacarDetected;
-        //_rangAtac.OnStay += AtacarDetected;
-        //_rangAtac.OnExit += AtacarUndetected;
-        StartCoroutine(patrullar());*/
-       StartCoroutine(mirarPersonaje());
+         _animator.runtimeAnimatorController = _enemySO.animator;
+         this._hp = _enemySO.hp;
+  //       this._rangAtac.GetComponent<CircleCollider2D>().radius = this._enemySO.rangeAttack;
+  //       _rangPerseguir.OnEnter += PerseguirDetected;
+  //       _rangPerseguir.OnStay += PerseguirDetected;
+  //       _rangPerseguir.OnExit += PerseguirUndetected;
+  //       _rangAtac.OnEnter += AtacarDetected;
+  //       _rangAtac.OnStay += AtacarDetected;
+  //       _rangAtac.OnExit += AtacarUndetected;
+  //       StartCoroutine(patrullar());
+       // StartCoroutine(mirarPersonaje());
     }
     private void Awake()
     {
@@ -53,55 +48,25 @@ public class EnemyStateMachine : MonoBehaviour
     {
         while (true)
         {
-
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right);
-            hit.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector2(this.transform.position.x, this.transform.position.y) + (hit.distance * Vector2.right), Color.red, 5);
-            RaycastHit2D hit2 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.right));
-            hit2.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit2.distance * (Quaternion.Euler(0, 0, 45) * Vector2.right)), Color.red, 5);
-            RaycastHit2D hit3 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.right));
-            hit3.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit3.distance * (Quaternion.Euler(0, 0, 22) * Vector2.right)), Color.red, 5);
-            RaycastHit2D hit4 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.down));
-            hit4.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit4.distance * (Quaternion.Euler(0, 0, 42) * Vector2.down)), Color.red, 5);
-            RaycastHit2D hit5 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 45) * Vector2.down));
-            hit5.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit5.distance * (Quaternion.Euler(0, 0, 55) * Vector2.down)), Color.red, 5);
-            RaycastHit2D hit6 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 75) * Vector2.down));
-            hit6.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit6.distance * (Quaternion.Euler(0, 0, 75) * Vector2.down)), Color.red, 5);
-            RaycastHit2D hit7 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 55) * Vector2.right));
-            hit7.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit7.distance * (Quaternion.Euler(0, 0, 35) * Vector2.right)), Color.red, 5);
-            RaycastHit2D hit8 = Physics2D.Raycast(this.transform.position, (Quaternion.Euler(0, 0, 55) * Vector2.right));
-            hit8.distance = 5;
-            Debug.DrawLine(this.transform.position, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + (hit8.distance * (Quaternion.Euler(0, 0, 10) * Vector2.right)), Color.red, 5);
-            yield return new WaitForSeconds(1);
-
+            RaycastHit2D a = Physics2D.BoxCast(this.transform.position + transform.right * 2.5f, new Vector2(5, 5), 0, Vector2.right, 5);
+            if (a != false) { 
+            if (a.collider.gameObject.tag == "Player")
+            {
+                this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
+            }
+            }
+            else{
+                this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+            yield return new WaitForSeconds(0.5f);
         }
-    }
-    /*IEnumerator mirarPersonaje()
-    {
-        while (true)
-        {
+    } 
 
-            Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 45);
-            yield return new WaitForSeconds(1);
-
-        }
-    }*/
- /*   private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(new Vector3(this.transform.position.x+1,this.transform.position.y, this.transform.position.z), 1);
-
-    }*/
     private void Start()
     {
-       // ChangeState(SkeletonStates.IDLE);
+        // ChangeState(SkeletonStates.IDLE);
     }
-    /*
+
     private void ChangeState(SkeletonStates newState)
     {
         //tornar al mateix estat o no
@@ -121,19 +86,19 @@ public class EnemyStateMachine : MonoBehaviour
         {
             case SkeletonStates.IDLE:
                 this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                _animator.Play("RedSkeletonIdle");
+                _animator.Play(_enemySO.clipIdle.name);
                 break;
             case SkeletonStates.MOVE:
-                _animator.Play("RedSkeletonMove");
+                _animator.Play(_enemySO.clipMove.name);
                 break;
 
             case SkeletonStates.ATTACK:
-                _animator.Play("RedSkeletonAttack");
-                hitbox.Damage = _enemySO.dmg;
+                _animator.Play(_enemySO.clipAttack.name);
+             //   hitbox.Damage = _enemySO.dmg;
                 break;
             case SkeletonStates.ATTACK2:
-                _animator.Play("RedSkeletonAttack2");
-                hitbox.Damage = _enemySO.dmg2;
+                _animator.Play(_enemySO.clipAttack2.name);
+             //   hitbox.Damage = _enemySO.dmg2;
                 break;
             default:
                 break;
@@ -186,7 +151,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void LateUpdate()
     {
-        this.slider.transform.eulerAngles = Vector3.zero;
+        //this.slider.transform.eulerAngles = Vector3.zero;
     }
     private void ExitState(SkeletonStates exitState)
     {
@@ -226,23 +191,15 @@ public class EnemyStateMachine : MonoBehaviour
     {
         this.GetComponent<SpriteRenderer>().color = Color.grey;
         yield return new WaitForSeconds(0.5f);
-        this.GetComponent<SpriteRenderer>().color = _enemySO.color;
     }
     public void ReceiveDamage(float damage)
     {
         this._hp -= damage;
-        this.slider.value = _hp;
+      //  this.slider.value = _hp;
         StartCoroutine(DamagedColor());
         if (this._hp <= 0)
         {
-            ronda.enemicsActuals--;
-            this.gameObject.SetActive(false);
-            _rangPerseguir.OnEnter -= PerseguirDetected;
-            _rangPerseguir.OnStay -= PerseguirDetected;
-            _rangPerseguir.OnExit -= PerseguirUndetected;
-            _rangAtac.OnEnter -= AtacarDetected;
-            _rangAtac.OnStay -= AtacarDetected;
-            _rangAtac.OnExit -= AtacarUndetected;
+           this.gameObject.SetActive(false);
         }
     }
     private void PerseguirDetected(GameObject personatge)
@@ -286,16 +243,15 @@ public class EnemyStateMachine : MonoBehaviour
         if (personatge.name == "PJ")
         {
             this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            if (this._enemySO.color == Color.white || this._enemySO.color == Color.red)
-                ChangeState(SkeletonStates.ATTACK);
-            else
+            ChangeState(SkeletonStates.ATTACK);
+        }
+        else
+        {
+            if (!cooldown)
             {
-                if (!cooldown)
-                {
-                    cooldown = true;
-                    ChangeState(SkeletonStates.ATTACK2);
-                    StartCoroutine(cooldownFalse());
-                }
+                cooldown = true;
+                ChangeState(SkeletonStates.ATTACK2);
+                StartCoroutine(cooldownFalse());
             }
         }
     }
@@ -304,25 +260,8 @@ public class EnemyStateMachine : MonoBehaviour
         yield return new WaitForSeconds(2f);
         cooldown = false;
     }
-    private void spawnKife()
-    {
-        for (int x = 0; x < knifes.Length; x++)
-        {
-            if (!knifes[x].gameObject.activeSelf)
-            {
-                knifes[x].Damage = (int)(_enemySO.dmg2);
-                knifes[x].gameObject.transform.position = this.transform.position;
-                if (knifes[x] != null)
-                    knifes[x].gameObject.SetActive(true);
-                break;
-            }
-        }
-    }
     private void AtacarUndetected(GameObject personatge)
     {
 
     }
-}*/
-
-
 }

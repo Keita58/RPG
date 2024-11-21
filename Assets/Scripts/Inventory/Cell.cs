@@ -5,8 +5,7 @@ using static UnityEditor.Progress;
 public class Cell : MonoBehaviour
 {
     public bool empty = true;
-   // GameObject actualItem = null;
-    int quantity = 0;
+    GameObject actualItem = null;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,7 +15,15 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(this.empty);
+        if (actualItem != null)
+        {
+            if (this.transform.position != this.actualItem.transform.position)
+            {
+                this.empty = true;
+                this.actualItem = null;
+                this.GetComponent<Collider2D>().enabled = true;
+            }
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -27,8 +34,8 @@ public class Cell : MonoBehaviour
             if (!collision.GetComponent<DragObjecte>().drageando)
             {
                 this.empty = false;
-                this.quantity = 1;
                 //Destroy(this.actualItem.GetComponent<DragObjecte>());
+                actualItem = collision.gameObject;
                 collision.transform.position = this.transform.position;
                 this.GetComponent<Collider2D>().enabled = false;
                 collision.GetComponent<DragObjecte>().cellCollider = this.gameObject;
@@ -49,7 +56,7 @@ public class Cell : MonoBehaviour
                 }
             }
         }*/
-        print("Quantity: " + quantity);
+
     }
 
 }
