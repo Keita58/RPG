@@ -17,7 +17,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     [SerializeField] AnimationClip atacClip;
     [SerializeField] AnimationClip hurtClip;
 
-    enum CombatStates { WAITING, SELECT_ACTION, ACTION_ATTACK, ACTION_MAGIC, ACTION_OBJECTS, ACTION_RUN }
+    enum CombatStates { WAITING, SELECT_ACTION, ACTION_ATTACK, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_OBJECTS, ACTION_RUN }
     [SerializeField] CombatStates combatState;
     enum PlayerAnimations { IDLE, HURT, ATTACK }
     [SerializeField] PlayerAnimations actualState;
@@ -29,7 +29,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int damageAtk;
     int spd;
     EstadosAlterados estado;
-    [SerializeField] AtacSO[] atacsBase;
+    [SerializeField] List<AtacSO> atacsBase;
     public event Action onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
@@ -208,8 +208,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 }
                 break;
             case CombatStates.ACTION_MAGIC:
-                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
-                OnMostrarMagia.Invoke(atacs);
+                OnMostrarMagia?.Invoke(atacsBase);
                 break;
             case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
@@ -230,10 +229,10 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.SELECT_ACTION:
                 OnOcultarAccions?.Invoke();
                 break;
-            case CombatStates.ACTION_ATTACK:
-                break;
-            case CombatStates.ACTION_MAGIC:
+            case CombatStates.SELECT_MAGIC:
                 OnOcultarMagia?.Invoke();
+                break;
+            case CombatStates.ACTION_ATTACK:
                 break;
             case CombatStates.ACTION_OBJECTS:
                 break;
@@ -340,7 +339,22 @@ public class PlayerCombat : MonoBehaviour, Tornable
         ChangeState(CombatStates.ACTION_RUN);
     }
 
+    public void AccioCancelar()
+    {
+        switch (combatState)
+        {
+            case CombatStates.SELECT_MAGIC:
+            case CombatStates.SELECT_OBJECT:
+                ChangeState(CombatStates.SELECT_ACTION);
+                break;
+        }
+    }
 
+    public void AccioHabilitat(AtacSO atac)
+    {
+        //comprovar mana, estat, tot i canviar
+        ChangeState(CombatStates.ACTION_MAGIC);
+    }
     //hacer una funcion que se suscriba que sea rebre mal;
 
 }
