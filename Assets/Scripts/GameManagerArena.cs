@@ -10,7 +10,7 @@ public class GameManagerArena : MonoBehaviour
     [SerializeField] List<EnemySO> _Enemics; // Llista de tots els tipus diferents d'enemics 
     [SerializeField] List<GameObject> _OrdreAtac; // Llista de tots els enemics a l'inici de l'escena
     [SerializeField] EnemySO _EnemicPrincipal; // Enemic que hem trobat al OW
-    [SerializeField] LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
+    private LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
 
     public static GameManagerArena Instance { get; private set; }
 
@@ -71,7 +71,7 @@ public class GameManagerArena : MonoBehaviour
             EnemyArena e = nodeActual.Value.GetComponent<EnemyArena>();
             if (e != null)
             {
-                if (e.getHp() <= 0)
+                if (e.hp <= 0)
                 {
                     PilaEnemics.Remove(nodeActual);
                 }
@@ -112,5 +112,10 @@ public class GameManagerArena : MonoBehaviour
     public List<GameObject> getEnemics()
     {
         return _OrdreAtac;
+    }
+
+    public void CanviaEnemicSelected()
+    {
+
     }
 }

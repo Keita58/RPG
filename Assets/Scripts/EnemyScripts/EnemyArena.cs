@@ -56,8 +56,8 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 
     private void OnMouseDown()
     {
-        this.selected = true;
-        //GameManagerArena.instance.setId(this.id);
+        if(!this.selected)
+            this.selected = true;
     }
 
     public void RebreMal(AtacSO atac)
