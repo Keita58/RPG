@@ -49,13 +49,13 @@ public class GameManagerArena : MonoBehaviour
 
                 for (var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next)
                 {
-                    /*
+                    
                     if(nodeActual.Value.GetComponent<EnemySO>().spd <= _Jugador.GetComponent<PlayerCombat>.spd)
                     {
                         LinkedListNode<GameObject> aux2 = new LinkedListNode<GameObject>(_Jugador);
                         PilaEnemics.AddBefore(nodeActual, aux2);
                         break;
-                    }*/
+                    }
                 }
                 BucleJoc();
                 break;
@@ -69,11 +69,11 @@ public class GameManagerArena : MonoBehaviour
             EnemyArena e = nodeActual.Value.GetComponent<EnemyArena>();
             if (e != null)
             {
-                /*
+                
                 if (e.getHp() <= 0)
                 {
                     PilaEnemics.Remove(nodeActual);
-                }*/
+                }
             }
         }
 
@@ -90,7 +90,7 @@ public class GameManagerArena : MonoBehaviour
             }
             else if(enemic != null)
             {
-                //enemic.EscollirAtac();
+                enemic.EscollirAtac();
             }
             PilaEnemics.RemoveFirst();
             PilaEnemics.AddLast(aux);
@@ -99,7 +99,7 @@ public class GameManagerArena : MonoBehaviour
 
     private void OnSceneUnloaded(Scene scene)
     {
-        //_Jugador.SavePlayer();
+        _Jugador.GetComponent<PlayerCombat>().SavePlayer();
         SceneManager.SetActiveScene(scene);
     }
 

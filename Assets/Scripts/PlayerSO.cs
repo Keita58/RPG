@@ -9,7 +9,7 @@ public class PlayerSO : ScriptableObject
     [SerializeField] private int mana;
     [SerializeField] private int lvl;
     [SerializeField] private int def;
-    [SerializeField] private int Spd;
+    [SerializeField] private int spd;
 
 
     public List<AtacSO> listaAtaques;
@@ -18,6 +18,6 @@ public class PlayerSO : ScriptableObject
     public int Mana { get => mana; set => mana = value; }
     public int Lvl { get => lvl; set => lvl = value; }
     public int Def { get => def; set => def = value; }
-    public int spd {  get => Spd; set => Spd = value;}
+    public int Spd {  get => spd; set => spd = value;}
     //poner el inventario y todo.
 }
