@@ -11,6 +11,7 @@ public class GameManagerArena : MonoBehaviour
     [SerializeField] List<GameObject> _OrdreAtac; // Llista de tots els enemics a l'inici de l'escena
     [SerializeField] EnemySO _EnemicPrincipal; // Enemic que hem trobat al OW
     private LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
+    private GameObject enemicSeleccionat;
 
     public static GameManagerArena Instance { get; private set; }
 
@@ -114,8 +115,15 @@ public class GameManagerArena : MonoBehaviour
         return _OrdreAtac;
     }
 
-    public void CanviaEnemicSelected()
+    public void CanviaEnemicSelected(GameObject GO)
     {
-
+        print("Canvi de seleccionat");
+        foreach (GameObject go in _OrdreAtac)
+        {
+            if (GO != enemicSeleccionat)
+            {
+                go.GetComponent<EnemyArena>().selected = false;
+            }
+        }
     }
 }

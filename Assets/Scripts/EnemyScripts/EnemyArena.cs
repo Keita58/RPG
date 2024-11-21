@@ -8,7 +8,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
     private Animator animator;
     private EnemySO EnemySO;
     public int id { get; private set; }
-    public bool selected { get; private set; }
+    public bool selected { get; set; }
     public int hp { get; private set; }
     public AtacSO[] atk { get; private set; }
     public int def { get; private set; }
@@ -58,6 +58,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
     {
         if(!this.selected)
             this.selected = true;
+        GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
     }
 
     public void RebreMal(AtacSO atac)
