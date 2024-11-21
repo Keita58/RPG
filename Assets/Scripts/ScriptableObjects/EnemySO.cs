@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemySO", menuName = "Scriptable Objects/EnemySO")]
@@ -8,5 +9,5 @@ public class EnemySO : ScriptableObject
     public int def;
     public AtacSO[] atk;
     public int mana;
-    public Animator animator;
+    public AnimatorController animator;
 }

@@ -1,12 +1,13 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
 using UnityEngine;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 {
-    public EnemySO EnemySO;
+    private EnemySO EnemySO;
     private int id;
     private bool selected;
-    public Animator animator;
+    private Animator animator;
     public int getId()
     {
         return id; 
@@ -20,24 +21,31 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
     {
         return hp;
     }
-    private AtacSO[] atk;
-    private int def;
-    private int spd;
-    private int mana;
+    public AtacSO[] atk { get; private set; }
+    public int def { get; private set; }
+    public int spd { get; private set; }
+    public int mana { get; private set; }
     private AtacSO escollit;
     public event Action<AtacSO> onDamaged;
     EstadosAlterados estadosAlterados;
     public event Action<AtacSO> atacar;
     public AtacSO atac { set => value = escollit; }
 
-    void Awake()
+    private void Awake()
     {
+        animator = GetComponent<Animator>();
+    }
+
+    public void Iniciar(EnemySO enemic)
+    {
+        Assert.IsNull(EnemySO, $"Ja hi ha un EnemicSO al {gameObject}");
+        this.EnemySO = enemic;
         this.hp = this.EnemySO.hp;
         this.atk = this.EnemySO.atk;
         this.def = this.EnemySO.def;
         this.spd = this.EnemySO.spd;
         this.mana = this.EnemySO.mana;
-        this.animator = this.EnemySO.animator;
+        this.animator.runtimeAnimatorController = this.EnemySO.animator;
     }
     private void Start()
     {

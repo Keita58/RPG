@@ -34,23 +34,23 @@ public class GameManagerArena : MonoBehaviour
             case "Arena":
                 int numEnemics = Random.Range(1, _OrdreAtac.Count);
 
-                _OrdreAtac[0].SetActive(true);
-                _OrdreAtac[0].GetComponent<EnemyArena>().EnemySO = _EnemicPrincipal;
+                _OrdreAtac[0].gameObject.SetActive(true);
+                _OrdreAtac[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
 
                 for (int i = 1; i < numEnemics; i++)
                 {
-                    _OrdreAtac[i].SetActive(true);
-                    _OrdreAtac[i].GetComponent<EnemyArena>().EnemySO = _Enemics[Random.Range(0, _Enemics.Count)];
+                    _OrdreAtac[i].gameObject.SetActive(true);
+                    _OrdreAtac[i].GetComponent<EnemyArena>().Iniciar(_Enemics[Random.Range(0, _Enemics.Count)]);
                 }
 
                 //Això ordena la llista dels enemics per la seva velocitat (una passada)
-                var aux = _OrdreAtac.OrderByDescending(enemic => enemic.GetComponent<EnemySO>().spd).ToList();
+                var aux = _OrdreAtac.OrderByDescending(enemic => enemic.GetComponent<EnemyArena>().spd).ToList();
                 PilaEnemics = new LinkedList<GameObject>(aux);
 
                 for (var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next)
                 {
                     
-                    if(nodeActual.Value.GetComponent<EnemySO>().spd <= _Jugador.GetComponent<PlayerCombat>.spd)
+                    if(nodeActual.Value.GetComponent<EnemyArena>().spd <= _JugadorSO.Spd)
                     {
                         LinkedListNode<GameObject> aux2 = new LinkedListNode<GameObject>(_Jugador);
                         PilaEnemics.AddBefore(nodeActual, aux2);
