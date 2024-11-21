@@ -595,7 +595,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 341017929}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1131388799}
+        m_TargetAssemblyTypeName: UICombat, Assembly-CSharp
+        m_MethodName: OnBotoObjecte
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &341017929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,10 +1047,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 448209368}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1131388799}
+        m_TargetAssemblyTypeName: UICombat, Assembly-CSharp
+        m_MethodName: OnBotoMagia
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1443,7 +1455,7 @@ Transform:
   m_GameObject: {fileID: 1013298260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.78, y: 0.98, z: 0}
+  m_LocalPosition: {x: -6.01, y: 1.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1483,10 +1495,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190d62c0f0a211e45ba084694ebe4e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBase: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
   atacClip: {fileID: 7400000, guid: 694483457bb488447af92585b1b566f0, type: 2}
   hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
+  combatState: 0
   actualState: 0
   stateTime: 0
+  atacsBase: []
 --- !u!1 &1047797855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,6 +1650,7 @@ GameObject:
   - component: {fileID: 1131388797}
   - component: {fileID: 1131388796}
   - component: {fileID: 1131388798}
+  - component: {fileID: 1131388799}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1727,6 +1743,19 @@ MonoBehaviour:
   m_Spacing: {x: 109.3, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1131388799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131388794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e7c7b720b581a4b9e01fa36c7ed5fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1013298264}
 --- !u!1 &1375453006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,7 +1838,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1375453009}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1131388799}
+        m_TargetAssemblyTypeName: UICombat, Assembly-CSharp
+        m_MethodName: OnBotoAtacar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1375453009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3047,7 +3088,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2043368336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1131388799}
+        m_TargetAssemblyTypeName: UICombat, Assembly-CSharp
+        m_MethodName: OnBotoFugir
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2043368336
 MonoBehaviour:
   m_ObjectHideFlags: 0
