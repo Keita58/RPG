@@ -573,6 +573,7 @@ MonoBehaviour:
   actionAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   attackClip: {fileID: 7400000, guid: cc84a94cabfaece448242e92a84d35cb, type: 2}
   hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
+  player: {fileID: 0}
   actualState: 0
   stateTime: 0
 --- !u!1 &907915145
