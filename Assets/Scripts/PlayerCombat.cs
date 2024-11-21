@@ -47,7 +47,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         this.mana = playerBase.Mana;
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
-        this.spd=playerBase.spd;
+        this.spd=playerBase.Spd;
 
         StartCoroutine(EsperarIActuar(1, IniciarTorn));
     }
@@ -94,7 +94,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     {
         playerBase.Mana = this.mana;
         playerBase.Hp = this.hp;
-        playerBase.spd = this.spd;
+        playerBase.Spd = this.spd;
         playerBase.Def = this.def;
         playerBase.DamageAtk = this.damageAtk;
         playerBase.Lvl = this.lvl;
@@ -153,7 +153,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                     estado.Torns--;
                 }
             }
-            //GameManagerArena.Instance.BucleJoc();
+            GameManagerArena.Instance.BucleJoc();
 
         }
        
@@ -191,15 +191,19 @@ public class PlayerCombat : MonoBehaviour, Tornable
                     ChangeState( CombatStates.WAITING );
                     break;
                 }
+                else
+                {
+                    OnMostrarAccions?.Invoke();
 
+                }
                 //AvisarUIMOSTRAR BOTON
-                OnMostrarAccions?.Invoke();
                 break;
             case CombatStates.ACTION_ATTACK:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 break;
             case CombatStates.ACTION_MAGIC:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                OnMostrarMagia.Invoke(atacs);
                 break;
             case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
@@ -223,6 +227,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.ACTION_ATTACK:
                 break;
             case CombatStates.ACTION_MAGIC:
+                OnOcultarMagia?.Invoke();
                 break;
             case CombatStates.ACTION_OBJECTS:
                 break;
