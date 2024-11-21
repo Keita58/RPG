@@ -1,13 +1,17 @@
+using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 [RequireComponent(typeof(Animator))]
 public class PlayerCombat : MonoBehaviour, Tornable
 {
-    PlayerSO playerBase;
+    [SerializeField] PlayerSO playerBase;
 
     List<AtacSO> atacs;
     public event Action<AtacSO> onAttack;
@@ -15,8 +19,10 @@ public class PlayerCombat : MonoBehaviour, Tornable
     [SerializeField] AnimationClip atacClip;
     [SerializeField] AnimationClip hurtClip;
 
-    enum PlayerStates { IDLE, HURT, ATTACK}
-    [SerializeField] PlayerStates actualState;
+    enum CombatStates { WAITING, SELECT_ACTION, ACTION_ATTACK, ACTION_MAGIC, ACTION_OBJECTS, ACTION_RUN }
+    [SerializeField] CombatStates combatState;
+    enum PlayerAnimations { IDLE, HURT, ATTACK}
+    [SerializeField] PlayerAnimations actualState;
     [SerializeField] float stateTime;
     int hp;
     int lvl;
@@ -27,7 +33,11 @@ public class PlayerCombat : MonoBehaviour, Tornable
     EstadosAlterados estado;
     [SerializeField] AtacSO[] atacsBase;
     public event Action onMuerto;
-    public event Action onIniciarTurnoUI;
+    //Accions GUI
+    public event Action OnMostrarAccions;
+    public event Action OnOcultarAccions;
+    public event Action<List<AtacSO>> OnMostrarMagia;
+    public event Action OnOcultarMagia;
 
     private void Awake()
     {
@@ -38,6 +48,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
         this.spd=playerBase.spd;
+
+        StartCoroutine(EsperarIActuar(1, IniciarTorn));
     }
 
     public void RebreMal(AtacSO atac)
@@ -120,15 +132,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     public void IniciarTorn()
     {
-        //AvisarUIMOSTRAR BOTON
-        onIniciarTurnoUI.Invoke();
-
-        //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
-        if (estado != null && estado.Nom=="Ventaja" && estado.Torns>0)
-        {
-            AcabarTorn();
-            estado.Torns--;
-        }
+        Assert.AreEqual(combatState, CombatStates.WAITING, $"{gameObject}: Iniciant torn quan no s'està esperant.");
+        ChangeState( CombatStates.SELECT_ACTION );
     }
 
     public void AcabarTorn()
@@ -154,25 +159,98 @@ public class PlayerCombat : MonoBehaviour, Tornable
        
     }
 
-    private void ChangeState(PlayerStates newstate)
+    IEnumerator EsperarIActuar(float tempsDespera, Action accio)
+    {
+        yield return new WaitForSeconds(tempsDespera);
+        accio();
+    }
+
+    //FSM COMBAT
+    private void ChangeState(CombatStates newstate)
+    {
+        ExitState(combatState);
+        InitState(newstate);
+    }
+
+    private void InitState(CombatStates newstate)
+    {
+        combatState = newstate;
+        switch(combatState)
+        {
+            case CombatStates.WAITING:
+                //GameManagerArena.Instance.BucleJoc();
+                Debug.Log("He acabat el torn");
+                StartCoroutine(EsperarIActuar(3, () => ChangeState(CombatStates.SELECT_ACTION)) );
+                break;
+            case CombatStates.SELECT_ACTION:
+                //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
+                if (estado != null && estado.Nom == "Ventaja" && estado.Torns > 0)
+                {
+                    estado.Torns--; 
+                    //TODO: Mirar què passa
+                    ChangeState( CombatStates.WAITING );
+                    break;
+                }
+
+                //AvisarUIMOSTRAR BOTON
+                OnMostrarAccions?.Invoke();
+                break;
+            case CombatStates.ACTION_ATTACK:
+                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                break;
+            case CombatStates.ACTION_MAGIC:
+                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                break;
+            case CombatStates.ACTION_OBJECTS:
+                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                break;
+            case CombatStates.ACTION_RUN:
+                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                break;
+        }
+    }
+
+    private void ExitState(CombatStates currentState)
+    {
+        Assert.AreEqual(combatState, currentState, $"{gameObject}: Estàs cridant un sortir d'estat quan no estàs a aquest estat");
+        switch(currentState)
+        {
+            case CombatStates.WAITING:
+                break;
+            case CombatStates.SELECT_ACTION:
+                OnOcultarAccions?.Invoke();
+                break;
+            case CombatStates.ACTION_ATTACK:
+                break;
+            case CombatStates.ACTION_MAGIC:
+                break;
+            case CombatStates.ACTION_OBJECTS:
+                break;
+            case CombatStates.ACTION_RUN:
+                break;
+        }
+    }
+
+    //FSM ANIMACIONS
+    private void ChangeState(PlayerAnimations newstate)
     {
         ExitState(actualState);
         IniState(newstate);
     }
-    private void IniState(PlayerStates initState)
+    private void IniState(PlayerAnimations initState)
     {
         actualState = initState;
         stateTime = 0f;
 
         switch (actualState)
         {
-            case PlayerStates.IDLE:
+            case PlayerAnimations.IDLE:
                 animator.Play("Idle");
                 break;
-            case PlayerStates.ATTACK:
+            case PlayerAnimations.ATTACK:
                 animator.Play("atac2");
                 break;
-            case PlayerStates.HURT:
+            case PlayerAnimations.HURT:
                 animator.Play("Hurt");
                 break;
             default:
@@ -186,28 +264,28 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
         switch (actualState)
         {
-            case PlayerStates.IDLE:
+            case PlayerAnimations.IDLE:
                 break;
-            case PlayerStates.ATTACK:
+            case PlayerAnimations.ATTACK:
                 if (stateTime >= atacClip.length)
-                    ChangeState(PlayerStates.IDLE);
+                    ChangeState(PlayerAnimations.IDLE);
                 break;
-            case PlayerStates.HURT:
+            case PlayerAnimations.HURT:
                 if (stateTime >= hurtClip.length)
-                    ChangeState(PlayerStates.IDLE);
+                    ChangeState(PlayerAnimations.IDLE);
                 break;
         }
     }
 
-    private void ExitState(PlayerStates exitState)
+    private void ExitState(PlayerAnimations exitState)
     {
         switch (exitState)
         {
-            case PlayerStates.IDLE:
+            case PlayerAnimations.IDLE:
                 break;
-            case PlayerStates.ATTACK:
+            case PlayerAnimations.ATTACK:
                 break;
-            case PlayerStates.HURT:
+            case PlayerAnimations.HURT:
                 break;
             default:
                 break;
@@ -216,12 +294,37 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     private void Start()
     {
-        IniState(PlayerStates.IDLE);
+        IniState(PlayerAnimations.IDLE);
     }
 
     private void Update()
     {
         UpdateState();
+    }
+
+    //Accions Menu
+    internal void AccioAtacar()
+    {
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció atack quan no s'està esperant una selecció.");
+        ChangeState(CombatStates.ACTION_ATTACK);
+    }
+
+    internal void AccioMagia()
+    {
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció magia quan no s'està esperant una selecció.");
+        ChangeState(CombatStates.ACTION_MAGIC);
+    }
+
+    internal void AccioObjecte()
+    {
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció objecte quan no s'està esperant una selecció.");
+        ChangeState(CombatStates.ACTION_OBJECTS);
+    }
+
+    internal void AccioFugir()
+    {
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció fugir quan no s'està esperant una selecció.");
+        ChangeState(CombatStates.ACTION_RUN);
     }
 
 
