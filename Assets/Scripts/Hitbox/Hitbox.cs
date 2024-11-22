@@ -17,12 +17,14 @@ public class Hitbox : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        print("debug moment");
         if (collision.TryGetComponent<EnemyStateMachine>(out EnemyStateMachine enemy) == true)
         {
             enemy._enemySO.EstadosAlterados.IniciarEstadoAlterado(estadoAlteradoSO);
             SceneManager.LoadScene("Arena");
         }else if(collision.TryGetComponent<Player>(out Player player) == true)
         {
+            print(player.player.estadosAlterados);
             player.player.estadosAlterados.IniciarEstadoAlterado(estadoAlteradoSO);
             SceneManager.LoadScene("Arena");
         }
