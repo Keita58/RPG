@@ -2,7 +2,8 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using UnityEngine;
-public class EnemyArena : MonoBehaviour, IAttack, IDamageable
+using UnityEngine.EventSystems;
+public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandler
 {
     private AtacSO escollit;
     private Animator animator;
@@ -86,5 +87,12 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
     private void OnDestroy()
     {
         //GameManager.instance.ActivarAtac -= EscollirAtac();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!this.selected)
+            this.selected = true;
+        GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
     }
 }

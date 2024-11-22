@@ -733,6 +733,7 @@ GameObject:
   - component: {fileID: 527182278}
   - component: {fileID: 527182277}
   - component: {fileID: 527182280}
+  - component: {fileID: 527182281}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -858,6 +859,22 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &527182281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527182276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &684606618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,11 +1274,13 @@ MonoBehaviour:
   atacs: []
   atacClip: {fileID: 7400000, guid: 694483457bb488447af92585b1b566f0, type: 2}
   hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
+  textoTarget: {fileID: 0}
+  ataqueBasico: {fileID: 11400000, guid: fea5e6efc0112034d80dfcc5531b0cbe, type: 2}
   combatState: 0
   actualState: 0
   stateTime: 0
   atacsBase:
-  - {fileID: 11400000, guid: fea5e6efc0112034d80dfcc5531b0cbe, type: 2}
+  - {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
 --- !u!1 &1047797855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,6 +1680,7 @@ GameObject:
   - component: {fileID: 1453499313}
   - component: {fileID: 1453499312}
   - component: {fileID: 1453499311}
+  - component: {fileID: 1453499314}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1731,13 +1751,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 448209368}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1453499314}
+        m_TargetAssemblyTypeName: UICombat, Assembly-CSharp
+        m_MethodName: Cancelar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1781,6 +1801,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453499309}
   m_CullTransparentMesh: 1
+--- !u!114 &1453499314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453499309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e7c7b720b581a4b9e01fa36c7ed5fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1013298264}
 --- !u!1 &1493858460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,7 +2187,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1585784131}
         m_TargetAssemblyTypeName: UIBotoAtac, Assembly-CSharp
-        m_MethodName: BotoSeleccionat
+        m_MethodName: UtilitzaHabilitat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2439,7 +2472,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1701585678}
         m_TargetAssemblyTypeName: UIBotoAtac, Assembly-CSharp
-        m_MethodName: BotoSeleccionat
+        m_MethodName: UtilitzaHabilitat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2588,7 +2621,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1724506410}
         m_TargetAssemblyTypeName: UIBotoAtac, Assembly-CSharp
-        m_MethodName: BotoSeleccionat
+        m_MethodName: UtilitzaHabilitat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3072,7 +3105,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1974489812}
         m_TargetAssemblyTypeName: UIBotoAtac, Assembly-CSharp
-        m_MethodName: BotoSeleccionat
+        m_MethodName: UtilitzaHabilitat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

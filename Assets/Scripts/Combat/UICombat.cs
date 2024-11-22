@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UICombat : MonoBehaviour
 {
@@ -8,18 +9,32 @@ public class UICombat : MonoBehaviour
     {
         player.OnMostrarAccions += Mostrar;
         player.OnOcultarAccions += Ocultar;
-
+        player.OnDeshabilitarAccions += Deshabilitar;
         Ocultar();
     }
 
     private void Mostrar()
     {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<Button>().interactable = true;
+
+        }
         gameObject.SetActive(true);
     }
 
     private void Ocultar()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Deshabilitar()
+    {
+        for (int i = 0; i < transform.childCount; i++) 
+        {
+            transform.GetChild(i).GetComponent<Button>().interactable = false;
+
+        }
     }
 
     public void OnBotoAtacar()
@@ -29,7 +44,7 @@ public class UICombat : MonoBehaviour
 
     public void OnBotoMagia()
     {
-        player.AccioMagia();
+        player.AccioSeleccionarMagia();
     }
 
     public void OnBotoObjecte()
@@ -40,5 +55,10 @@ public class UICombat : MonoBehaviour
     public void OnBotoFugir()
     {
         player.AccioFugir();
+    }
+
+    public void Cancelar()
+    {
+        player.AccioCancelar();
     }
 }
