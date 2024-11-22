@@ -38,8 +38,4 @@ public class UIMenuSeleccionarMagia : MonoBehaviour
         player.AccioHabilitat(atac);
     }
 
-    public void CancelarAccio()
-    {
-        //dir al player que cancelem
-    }
 }

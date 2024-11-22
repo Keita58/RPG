@@ -19,7 +19,9 @@ public class PlayerCombat : MonoBehaviour, Tornable
     [SerializeField] AnimationClip hurtClip;
     [SerializeField] TextMeshProUGUI textoTarget;
 
-    enum CombatStates { WAITING, SELECT_ACTION, ACTION_ATTACK, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_OBJECTS, ACTION_RUN }
+    [SerializeField] AtacSO ataqueBasico;
+
+    enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_OBJECTS, ACTION_RUN , SELECCIONAR_TARGET}
     [SerializeField] CombatStates combatState;
     enum PlayerAnimations { IDLE, HURT, ATTACK }
     [SerializeField] PlayerAnimations actualState;
@@ -32,17 +34,20 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int spd;
     EstadosAlterados estado;
     [SerializeField] List<AtacSO> atacsBase;
+    AtacSO atacSeleccionat;
+    EnemyArena target;
     public event Action onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
     public event Action OnOcultarAccions;
     public event Action<List<AtacSO>> OnMostrarMagia;
     public event Action OnOcultarMagia;
+    public event Action OnDeshabilitarAccions;
 
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
-        //StartCoroutine(EsperarIActuar(1, IniciarTorn));
+        StartCoroutine(EsperarIActuar(1, IniciarTorn));
     }
 
     public void Iniciar(PlayerSO player)
@@ -181,7 +186,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 //GameManagerArena.Instance.BucleJoc();
                 Debug.Log("He acabat el torn");
                 OnOcultarAccions?.Invoke();
-                StartCoroutine(EsperarIActuar(3, () => ChangeState(CombatStates.SELECT_ACTION)));
                 break;
             case CombatStates.SELECT_ACTION:
                 //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
@@ -198,30 +202,35 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 }
                 //AvisarUIMOSTRAR BOTON
                 break;
-            case CombatStates.ACTION_ATTACK:
+      
                 //StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
-                List<GameObject> li = GameManagerArena.Instance.getEnemics();
-                foreach (GameObject go in li)
-                {
-                    Debug.Log("ENEMIC: "+ go.GetComponent<EnemyArena>().name);
-                    Debug.Log("ENEMIC SELECCIONAT?: " + go.GetComponent<EnemyArena>().selected);
-                    if (go.GetComponent<EnemyArena>().selected)
-                    {
-                        ChangeState(PlayerAnimations.ATTACK);
-                        Debug.Log("VIDA ANTES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
-                        go.GetComponent<EnemyArena>().RebreMal(atacsBase.ElementAt(0));
-                        Debug.Log("ATACO A"+go.name);
-                        Debug.Log("VIDA DESPUES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
-                    }
-                    else
-                    {
-                        textoTarget.text = "HAS DE SELECCIONAR UN ENEMIC";
-                        ChangeState(CombatStates.SELECT_ACTION);
-                    }
-                }
+                //List<GameObject> li = GameManagerArena.Instance.getEnemics();
+                //foreach (GameObject go in li)
+                //{
+                //    Debug.Log("ENEMIC: "+ go.GetComponent<EnemyArena>().name);
+                //    Debug.Log("ENEMIC SELECCIONAT?: " + go.GetComponent<EnemyArena>().selected);
+                //    if (go.GetComponent<EnemyArena>().selected)
+                //    {
+                //        ChangeState(PlayerAnimations.ATTACK);
+                //        Debug.Log("VIDA ANTES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
+                //        go.GetComponent<EnemyArena>().RebreMal(ataqueBasico);
+                //        Debug.Log("ATACO A"+go.name);
+                //        Debug.Log("VIDA DESPUES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
+                //    }
+                //    else
+                //    {
+                //        textoTarget.text = "HAS DE SELECCIONAR UN ENEMIC";
+                //        ChangeState(CombatStates.SELECT_ACTION);
+                //    }
+                //}
+            case CombatStates.SELECT_MAGIC:
+                OnMostrarMagia?.Invoke(atacsBase);
+                OnDeshabilitarAccions?.Invoke();
                 break;
             case CombatStates.ACTION_MAGIC:
-                OnMostrarMagia?.Invoke(atacsBase);
+                ChangeState(PlayerAnimations.ATTACK);
+                this.mana -= atacSeleccionat.mana;
+                StartCoroutine(EsperarIActuar(1, () => AtacAcabat()));
                 break;
             case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
@@ -229,7 +238,15 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.ACTION_RUN:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 break;
+            case CombatStates.SELECCIONAR_TARGET:
+                //GameManager.Instance.OnSeleccionarTarget += TargetSeleccionat;
+                break;
         }
+    }
+
+    private void AtacAcabat()
+    {
+        ChangeState(CombatStates.WAITING);
     }
 
     private void ExitState(CombatStates currentState)
@@ -245,12 +262,12 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.SELECT_MAGIC:
                 OnOcultarMagia?.Invoke();
                 break;
-            case CombatStates.ACTION_ATTACK:
-                break;
+            case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
+                AcabarTorn();
                 break;
-            case CombatStates.ACTION_RUN:
-                break;
+
+     
         }
     }
 
@@ -329,16 +346,18 @@ public class PlayerCombat : MonoBehaviour, Tornable
     //Accions Menu
     internal void AccioAtacar()
     {
+
         Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció atack quan no s'està esperant una selecció.");
-        ChangeState(CombatStates.ACTION_ATTACK);
+        this.atacSeleccionat = ataqueBasico;
+        ChangeState(CombatStates.SELECCIONAR_TARGET);
        
     }
 
-    internal void AccioMagia()
+    internal void AccioSeleccionarMagia()
     {
         Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció magia quan no s'està esperant una selecció.");
-        ChangeState(CombatStates.ACTION_MAGIC);
-    }
+        ChangeState(CombatStates.SELECT_MAGIC);
+    } 
 
     internal void AccioObjecte()
     {
@@ -365,9 +384,27 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     public void AccioHabilitat(AtacSO atac)
     {
+
         //comprovar mana, estat, tot i canviar
+        if (this.mana >= atac.mana)
+        {
+            this.atacSeleccionat = atac;
+
+            ChangeState(CombatStates.SELECCIONAR_TARGET);
+
+        }
+        else
+        {
+            ChangeState(CombatStates.SELECT_ACTION);
+        }
+    }
+
+    private void TargetSeleccionat(EnemyArena target)
+    {
+        //GameManager.Instance.OnSeleccionarTarget -= TargetSeleccionat;
+        this.target = target;
+        //guardar target   
         ChangeState(CombatStates.ACTION_MAGIC);
     }
-    //hacer una funcion que se suscriba que sea rebre mal;
 
 }

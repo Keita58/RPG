@@ -27,4 +27,6 @@ public class UIBotoAtac : MonoBehaviour
     {
         menuSeleccionarMagia.UtilitzaHabilitat(atacSO);
     }
+
+
 }
