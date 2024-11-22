@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5612b977ec0c2643ba4c9ce39695f5b, type: 3}
   m_Name: Enemic1
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 5
   spd: 0
   def: 0
   atk: []
   mana: 0
   animator: {fileID: 9100000, guid: 7b523cc883b30724c8dbf78799489f92, type: 2}
+  clipIdle: {fileID: 0}
+  clipMove: {fileID: 0}
+  clipAttack: {fileID: 0}
+  clipAttack2: {fileID: 0}

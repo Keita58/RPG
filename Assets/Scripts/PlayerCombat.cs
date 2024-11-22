@@ -209,7 +209,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                     {
                         ChangeState(PlayerAnimations.ATTACK);
                         Debug.Log("VIDA ANTES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
-                        go.GetComponent<EnemyArena>().RebreMal(atacs.ElementAt(0));
+                        go.GetComponent<EnemyArena>().RebreMal(atacsBase.ElementAt(0));
                         Debug.Log("ATACO A"+go.name);
                         Debug.Log("VIDA DESPUES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
                     }

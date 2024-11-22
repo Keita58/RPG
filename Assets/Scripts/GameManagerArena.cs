@@ -120,7 +120,7 @@ public class GameManagerArena : MonoBehaviour
         print("Canvi de seleccionat");
         foreach (GameObject go in _OrdreAtac)
         {
-            if (GO != enemicSeleccionat)
+            if (GO != go)
             {
                 go.GetComponent<EnemyArena>().selected = false;
             }
