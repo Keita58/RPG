@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] AnimationClip attackClip;
     [SerializeField] AnimationClip hurtClip;
-    [SerializeField] PlayerSO player;
+    [SerializeField] public PlayerSO player { get; private set; }
 
     int hp;
     int lvl;
