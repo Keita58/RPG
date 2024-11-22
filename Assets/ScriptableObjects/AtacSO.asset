@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2712ab3bcddc5094bbd04bbb6cfdbb43, type: 3}
-  m_Name: PlayerSO
+  m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
+  m_Name: AtacSO
   m_EditorClassIdentifier: 
-  hp: 5
-  damageAtk: 0
+  nom: Basic
+  mal: 4
+  tipus: 0
+  estat: {fileID: 0}
   mana: 0
-  lvl: 0
-  def: 0
-  spd: 9
-  listaAtaques: []

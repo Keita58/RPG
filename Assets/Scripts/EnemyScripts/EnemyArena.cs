@@ -4,31 +4,21 @@ using System.Collections;
 using UnityEngine;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 {
-    private EnemySO EnemySO;
-    private int id;
-    private bool selected;
+    [SerializeField] HealthBar vidaPantalla;
+    private AtacSO escollit;
     private Animator animator;
-    public int getId()
-    {
-        return id; 
-    }
-    public void setId(int i)
-    {
-        this.id = i;
-    }
-    private int hp;
-    public int getHp()
-    {
-        return hp;
-    }
+    private EnemySO EnemySO;
+    public int id { get; private set; }
+    public bool selected { get; set; }
+    public int hp { get; private set; }
     public AtacSO[] atk { get; private set; }
     public int def { get; private set; }
     public int spd { get; private set; }
     public int mana { get; private set; }
-    private AtacSO escollit;
     public event Action<AtacSO> onDamaged;
-    EstadosAlterados estadosAlterados;
     public event Action<AtacSO> atacar;
+    EstadosAlterados estadosAlterados;
+
     public AtacSO atac { set => value = escollit; }
 
     private void Awake()
@@ -46,11 +36,9 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
         this.spd = this.EnemySO.spd;
         this.mana = this.EnemySO.mana;
         this.animator.runtimeAnimatorController = this.EnemySO.animator;
+        vidaPantalla.IniciarBarra(this.hp);
     }
-    private void Start()
-    {
 
-    }
     public void EscollirAtac()
     {
         bool sortir = false;
@@ -67,10 +55,15 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
         this.escollit = at;
         atacar.Invoke(at);
     }
+
     private void OnMouseDown()
     {
-        this.selected = true;
-        //GameManagerArena.instance.setId(this.id);
+        if(!this.selected)
+        {
+            this.selected = true;
+    
+        }
+        GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
     }
 
     public void RebreMal(AtacSO atac)
@@ -78,21 +71,26 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
         if (atac.mal > this.def)
         {
             StartCoroutine(AnimacioMal());
+            Debug.Log("Vida abans mal: " + this.hp);
             this.hp -= atac.mal - this.def;
+            Debug.Log("Vida després mal: " + this.hp);
             if (atac.estat != null)
                 this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+            vidaPantalla.UpdateHealth(atac.mal);
         }
         if (this.hp <= 0)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
+
     IEnumerator AnimacioMal()
     {
         this.GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(1);
         this.GetComponent<SpriteRenderer>().color = Color.white;
     }
+
     private void OnDestroy()
     {
         //GameManager.instance.ActivarAtac -= EscollirAtac();

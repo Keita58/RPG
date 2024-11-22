@@ -10,7 +10,8 @@ public class GameManagerArena : MonoBehaviour
     [SerializeField] List<EnemySO> _Enemics; // Llista de tots els tipus diferents d'enemics 
     [SerializeField] List<GameObject> _OrdreAtac; // Llista de tots els enemics a l'inici de l'escena
     [SerializeField] EnemySO _EnemicPrincipal; // Enemic que hem trobat al OW
-    LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
+    private LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
+    private GameObject enemicSeleccionat;
 
     public static GameManagerArena Instance { get; private set; }
 
@@ -36,11 +37,13 @@ public class GameManagerArena : MonoBehaviour
 
                 _OrdreAtac[0].gameObject.SetActive(true);
                 _OrdreAtac[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
+                _OrdreAtac[0].transform.Rotate(0, 180, 0);
 
                 for (int i = 1; i < numEnemics; i++)
                 {
                     _OrdreAtac[i].gameObject.SetActive(true);
                     _OrdreAtac[i].GetComponent<EnemyArena>().Iniciar(_Enemics[Random.Range(0, _Enemics.Count)]);
+                    _OrdreAtac[i].transform.Rotate(0, 180, 0);
                 }
 
                 //Això ordena la llista dels enemics per la seva velocitat (una passada)
@@ -69,8 +72,7 @@ public class GameManagerArena : MonoBehaviour
             EnemyArena e = nodeActual.Value.GetComponent<EnemyArena>();
             if (e != null)
             {
-                
-                if (e.getHp() <= 0)
+                if (e.hp <= 0)
                 {
                     PilaEnemics.Remove(nodeActual);
                 }
@@ -111,5 +113,17 @@ public class GameManagerArena : MonoBehaviour
     public List<GameObject> getEnemics()
     {
         return _OrdreAtac;
+    }
+
+    public void CanviaEnemicSelected(GameObject GO)
+    {
+        print("Canvi de seleccionat");
+        foreach (GameObject go in _OrdreAtac)
+        {
+            if (GO != go)
+            {
+                go.GetComponent<EnemyArena>().selected = false;
+            }
+        }
     }
 }
