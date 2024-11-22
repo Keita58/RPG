@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 
@@ -16,6 +17,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     Animator animator;
     [SerializeField] AnimationClip atacClip;
     [SerializeField] AnimationClip hurtClip;
+    [SerializeField] TextMeshProUGUI textoTarget;
 
     enum CombatStates { WAITING, SELECT_ACTION, ACTION_ATTACK, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_OBJECTS, ACTION_RUN }
     [SerializeField] CombatStates combatState;
@@ -197,17 +199,22 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 //AvisarUIMOSTRAR BOTON
                 break;
             case CombatStates.ACTION_ATTACK:
-                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                //StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 List<GameObject> li = GameManagerArena.Instance.getEnemics();
-                ChangeState(PlayerAnimations.ATTACK);
                 foreach (GameObject go in li)
                 {
                     if (go.GetComponent<EnemyArena>().selected)
                     {
+                        ChangeState(PlayerAnimations.ATTACK);
                         Debug.Log("VIDA ANTES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
                         go.GetComponent<EnemyArena>().RebreMal(atacs.ElementAt(0));
                         Debug.Log("ATACO A"+go.name);
                         Debug.Log("VIDA DESPUES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
+                    }
+                    else
+                    {
+                        textoTarget.text = "HAS DE SELECCIONAR UN ENEMIC";
+                        ChangeState(CombatStates.SELECT_ACTION);
                     }
                 }
                 break;
