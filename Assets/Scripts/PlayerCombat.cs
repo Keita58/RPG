@@ -203,6 +203,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 List<GameObject> li = GameManagerArena.Instance.getEnemics();
                 foreach (GameObject go in li)
                 {
+                    Debug.Log("ENEMIC: "+ go.GetComponent<EnemyArena>().name);
+                    Debug.Log("ENEMIC SELECCIONAT?: " + go.GetComponent<EnemyArena>().selected);
                     if (go.GetComponent<EnemyArena>().selected)
                     {
                         ChangeState(PlayerAnimations.ATTACK);
