@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] AnimationClip attackClip;
     [SerializeField] AnimationClip hurtClip;
-    [SerializeField] PlayerSO player;
+    [SerializeField] public PlayerSO player;
 
     int hp;
     int lvl;
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         this.lvl=player.Lvl;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        this.player.estadosAlterados = new EstadosAlterados("", false, 0, 0, 0, 0, 0);
         inputAction = Instantiate(actionAsset);
         inputAction.FindActionMap("Player").FindAction("Attack").performed += OnAttack;
         moviment = inputAction.FindActionMap("Player").FindAction("Move");
