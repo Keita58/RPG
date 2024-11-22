@@ -40,7 +40,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
-        StartCoroutine(EsperarIActuar(1, IniciarTorn));
+        //StartCoroutine(EsperarIActuar(1, IniciarTorn));
     }
 
     public void Iniciar(PlayerSO player)
@@ -178,6 +178,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.WAITING:
                 //GameManagerArena.Instance.BucleJoc();
                 Debug.Log("He acabat el torn");
+                OnOcultarAccions?.Invoke();
                 StartCoroutine(EsperarIActuar(3, () => ChangeState(CombatStates.SELECT_ACTION)));
                 break;
             case CombatStates.SELECT_ACTION:
@@ -227,7 +228,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.WAITING:
                 break;
             case CombatStates.SELECT_ACTION:
-                OnOcultarAccions?.Invoke();
+                //OnOcultarAccions?.Invoke();
                 break;
             case CombatStates.SELECT_MAGIC:
                 OnOcultarMagia?.Invoke();

@@ -35,6 +35,7 @@ public class UIMenuSeleccionarMagia : MonoBehaviour
     public void UtilitzaHabilitat(AtacSO atac)
     {
         //avisar al player que faci l'atac
+        player.AccioHabilitat(atac);
     }
 
     public void CancelarAccio()
