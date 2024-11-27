@@ -32,6 +32,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int def;
     int damageAtk;
     int spd;
+    bool entroSeleccionado { get; set; }
     EstadosAlterados estado;
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
@@ -43,6 +44,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public event Action<List<AtacSO>> OnMostrarMagia;
     public event Action OnOcultarMagia;
     public event Action OnDeshabilitarAccions;
+    public event Action OnEntrarSeleccionarTarget;
 
     private void Awake()
     {
@@ -240,6 +242,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
+                entroSeleccionado = true;
                 GameManagerArena.Instance.OnSeleccionarTarget += TargetSeleccionat;
                 OnDeshabilitarAccions.Invoke();
                 break;
@@ -267,6 +270,9 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
                 AcabarTorn();
+                break;
+            case CombatStates.SELECCIONAR_TARGET:
+                entroSeleccionado=false;
                 break;
 
      
