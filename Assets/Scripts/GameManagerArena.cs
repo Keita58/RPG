@@ -35,7 +35,7 @@ public class GameManagerArena : MonoBehaviour
         switch (scene.name)
         {
             case "Arena":
-                int numEnemics = UnityEngine.Random.Range(1, _OrdreAtac.Count);
+                int numEnemics = UnityEngine.Random.Range(1, _OrdreAtac.Count + 1);
 
                 _OrdreAtac[0].gameObject.SetActive(true);
                 _OrdreAtac[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
@@ -54,7 +54,6 @@ public class GameManagerArena : MonoBehaviour
 
                 for (var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next)
                 {
-                    
                     if(nodeActual.Value.GetComponent<EnemyArena>().spd <= _JugadorSO.Spd)
                     {
                         LinkedListNode<GameObject> aux2 = new LinkedListNode<GameObject>(_Jugador);
@@ -69,32 +68,40 @@ public class GameManagerArena : MonoBehaviour
 
     public void BucleJoc()
     {
-        for(var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next) 
+        print(PilaEnemics);
+        for (int i = 0; i < PilaEnemics.Count; i++) 
         {
-            EnemyArena e = nodeActual.Value.GetComponent<EnemyArena>();
-            if (e != null)
+            if (PilaEnemics.ElementAt(i).TryGetComponent<EnemyArena>(out EnemyArena e))
             {
                 if (e.hp <= 0)
                 {
-                    PilaEnemics.Remove(nodeActual);
+                    PilaEnemics.Remove(PilaEnemics.ElementAt(i));
                 }
             }
         }
+        //for(var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next) 
+        //{
+        //    if(nodeActual.Value.TryGetComponent<EnemyArena>(out EnemyArena e))
+        //    {
+        //        if(e.hp <= 0)
+        //        {
+        //            PilaEnemics.Remove(nodeActual);
+        //        }
+        //    }
+        //}
 
         if (PilaEnemics.Count == 1 && PilaEnemics.First.Value == _Jugador)
             OnSceneUnloaded(SceneManager.GetSceneByName("Overworld"));
         else
         {
             GameObject aux = PilaEnemics.First.Value;
-            PlayerCombat jugador = aux.GetComponent<PlayerCombat>();
-            EnemyArena enemic = aux.GetComponent<EnemyArena>();
-            if(jugador != null)
+            if(aux.TryGetComponent<PlayerCombat>(out PlayerCombat p))
             {
-                jugador.IniciarTorn();
+                p.IniciarTorn();
             }
-            else if(enemic != null)
+            else if(aux.TryGetComponent<EnemyArena>(out EnemyArena e))
             {
-                enemic.EscollirAtac();
+                e.EscollirAtac();
             }
             PilaEnemics.RemoveFirst();
             PilaEnemics.AddLast(aux);
@@ -129,7 +136,7 @@ public class GameManagerArena : MonoBehaviour
             }
             else
             {
-                OnSeleccionarTarget.Invoke(go);
+                OnSeleccionarTarget?.Invoke(go);
             }
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandler
 {
     [SerializeField] HealthBar vidaPantalla;
-    [SerializeField] public GameObject Seleccionat { get; set; }
+    public GameObject Seleccionat;
     private AtacSO escollit;
     private Animator animator;
     private EnemySO EnemySO;
@@ -20,11 +20,13 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
     public event Action<AtacSO> onDamaged;
     public event Action<AtacSO> atacar;
     EstadosAlterados estadosAlterados;
+    GameObject _Jugador;
 
     public AtacSO atac { set => value = escollit; }
 
     private void Awake()
     {
+        _Jugador = GameManagerArena.Instance.getJugador();
         animator = GetComponent<Animator>();
     }
 
@@ -53,6 +55,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
                 this.mana-=at.mana;
                 sortir = true;
             }
+            sortir = true;
         }
         this.escollit = at;
         atacar.Invoke(at);
@@ -91,7 +94,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!this.selected)
-        {
+        {   
             this.selected = true;
             Seleccionat.SetActive(true);
         }
