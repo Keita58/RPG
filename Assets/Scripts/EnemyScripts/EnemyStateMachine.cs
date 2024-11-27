@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStateMachine : MonoBehaviour
 {
+    public LayerMask ly;
     [SerializeField] public EnemySO _enemySO;
     private Animator _animator;
     //    [SerializeField] private Hitbox hitbox;
@@ -33,7 +33,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void Awake()
     {
-        this._enemySO.EstadosAlterados = new EstadosAlterados("",false,0,0,0,0,0);
+        this._enemySO.EstadosAlterados = new EstadosAlterados("", false, 0, 0, 0, 0, 0);
         this._hp = _enemySO.hp;
         _animator = GetComponent<Animator>();
         _animator.runtimeAnimatorController = _enemySO.animator;
@@ -51,41 +51,38 @@ public class EnemyStateMachine : MonoBehaviour
     {
         while (true)
         {
-            RaycastHit2D a = Physics2D.BoxCast(this.transform.position + transform.right * 2.5f, new Vector2(5, 5), 0, Vector2.right, 5);
-            if (a != false)
+            RaycastHit2D a = Physics2D.BoxCast(this.transform.position + transform.right * 2.5f, new Vector2(5, 5), 0, Vector2.right, 5, ly);
+            if (a.collider != null)
             {
-                if (a.collider.gameObject.tag == "Player")
+                if (this.transform.eulerAngles == Vector3.zero)
                 {
-                    if (this.transform.eulerAngles == Vector3.zero)
+                    if (a.point.x < a.centroid.x - 1.5f && (a.point.y >= a.centroid.y - 0.50 && a.point.y <= a.centroid.y + 0.50))
                     {
-                        if (a.point.x < a.centroid.x - 1.5f && (a.point.y >= a.centroid.y - 0.50 && a.point.y <= a.centroid.y + 0.50))
-                        {
-                            ChangeState(SkeletonStates.ATTACK);
-                        }
-                        else
-                        {
-                            this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
-                        }
+                        ChangeState(SkeletonStates.ATTACK);
                     }
-                    else if (this.transform.eulerAngles != Vector3.zero)
+                    else
                     {
-                        if (a.point.x > a.centroid.x + 1.5f && (a.point.y >= a.centroid.y - 0.50 && a.point.y <= a.centroid.y + 0.50))
-                        {
-                            ChangeState(SkeletonStates.ATTACK);
-                        }
-                        else
-                        {
-                            this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
-                        }
+                        this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
                     }
-
                 }
+                else if (this.transform.eulerAngles != Vector3.zero)
+                {
+                    if (a.point.x > a.centroid.x + 1.5f && (a.point.y >= a.centroid.y - 0.50 && a.point.y <= a.centroid.y + 0.50))
+                    {
+                        ChangeState(SkeletonStates.ATTACK);
+                    }
+                    else
+                    {
+                        this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
+                    }
+                }
+
             }
             else
             {
                 this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

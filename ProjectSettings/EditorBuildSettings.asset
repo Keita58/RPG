@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arena.unity
     guid: b1f88782f14bc78438b1b318a1eb2e3e
+  - enabled: 1
+    path: Assets/Scenes/PelsPesats v2.unity
+    guid: 4c319b9a538e5ee4c8fddd90061f7817
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

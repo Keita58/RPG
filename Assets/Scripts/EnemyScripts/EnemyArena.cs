@@ -52,10 +52,13 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
             at = atk[UnityEngine.Random.Range(0, atk.Length)];
             if (at.mana < this.mana)
             {
-                this.mana-=at.mana;
+                this.mana -= at.mana;
                 sortir = true;
             }
-            sortir = true;
+            else
+            {
+                break;
+            }
         }
         this.escollit = at;
         atacar.Invoke(at);
@@ -68,7 +71,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
             StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
             this.hp -= atac.mal - this.def;
-            Debug.Log("Vida després mal: " + this.hp);
+            Debug.Log("Vida desprï¿½s mal: " + this.hp);
             if (atac.estat != null)
                 this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
             vidaPantalla.UpdateHealth(atac.mal);
