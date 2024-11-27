@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
-  m_Name: AtacSO 1
+  m_Name: Cop de falc
   m_EditorClassIdentifier: 
   nom: "Cop de fal\xE7"
   mal: 1917
