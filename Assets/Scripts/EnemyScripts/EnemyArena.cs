@@ -56,6 +56,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         }
         this.escollit = at;
         atacar.Invoke(at);
+        //HACER AQUI LO DE LOS ESTADOS ALTERADOS?
     }
 
     public void RebreMal(AtacSO atac)

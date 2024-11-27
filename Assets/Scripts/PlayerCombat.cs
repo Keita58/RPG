@@ -49,7 +49,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
-        //StartCoroutine(EsperarIActuar(1, IniciarTorn));
     }
 
     public void Iniciar(PlayerSO player)
@@ -76,7 +75,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             hp -= hprestat;
         }
 
-        if (atac.estat != null)
+        if (atac.estat != null && estado==null)
         {
             estado.IniciarEstadoAlterado(atac.estat);
         }
@@ -126,14 +125,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     public void AcabarTorn()
     {
-        if (estado != null)
-        {
-            if (estado.Nom == "Veneno" && estado.Torns > 0)
-            {
-                this.hp -= estado.Hp;
-                estado.Torns--;
-            }
-        }
+        ProcessarEstat();
         GameManagerArena.Instance.BucleJoc();
     }
 
@@ -162,7 +154,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.SELECT_ACTION:
                 //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
-                if (estado != null && estado.Nom == "Ventaja" && estado.Torns > 0)
+                if (estado != null && estado.Incapacitat && estado.Torns > 0)
                 {
                     estado.Torns--;
                     //TODO: Mirar què passa
@@ -173,29 +165,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 {
                     OnMostrarAccions?.Invoke();
                 }
-                //AvisarUIMOSTRAR BOTON
                 break;
       
-                //StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
-                //List<GameObject> li = GameManagerArena.Instance.getEnemics();
-                //foreach (GameObject go in li)
-                //{
-                //    Debug.Log("ENEMIC: "+ go.GetComponent<EnemyArena>().name);
-                //    Debug.Log("ENEMIC SELECCIONAT?: " + go.GetComponent<EnemyArena>().selected);
-                //    if (go.GetComponent<EnemyArena>().selected)
-                //    {
-                //        ChangeState(PlayerAnimations.ATTACK);
-                //        Debug.Log("VIDA ANTES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
-                //        go.GetComponent<EnemyArena>().RebreMal(ataqueBasico);
-                //        Debug.Log("ATACO A"+go.name);
-                //        Debug.Log("VIDA DESPUES DEL ATAQUE: " + go.GetComponent<EnemyArena>().hp);
-                //    }
-                //    else
-                //    {
-                //        textoTarget.text = "HAS DE SELECCIONAR UN ENEMIC";
-                //        ChangeState(CombatStates.SELECT_ACTION);
-                //    }
-                //}
             case CombatStates.SELECT_MAGIC:
                 OnMostrarMagia?.Invoke(atacsBase);
                 OnDeshabilitarAccions?.Invoke();
@@ -219,6 +190,25 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 OnDeshabilitarAccions.Invoke();
                 break;
         }
+    }
+
+    private void ProcessarEstat()
+    {
+        //DARLE A UNA VUELTA POR SI HACEMOS QUE LA VIDA SEA NEGATIVA EN CASO DE QUE QUITE VIDA.
+        if (estado != null)
+        {
+            this.hp -= estado.Hp;
+            this.def += estado.ModDef;
+            this.damageAtk += estado.ModAtk;
+            this.spd += estado.ModSpd;
+            estado.Torns--;
+            if (estado.Torns <= 0)
+            {
+                Debug.Log($"L'estat {estado.Nom} ha finalitzat");
+                estado = null;
+            }
+           
+        } 
     }
 
     private void AtacAcabat()
