@@ -240,6 +240,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 //GameManager.Instance.OnSeleccionarTarget += TargetSeleccionat;
+                OnDeshabilitarAccions.Invoke();
                 break;
         }
     }
