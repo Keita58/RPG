@@ -35,7 +35,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     EstadosAlterados estado;
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
-    EnemyArena target;
+    GameObject target;
     public event Action onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
@@ -47,7 +47,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
-        StartCoroutine(EsperarIActuar(1, IniciarTorn));
+        //StartCoroutine(EsperarIActuar(1, IniciarTorn));
     }
 
     public void Iniciar(PlayerSO player)
@@ -230,6 +230,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             case CombatStates.ACTION_MAGIC:
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
+                target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat);
                 StartCoroutine(EsperarIActuar(1, () => AtacAcabat()));
                 break;
             case CombatStates.ACTION_OBJECTS:
@@ -239,7 +240,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
-                //GameManager.Instance.OnSeleccionarTarget += TargetSeleccionat;
+                GameManagerArena.Instance.OnSeleccionarTarget += TargetSeleccionat;
                 OnDeshabilitarAccions.Invoke();
                 break;
         }
@@ -400,9 +401,9 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
-    private void TargetSeleccionat(EnemyArena target)
+    private void TargetSeleccionat(GameObject target)
     {
-        //GameManager.Instance.OnSeleccionarTarget -= TargetSeleccionat;
+        GameManagerArena.Instance.OnSeleccionarTarget -= TargetSeleccionat;
         this.target = target;
         //guardar target   
         ChangeState(CombatStates.ACTION_MAGIC);
