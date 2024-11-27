@@ -96,7 +96,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!this.selected)
+        if (!this.selected && _Jugador.GetComponent<PlayerCombat>().entroSeleccionado)
         {   
             this.selected = true;
             Seleccionat.SetActive(true);

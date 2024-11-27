@@ -32,7 +32,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int def;
     int damageAtk;
     int spd;
-    bool entroSeleccionado { get; set; }
+    public bool entroSeleccionado { get; private set; }
     EstadosAlterados estado;
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
