@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandler
 {
+    [SerializeField] HealthBar vidaPantalla;
     private AtacSO escollit;
     private Animator animator;
     private EnemySO EnemySO;
@@ -36,6 +37,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         this.spd = this.EnemySO.spd;
         this.mana = this.EnemySO.mana;
         this.animator.runtimeAnimatorController = this.EnemySO.animator;
+        vidaPantalla.IniciarBarra(this.hp);
     }
 
     public void EscollirAtac()
@@ -58,7 +60,10 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
     private void OnMouseDown()
     {
         if(!this.selected)
+        {
             this.selected = true;
+    
+        }
         GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
     }
 
@@ -67,13 +72,16 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         if (atac.mal > this.def)
         {
             StartCoroutine(AnimacioMal());
+            Debug.Log("Vida abans mal: " + this.hp);
             this.hp -= atac.mal - this.def;
+            Debug.Log("Vida després mal: " + this.hp);
             if (atac.estat != null)
                 this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+            vidaPantalla.UpdateHealth(atac.mal);
         }
         if (this.hp <= 0)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 

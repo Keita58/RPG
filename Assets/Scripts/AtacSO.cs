@@ -8,6 +8,7 @@ public class AtacSO : ScriptableObject
         FOC,
         AIGUA,
         LLUM,
+        NEUTRE
     }
 
     public string nom;

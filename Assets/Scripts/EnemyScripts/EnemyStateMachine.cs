@@ -1,39 +1,42 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStateMachine : MonoBehaviour
 {
-    [SerializeField] private EnemySO _enemySO;
+    [SerializeField] public EnemySO _enemySO;
     private Animator _animator;
- //    [SerializeField] private Hitbox hitbox;
- //   [SerializeField] private RangeDetection _rangPerseguir;
- //   [SerializeField] private RangeDetection _rangAtac;
-   // [SerializeField] private UnityEngine.UI.Slider slider;
+    //    [SerializeField] private Hitbox hitbox;
+    //   [SerializeField] private RangeDetection _rangPerseguir;
+    //   [SerializeField] private RangeDetection _rangAtac;
+    // [SerializeField] private UnityEngine.UI.Slider slider;
 
     void OnEnable()
     {
-  //     this.slider.maxValue = this._enemySO.hp;
-    //    this.slider.value = _enemySO.hp;
-         this.cooldown = false;
-         this.ChangeState(SkeletonStates.IDLE);
-        _animator = GetComponent<Animator>();
-         _animator.runtimeAnimatorController = _enemySO.animator;
-         this._hp = _enemySO.hp;
-  //       this._rangAtac.GetComponent<CircleCollider2D>().radius = this._enemySO.rangeAttack;
-  //       _rangPerseguir.OnEnter += PerseguirDetected;
-  //       _rangPerseguir.OnStay += PerseguirDetected;
-  //       _rangPerseguir.OnExit += PerseguirUndetected;
-  //       _rangAtac.OnEnter += AtacarDetected;
-  //       _rangAtac.OnStay += AtacarDetected;
-  //       _rangAtac.OnExit += AtacarUndetected;
-  //       StartCoroutine(patrullar());
-       // StartCoroutine(mirarPersonaje());
+        //     this.slider.maxValue = this._enemySO.hp;
+        //    this.slider.value = _enemySO.hp;
+        this.ChangeState(SkeletonStates.IDLE);
+        this.cooldown = false;
+
+        //       this._rangAtac.GetComponent<CircleCollider2D>().radius = this._enemySO.rangeAttack;
+        //       _rangPerseguir.OnEnter += PerseguirDetected;
+        //       _rangPerseguir.OnStay += PerseguirDetected;
+        //       _rangPerseguir.OnExit += PerseguirUndetected;
+        //       _rangAtac.OnEnter += AtacarDetected;
+        //       _rangAtac.OnStay += AtacarDetected;
+        //       _rangAtac.OnExit += AtacarUndetected;
+        //       StartCoroutine(patrullar());
+        // StartCoroutine(mirarPersonaje());
     }
     private void Awake()
     {
+        this._enemySO.EstadosAlterados = new EstadosAlterados("",false,0,0,0,0,0);
+        this._hp = _enemySO.hp;
+        _animator = GetComponent<Animator>();
+        _animator.runtimeAnimatorController = _enemySO.animator;
         StartCoroutine(mirarPersonaje());
     }
 
@@ -49,18 +52,42 @@ public class EnemyStateMachine : MonoBehaviour
         while (true)
         {
             RaycastHit2D a = Physics2D.BoxCast(this.transform.position + transform.right * 2.5f, new Vector2(5, 5), 0, Vector2.right, 5);
-            if (a != false) { 
-            if (a.collider.gameObject.tag == "Player")
+            if (a != false)
             {
-                this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
+                if (a.collider.gameObject.tag == "Player")
+                {
+                    if (this.transform.eulerAngles == Vector3.zero)
+                    {
+                        if (a.point.x < a.centroid.x - 1.5f && (a.point.y >= a.centroid.y - 0.50 && a.point.y <= a.centroid.y + 0.50))
+                        {
+                            ChangeState(SkeletonStates.ATTACK);
+                        }
+                        else
+                        {
+                            this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
+                        }
+                    }
+                    else if (this.transform.eulerAngles != Vector3.zero)
+                    {
+                        if (a.point.x > a.centroid.x + 1.5f && (a.point.y >= a.centroid.y - 0.50 && a.point.y <= a.centroid.y + 0.50))
+                        {
+                            ChangeState(SkeletonStates.ATTACK);
+                        }
+                        else
+                        {
+                            this.GetComponent<Rigidbody2D>().velocity = (a.collider.gameObject.transform.position - this.transform.position).normalized;
+                        }
+                    }
+
+                }
             }
-            }
-            else{
+            else
+            {
                 this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
             yield return new WaitForSeconds(0.5f);
         }
-    } 
+    }
 
     private void Start()
     {
@@ -90,15 +117,16 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
             case SkeletonStates.MOVE:
                 _animator.Play(_enemySO.clipMove.name);
+
                 break;
 
             case SkeletonStates.ATTACK:
                 _animator.Play(_enemySO.clipAttack.name);
-             //   hitbox.Damage = _enemySO.dmg;
+                //   hitbox.Damage = _enemySO.dmg;
                 break;
             case SkeletonStates.ATTACK2:
                 _animator.Play(_enemySO.clipAttack2.name);
-             //   hitbox.Damage = _enemySO.dmg2;
+                //   hitbox.Damage = _enemySO.dmg2;
                 break;
             default:
                 break;
@@ -195,11 +223,11 @@ public class EnemyStateMachine : MonoBehaviour
     public void ReceiveDamage(float damage)
     {
         this._hp -= damage;
-      //  this.slider.value = _hp;
+        //  this.slider.value = _hp;
         StartCoroutine(DamagedColor());
         if (this._hp <= 0)
         {
-           this.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
     }
     private void PerseguirDetected(GameObject personatge)
