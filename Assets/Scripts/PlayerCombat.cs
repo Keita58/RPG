@@ -117,35 +117,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
         playerBase.Lvl = this.lvl;
     }
 
-    //public void atacar1()
-    //{
-    //    onAttack.Invoke(atacs.ElementAt(0));
-    //    ChangeState(PlayerStates.ATTACK);
-    //    this.mana-=atacs.ElementAt(0).mana;
-
-    //}
-
-    //public void atacar2()
-    //{
-    //    onAttack.Invoke(atacs.ElementAt(1));
-    //    ChangeState(PlayerStates.ATTACK);
-    //    this.mana -= atacs.ElementAt(1).mana;
-    //}
-
-    //public void atacar3()
-    //{
-    //    onAttack.Invoke(atacs.ElementAt(2));
-    //    ChangeState(PlayerStates.ATTACK);
-    //    this.mana -= atacs.ElementAt(2).mana;
-    //}
-
-    //public void atacar4()
-    //{
-    //    onAttack.Invoke(atacs.ElementAt(3));
-    //    ChangeState(PlayerStates.ATTACK);
-    //    this.mana -= atacs.ElementAt(3).mana;
-    //}
-
 
     public void IniciarTorn()
     {
@@ -239,6 +210,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 break;
             case CombatStates.ACTION_RUN:
+                //AVISAR AL GAMEMANAGER PARA CANVIAR DE ESCENA.
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
@@ -316,7 +288,10 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case PlayerAnimations.ATTACK:
                 if (stateTime >= atacClip.length)
+                {
                     ChangeState(PlayerAnimations.IDLE);
+                    ChangeState(CombatStates.WAITING);
+                }
                 break;
             case PlayerAnimations.HURT:
                 if (stateTime >= hurtClip.length)
