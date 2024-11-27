@@ -32,7 +32,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int def;
     int damageAtk;
     int spd;
-    bool entroSeleccionado { get; set; }
+    public bool entroSeleccionado { get; set; }
     EstadosAlterados estado;
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
@@ -365,6 +365,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
+    //FUNCIO QUE ES CRIDA QUAN SE SELCCIONA UN BOTO D'ATAC.
     public void AccioHabilitat(AtacSO atac)
     {
 
@@ -382,6 +383,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
+    //FUNCIO QUE ES CRIDA QUAN EL GAMEMANAGER SELECCIONA UN TARGET
     private void TargetSeleccionat(GameObject target)
     {
         GameManagerArena.Instance.OnSeleccionarTarget -= TargetSeleccionat;
