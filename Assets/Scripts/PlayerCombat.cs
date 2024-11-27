@@ -120,7 +120,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     public void IniciarTorn()
     {
-        Assert.AreEqual(combatState, CombatStates.WAITING, $"{gameObject}: Iniciant torn quan no s'està esperant.");
+        Assert.AreEqual(combatState, CombatStates.WAITING, $"{gameObject}: Iniciant torn quan no s'estï¿½ esperant.");
         ChangeState(CombatStates.SELECT_ACTION);
     }
 
@@ -161,11 +161,11 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 OnOcultarAccions?.Invoke();
                 break;
             case CombatStates.SELECT_ACTION:
-                //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
+                //Si el enemigo empieza con ventaja. Incapacitat sempre serï¿½ true en aquest cas.
                 if (estado != null && estado.Nom == "Ventaja" && estado.Torns > 0)
                 {
                     estado.Torns--;
-                    //TODO: Mirar què passa
+                    //TODO: Mirar quï¿½ passa
                     ChangeState(CombatStates.WAITING);
                     break;
                 }
@@ -228,7 +228,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     private void ExitState(CombatStates currentState)
     {
-        Assert.AreEqual(combatState, currentState, $"{gameObject}: Estàs cridant un sortir d'estat quan no estàs a aquest estat");
+        Assert.AreEqual(combatState, currentState, $"{gameObject}: Estï¿½s cridant un sortir d'estat quan no estï¿½s a aquest estat");
         switch (currentState)
         {
             case CombatStates.WAITING:
@@ -330,7 +330,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     internal void AccioAtacar()
     {
 
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció atack quan no s'està esperant una selecció.");
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acciï¿½ atack quan no s'estï¿½ esperant una selecciï¿½.");
         this.atacSeleccionat = ataqueBasico;
         ChangeState(CombatStates.SELECCIONAR_TARGET);
        
@@ -338,19 +338,19 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     internal void AccioSeleccionarMagia()
     {
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció magia quan no s'està esperant una selecció.");
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acciï¿½ magia quan no s'estï¿½ esperant una selecciï¿½.");
         ChangeState(CombatStates.SELECT_MAGIC);
     } 
 
     internal void AccioObjecte()
     {
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció objecte quan no s'està esperant una selecció.");
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acciï¿½ objecte quan no s'estï¿½ esperant una selecciï¿½.");
         ChangeState(CombatStates.ACTION_OBJECTS);
     }
 
     internal void AccioFugir()
     {
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acció fugir quan no s'està esperant una selecció.");
+        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acciï¿½ fugir quan no s'estï¿½ esperant una selecciï¿½.");
         ChangeState(CombatStates.ACTION_RUN);
     }
 
@@ -365,6 +365,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
+    //FUNCIO QUE ES CRIDA QUAN SE SELCCIONA UN BOTO D'ATAC.
     public void AccioHabilitat(AtacSO atac)
     {
 
@@ -382,6 +383,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
+    //FUNCIO QUE ES CRIDA QUAN EL GAMEMANAGER SELECCIONA UN TARGET
     private void TargetSeleccionat(GameObject target)
     {
         GameManagerArena.Instance.OnSeleccionarTarget -= TargetSeleccionat;

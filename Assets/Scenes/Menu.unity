@@ -1281,6 +1281,9 @@ MonoBehaviour:
   stateTime: 0
   atacsBase:
   - {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
+  - {fileID: 11400000, guid: 31305168ec972d941b31b41644f547f0, type: 2}
+  - {fileID: 11400000, guid: 72aa7ba4577edc94abdd98eeed2b6474, type: 2}
+  - {fileID: 11400000, guid: e9f3d78870a9cf94bb54404d8df0fc7a, type: 2}
 --- !u!1 &1047797855
 GameObject:
   m_ObjectHideFlags: 0
