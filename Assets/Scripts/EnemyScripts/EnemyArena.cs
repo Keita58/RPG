@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandler
 {
     [SerializeField] HealthBar vidaPantalla;
+    [SerializeField] public GameObject Seleccionat { get; set; }
     private AtacSO escollit;
     private Animator animator;
     private EnemySO EnemySO;
@@ -57,16 +58,6 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         atacar.Invoke(at);
     }
 
-    private void OnMouseDown()
-    {
-        if(!this.selected)
-        {
-            this.selected = true;
-    
-        }
-        GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
-    }
-
     public void RebreMal(AtacSO atac)
     {
         if (atac.mal > this.def)
@@ -100,7 +91,10 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!this.selected)
+        {
             this.selected = true;
+            Seleccionat.SetActive(true);
+        }
         GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
     }
 }

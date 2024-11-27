@@ -1704,7 +1704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a905f4028c080ff479da40c04ba7e251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Jugador: {fileID: 0}
+  _Jugador: {fileID: 109242324}
   _JugadorSO: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
   _Enemics:
   - {fileID: 11400000, guid: 33e30cc5148300a4ca0e2b365718757a, type: 2}

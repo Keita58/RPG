@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class GameManagerArena : MonoBehaviour
     [SerializeField] EnemySO _EnemicPrincipal; // Enemic que hem trobat al OW
     private LinkedList<GameObject> PilaEnemics = new LinkedList<GameObject>();
     private GameObject enemicSeleccionat;
+    public event Action<GameObject> OnSeleccionarTarget;
 
     public static GameManagerArena Instance { get; private set; }
 
@@ -33,7 +35,7 @@ public class GameManagerArena : MonoBehaviour
         switch (scene.name)
         {
             case "Arena":
-                int numEnemics = Random.Range(1, _OrdreAtac.Count);
+                int numEnemics = UnityEngine.Random.Range(1, _OrdreAtac.Count);
 
                 _OrdreAtac[0].gameObject.SetActive(true);
                 _OrdreAtac[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
@@ -42,7 +44,7 @@ public class GameManagerArena : MonoBehaviour
                 for (int i = 1; i < numEnemics; i++)
                 {
                     _OrdreAtac[i].gameObject.SetActive(true);
-                    _OrdreAtac[i].GetComponent<EnemyArena>().Iniciar(_Enemics[Random.Range(0, _Enemics.Count)]);
+                    _OrdreAtac[i].GetComponent<EnemyArena>().Iniciar(_Enemics[UnityEngine.Random.Range(0, _Enemics.Count)]);
                     _OrdreAtac[i].transform.Rotate(0, 180, 0);
                 }
 
@@ -122,7 +124,12 @@ public class GameManagerArena : MonoBehaviour
         {
             if (GO != go)
             {
+                go.GetComponent<EnemyArena>().Seleccionat.SetActive(false);
                 go.GetComponent<EnemyArena>().selected = false;
+            }
+            else
+            {
+                OnSeleccionarTarget.Invoke(go);
             }
         }
     }
