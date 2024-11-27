@@ -48,8 +48,12 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
             at = atk[UnityEngine.Random.Range(0, atk.Length)];
             if (at.mana < this.mana)
             {
-                this.mana-=at.mana;
+                this.mana -= at.mana;
                 sortir = true;
+            }
+            else
+            {
+                break;
             }
         }
         this.escollit = at;
@@ -58,10 +62,10 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable
 
     private void OnMouseDown()
     {
-        if(!this.selected)
+        if (!this.selected)
         {
             this.selected = true;
-    
+
         }
         GameManagerArena.Instance.CanviaEnemicSelected(gameObject);
     }
