@@ -546,6 +546,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6580230688127747332, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
+      propertyPath: _Jugador
+      value: 
+      objectReference: {fileID: 109242324}
     - target: {fileID: 9038106469137289281, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
       propertyPath: m_Name
       value: Enemic 2
@@ -2159,6 +2163,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6580230688127747332, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
+      propertyPath: _Jugador
+      value: 
+      objectReference: {fileID: 109242324}
     - target: {fileID: 9038106469137289281, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
       propertyPath: m_Name
       value: Enemic 3
@@ -2645,6 +2653,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6580230688127747332, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
+      propertyPath: _Jugador
+      value: 
+      objectReference: {fileID: 109242324}
     - target: {fileID: 9038106469137289281, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
       propertyPath: m_Name
       value: Enemic 4
@@ -3611,6 +3623,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6580230688127747332, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
+      propertyPath: _Jugador
+      value: 
+      objectReference: {fileID: 109242324}
     - target: {fileID: 9038106469137289281, guid: 779b9d3c3f3d48141b01932a943b6a73, type: 3}
       propertyPath: m_Name
       value: Enemic 1

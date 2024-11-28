@@ -55,6 +55,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         AtacSO at = null;
         while (!sortir)
         {
+            print("Sigo dentro");
             at = atk[UnityEngine.Random.Range(0, atk.Length)];
             if (at.mana < this.mana)
             {
@@ -66,19 +67,17 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
                 break;
             }
         }
+        print("He salido, no teneis razon");
         this.escollit = at;
-<<<<<<< HEAD
         _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
-=======
-        atacar.Invoke(at);
         ProcessarEstadoAlterado(at);
->>>>>>> origin/hector
-        //HACER AQUI LO DE LOS ESTADOS ALTERADOS?
+        GameManagerArena.Instance.BucleJoc();
+
     }
 
     public void ProcessarEstadoAlterado(AtacSO at)
     {
-        if (estadosAlterados == null)
+        if (estadosAlterados != null)
         {
             this.hp -= estadosAlterados.Hp;
             this.def += estadosAlterados.ModDef;

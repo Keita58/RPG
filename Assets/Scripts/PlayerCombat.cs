@@ -66,7 +66,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         if (this.hp <= 0)
         {
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            onMuerto.Invoke();
+            onMuerto?.Invoke();
         }
 
         if (atac.mal > def)
