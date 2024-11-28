@@ -20,7 +20,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
     public event Action<AtacSO> onDamaged;
     public event Action<AtacSO> atacar;
     EstadosAlterados estadosAlterados;
-    GameObject _Jugador;
+    [SerializeField] private GameObject _Jugador;
 
     public AtacSO atac { set => value = escollit; }
 
@@ -61,7 +61,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
             }
         }
         this.escollit = at;
-        atacar.Invoke(at);
+        _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
         //HACER AQUI LO DE LOS ESTADOS ALTERADOS?
     }
 
