@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -113,10 +112,10 @@ public class GameManagerArena : MonoBehaviour
         }
     }
 
-    private void OnSceneUnloaded()
+    private void OnSceneUnloaded(Scene scene)
     {
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
-        SceneManager.LoadScene(SceneManager.GetSceneByName("Overworld").name);
+        SceneManager.LoadScene();
     }
 
     public GameObject getJugador()
