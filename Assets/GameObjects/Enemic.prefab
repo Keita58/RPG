@@ -393,6 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaPantalla: {fileID: 8100486384434202361}
+  Seleccionat: {fileID: 3564343017623888165}
 --- !u!95 &4766857218217781855
 Animator:
   serializedVersion: 7

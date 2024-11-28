@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandler
 {
     [SerializeField] HealthBar vidaPantalla;
-    [SerializeField] public GameObject Seleccionat { get; set; }
+    public GameObject Seleccionat;
     private AtacSO escollit;
     private Animator animator;
     private EnemySO EnemySO;
@@ -20,11 +20,13 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
     public event Action<AtacSO> onDamaged;
     public event Action<AtacSO> atacar;
     EstadosAlterados estadosAlterados;
+    [SerializeField] private GameObject _Jugador;
 
     public AtacSO atac { set => value = escollit; }
 
     private void Awake()
     {
+        _Jugador = GameManagerArena.Instance.getJugador();
         animator = GetComponent<Animator>();
     }
 
@@ -47,28 +49,35 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         {
             estadosAlterados.Torns--;
             GameManagerArena.Instance.BucleJoc();
-            //TODO: Mirar què passa
+            //TODO: Mirar quï¿½ passa
         }
         bool sortir = false;
         AtacSO at = null;
         while (!sortir)
         {
+            print("Sigo dentro");
             at = atk[UnityEngine.Random.Range(0, atk.Length)];
             if (at.mana < this.mana)
             {
-                this.mana-=at.mana;
+                this.mana -= at.mana;
                 sortir = true;
             }
+            else
+            {
+                break;
+            }
         }
+        print("He salido, no teneis razon");
         this.escollit = at;
-        atacar.Invoke(at);
+        _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
         ProcessarEstadoAlterado(at);
-        //HACER AQUI LO DE LOS ESTADOS ALTERADOS?
+        GameManagerArena.Instance.BucleJoc();
+
     }
 
     public void ProcessarEstadoAlterado(AtacSO at)
     {
-        if (estadosAlterados == null)
+        if (estadosAlterados != null)
         {
             this.hp -= estadosAlterados.Hp;
             this.def += estadosAlterados.ModDef;
@@ -90,7 +99,7 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
             StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
             this.hp -= atac.mal - this.def;
-            Debug.Log("Vida després mal: " + this.hp);
+            Debug.Log("Vida desprï¿½s mal: " + this.hp);
             if (atac.estat != null)
                 this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
             vidaPantalla.UpdateHealth(atac.mal);
@@ -115,8 +124,8 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!this.selected)
-        {
+        if (!this.selected && _Jugador.GetComponent<PlayerCombat>().entroSeleccionado)
+        {   
             this.selected = true;
             Seleccionat.SetActive(true);
         }
