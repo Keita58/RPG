@@ -148,7 +148,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         switch (combatState)
         {
             case CombatStates.WAITING:
-                //GameManagerArena.Instance.BucleJoc();
+                GameManagerArena.Instance.BucleJoc();
                 Debug.Log("He acabat el torn");
                 OnOcultarAccions?.Invoke();
                 break;
