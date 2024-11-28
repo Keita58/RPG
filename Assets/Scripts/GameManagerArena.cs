@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -91,7 +92,7 @@ public class GameManagerArena : MonoBehaviour
         }
 
         if (PilaEnemics.Count == 1 && PilaEnemics.First.Value == _Jugador)
-            OnSceneUnloaded(SceneManager.GetSceneByName("Overworld"));
+            OnSceneUnloaded();
         else
         {
             Debug.Log("Canvi de torn");
@@ -112,10 +113,10 @@ public class GameManagerArena : MonoBehaviour
         }
     }
 
-    private void OnSceneUnloaded(Scene scene)
+    private void OnSceneUnloaded()
     {
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
-        SceneManager.LoadScene(scene.name);
+        SceneManager.LoadScene(SceneManager.GetSceneByName("Overworld").name);
     }
 
     public GameObject getJugador()
