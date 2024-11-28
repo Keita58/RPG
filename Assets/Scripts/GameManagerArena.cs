@@ -91,7 +91,7 @@ public class GameManagerArena : MonoBehaviour
         }
 
         if (PilaEnemics.Count == 1 && PilaEnemics.First.Value == _Jugador)
-            OnSceneUnloaded();
+            OnSceneUnloaded(SceneManager.GetSceneByName("Overworld"));
         else
         {
             Debug.Log("Canvi de torn");
@@ -115,7 +115,7 @@ public class GameManagerArena : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
-        SceneManager.LoadScene();
+        SceneManager.LoadScene(scene.name);
     }
 
     public GameObject getJugador()
