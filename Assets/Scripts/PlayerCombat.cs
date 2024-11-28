@@ -127,6 +127,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     {
         ProcessarEstat();
         GameManagerArena.Instance.BucleJoc();
+        Debug.Log("He acabat el torn");
     }
 
     IEnumerator EsperarIActuar(float tempsDespera, Action accio)
@@ -136,9 +137,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
     }
 
     //FSM COMBAT
+    #region FSM
     private void ChangeState(CombatStates newstate)
     {
+        Debug.Log($"---------------------- Sortint de {combatState} a {newstate} ------------------------");
         ExitState(combatState);
+
+        Debug.Log($"---------------------- Entrant a {newstate} ------------------------");
         InitState(newstate);
     }
 
@@ -148,8 +153,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
         switch (combatState)
         {
             case CombatStates.WAITING:
-                GameManagerArena.Instance.BucleJoc();
-                Debug.Log("He acabat el torn");
                 OnOcultarAccions?.Invoke();
                 break;
             case CombatStates.SELECT_ACTION:
@@ -175,7 +178,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat);
-                StartCoroutine(EsperarIActuar(1, () => AtacAcabat()));
                 break;
             case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
@@ -190,30 +192,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 OnDeshabilitarAccions.Invoke();
                 break;
         }
-    }
-
-    private void ProcessarEstat()
-    {
-        //DARLE A UNA VUELTA POR SI HACEMOS QUE LA VIDA SEA NEGATIVA EN CASO DE QUE QUITE VIDA.
-        if (estado != null)
-        {
-            this.hp -= estado.Hp;
-            this.def += estado.ModDef;
-            this.damageAtk += estado.ModAtk;
-            this.spd += estado.ModSpd;
-            estado.Torns--;
-            if (estado.Torns <= 0)
-            {
-                Debug.Log($"L'estat {estado.Nom} ha finalitzat");
-                estado = null;
-            }
-           
-        } 
-    }
-
-    private void AtacAcabat()
-    {
-        ChangeState(CombatStates.WAITING);
     }
 
     private void ExitState(CombatStates currentState)
@@ -234,12 +212,40 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 AcabarTorn();
                 break;
             case CombatStates.SELECCIONAR_TARGET:
-                entroSeleccionado=false;
+                entroSeleccionado = false;
                 break;
 
-     
+
         }
     }
+
+    #endregion
+    private void ProcessarEstat()
+    {
+        //DARLE A UNA VUELTA POR SI HACEMOS QUE LA VIDA SEA NEGATIVA EN CASO DE QUE QUITE VIDA.
+        if (estado != null)
+        {
+            this.hp -= estado.Hp;
+            this.def += estado.ModDef;
+            this.damageAtk += estado.ModAtk;
+            this.spd += estado.ModSpd;
+            estado.Torns--;
+            if (estado.Torns <= 0)
+            {
+                Debug.Log($"L'estat {estado.Nom} ha finalitzat");
+                estado = null;
+            }
+           
+        } 
+    }
+
+    public void AtacAcabat()
+    {
+        Debug.Log("Canviat a waiting després d'atacar");
+        ChangeState(CombatStates.WAITING);
+    }
+
+    
 
     //FSM ANIMACIONS
     private void ChangeState(PlayerAnimations newstate)
@@ -259,33 +265,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case PlayerAnimations.ATTACK:
                 animator.Play("atac2");
+                StartCoroutine(EsperarIActuar(atacClip.length, () => ChangeState(PlayerAnimations.IDLE)));
                 break;
             case PlayerAnimations.HURT:
                 animator.Play("Hurt");
+                StartCoroutine(EsperarIActuar(hurtClip.length, () => ChangeState(PlayerAnimations.IDLE)));
                 break;
             default:
-                break;
-        }
-    }
-
-    private void UpdateState()
-    {
-        stateTime += Time.deltaTime;
-
-        switch (actualState)
-        {
-            case PlayerAnimations.IDLE:
-                break;
-            case PlayerAnimations.ATTACK:
-                if (stateTime >= atacClip.length)
-                {
-                    ChangeState(PlayerAnimations.IDLE);
-                    ChangeState(CombatStates.WAITING);
-                }
-                break;
-            case PlayerAnimations.HURT:
-                if (stateTime >= hurtClip.length)
-                    ChangeState(PlayerAnimations.IDLE);
                 break;
         }
     }
@@ -309,11 +295,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
     {
         IniState(PlayerAnimations.IDLE);
         Iniciar(playerBase);
-    }
-
-    private void Update()
-    {
-        UpdateState();
     }
 
     //Accions Menu

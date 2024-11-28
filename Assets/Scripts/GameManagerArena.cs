@@ -69,42 +69,46 @@ public class GameManagerArena : MonoBehaviour
     public void BucleJoc()
     {
         print(PilaEnemics);
-        for (int i = 0; i < PilaEnemics.Count; i++) 
-        {
-            if (PilaEnemics.ElementAt(i).TryGetComponent<EnemyArena>(out EnemyArena e))
-            {
-                if (e.hp <= 0)
-                {
-                    PilaEnemics.Remove(PilaEnemics.ElementAt(i));
-                }
-            }
-        }
-        //for(var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next) 
+        //for (int i = 0; i < PilaEnemics.Count; i++) 
         //{
-        //    if(nodeActual.Value.TryGetComponent<EnemyArena>(out EnemyArena e))
+        //    if (PilaEnemics.ElementAt(i).TryGetComponent<EnemyArena>(out EnemyArena e))
         //    {
-        //        if(e.hp <= 0)
+        //        if (e.hp <= 0)
         //        {
-        //            PilaEnemics.Remove(nodeActual);
+        //            PilaEnemics.Remove(PilaEnemics.ElementAt(i));
         //        }
         //    }
         //}
+        for (var nodeActual = PilaEnemics.First; nodeActual != null; nodeActual = nodeActual.Next)
+        {
+            if (nodeActual.Value.TryGetComponent<EnemyArena>(out EnemyArena e))
+            {
+                if (e.hp <= 0)
+                {
+                    PilaEnemics.Remove(nodeActual);
+                }
+            }
+        }
 
         if (PilaEnemics.Count == 1 && PilaEnemics.First.Value == _Jugador)
             OnSceneUnloaded(SceneManager.GetSceneByName("Overworld"));
         else
         {
+            Debug.Log("Canvi de torn");
             GameObject aux = PilaEnemics.First.Value;
+            PilaEnemics.RemoveFirst();
+            PilaEnemics.AddLast(aux);
+            print("AUX: " + aux);
             if(aux.TryGetComponent<PlayerCombat>(out PlayerCombat p))
             {
+                Debug.Log("Canvi de torn Jugador");
                 p.IniciarTorn();
             }
             else if(aux.TryGetComponent<EnemyArena>(out EnemyArena e))
             {
+                Debug.Log("Canvi de torn Enemic");
                 e.EscollirAtac();
             }
-            PilaEnemics.RemoveFirst();
-            PilaEnemics.AddLast(aux);
         }
     }
 
