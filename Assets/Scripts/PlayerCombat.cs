@@ -63,21 +63,24 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     public void RebreMal(AtacSO atac)
     {
-        if (this.hp <= 0)
-        {
-            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            onMuerto?.Invoke();
-        }
+        Debug.Log($"VIDA ABANS ATAC{this.hp}");
+      
 
         if (atac.mal > def)
         {
             int hprestat = atac.mal - def;
             hp -= hprestat;
+            Debug.Log($"VIDA DESPRÉS ATAC{this.hp}");
         }
 
         if (atac.estat != null && estado==null)
         {
             estado.IniciarEstadoAlterado(atac.estat);
+        }
+        if (this.hp <= 0)
+        {
+            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
+            onMuerto?.Invoke();
         }
     }
 
