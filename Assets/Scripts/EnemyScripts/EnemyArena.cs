@@ -43,6 +43,12 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
 
     public void EscollirAtac()
     {
+        if (estadosAlterados != null && estadosAlterados.Incapacitat && estadosAlterados.Torns > 0)
+        {
+            estadosAlterados.Torns--;
+            GameManagerArena.Instance.BucleJoc();
+            //TODO: Mirar què passa
+        }
         bool sortir = false;
         AtacSO at = null;
         while (!sortir)
@@ -56,7 +62,25 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         }
         this.escollit = at;
         atacar.Invoke(at);
+        ProcessarEstadoAlterado(at);
         //HACER AQUI LO DE LOS ESTADOS ALTERADOS?
+    }
+
+    public void ProcessarEstadoAlterado(AtacSO at)
+    {
+        if (estadosAlterados == null)
+        {
+            this.hp -= estadosAlterados.Hp;
+            this.def += estadosAlterados.ModDef;
+            this.spd += estadosAlterados.ModSpd;
+            at.mal += estadosAlterados.ModAtk;
+            estadosAlterados.Torns--;
+            if (estadosAlterados.Torns <= 0)
+            {
+                Debug.Log($"L'estat {estadosAlterados.Nom} ha finalitzat");
+                estadosAlterados = null;
+            }
+        }
     }
 
     public void RebreMal(AtacSO atac)
