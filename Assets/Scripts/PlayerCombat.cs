@@ -148,9 +148,9 @@ public class PlayerCombat : MonoBehaviour, Tornable
         switch (combatState)
         {
             case CombatStates.WAITING:
+                OnOcultarAccions?.Invoke();
                 GameManagerArena.Instance.BucleJoc();
                 Debug.Log("He acabat el torn");
-                OnOcultarAccions?.Invoke();
                 break;
             case CombatStates.SELECT_ACTION:
                 //Si el enemigo empieza con ventaja. Incapacitat sempre serà true en aquest cas.
@@ -175,7 +175,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat);
-                StartCoroutine(EsperarIActuar(1, () => AtacAcabat()));
                 break;
             case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
@@ -280,7 +279,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 if (stateTime >= atacClip.length)
                 {
                     ChangeState(PlayerAnimations.IDLE);
-                    ChangeState(CombatStates.WAITING);
                 }
                 break;
             case PlayerAnimations.HURT:
