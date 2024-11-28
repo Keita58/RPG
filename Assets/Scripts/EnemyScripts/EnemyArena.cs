@@ -68,13 +68,23 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
             }
         }
         print("He salido, no teneis razon");
-        this.escollit = at;
-        _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
-        ProcessarEstadoAlterado(at);
-        GameManagerArena.Instance.BucleJoc();
+        this.animator.Play(EnemySO.clipAttack.name);
 
+        StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length,
+            () =>
+            {
+                this.animator.Play(EnemySO.clipIdle.name);
+                this.escollit = at;
+                _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
+                ProcessarEstadoAlterado(at);
+                GameManagerArena.Instance.BucleJoc();
+            }));
     }
-
+    IEnumerator EsperarIActuar(float tempsDespera, Action accio)
+    {
+        yield return new WaitForSeconds(tempsDespera);
+        accio();
+    }
     public void ProcessarEstadoAlterado(AtacSO at)
     {
         if (estadosAlterados != null)
