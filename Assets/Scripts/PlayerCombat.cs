@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -81,6 +82,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         if (this.hp <= 0)
         {
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
+            print(SceneManager.GetSceneByName("Overworld").IsUnityNull());
             onMuerto?.Invoke(SceneManager.GetSceneByName("Overworld"));
         }
     }

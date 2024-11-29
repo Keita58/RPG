@@ -115,6 +115,7 @@ public class GameManagerArena : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
+        print(scene.name);
         SceneManager.LoadScene(scene.name);
     }
 
