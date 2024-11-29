@@ -47,6 +47,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public event Action OnOcultarMagia;
     public event Action OnDeshabilitarAccions;
     public event Action OnEntrarSeleccionarTarget;
+    public event Action OnFugir;
 
     private void Awake()
     {
@@ -192,7 +193,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_RUN:
                 //AVISAR AL GAMEMANAGER PARA CANVIAR DE ESCENA.
-                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                StartCoroutine(EsperarIActuar(0, () => OnFugir?.Invoke()));
+                ChangeState(CombatStates.WAITING);
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 entroSeleccionado = true;
