@@ -26,7 +26,7 @@ public class GameManagerArena : MonoBehaviour
     private void Start()
     {
         _Jugador.GetComponent<PlayerCombat>().onMuerto += PlayerMort;
-        _Jugador.GetComponent<PlayerCombat>().OnFugir += PlayerFugir;
+        //_Jugador.GetComponent<PlayerCombat>().onFugir += PlayerFugir;
         int numEnemics = UnityEngine.Random.Range(1, _OrdreAtac.Count + 1);
         PilaEnemics = new List<GameObject>();
 
@@ -43,7 +43,7 @@ public class GameManagerArena : MonoBehaviour
             PilaEnemics.Add(_OrdreAtac[i]);
         }
 
-        //Això ordena la llista dels enemics per la seva velocitat (una passada)
+        //Aixï¿½ ordena la llista dels enemics per la seva velocitat (una passada)
         PilaEnemics = PilaEnemics.OrderByDescending(enemic => enemic.GetComponent<EnemyArena>().spd).ToList();
 
         for (int i = 0; i < PilaEnemics.Count; i++)

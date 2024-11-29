@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,7 +35,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int damageAtk;
     int spd;
     public bool entroSeleccionado { get; private set; }
-    EstadosAlterados estado;
+    EstadosAlterados estado=null;
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
     GameObject target;
@@ -63,13 +64,24 @@ public class PlayerCombat : MonoBehaviour, Tornable
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
         this.spd = playerBase.Spd;
+        Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {player.estadosAlterados.nom}");
+        if (player.estadosAlterados != null)
+        {
+            //this.estado=estado.IniciarEstadoAlterado(player.estadosAlterados);
+            this.estado = new EstadosAlterados(player.estadosAlterados.nom, player.estadosAlterados.incapacitat,player.estadosAlterados.torns, player.estadosAlterados.hp, player.estadosAlterados.modAtk, player.estadosAlterados.modDef, player.estadosAlterados.modSpd);
+
+        }
+        else
+        {
+            Debug.Log($"{gameObject}/{this}: ESTADO ALTERADO NULL: {player.estadosAlterados.nom}");
+
+        }
     }
 
     public void RebreMal(AtacSO atac)
     {
         Debug.Log($"VIDA ABANS ATAC{this.hp}");
-
-        ChangeState(PlayerAnimations.HURT);
+      
 
         if (atac.mal > def)
         {
@@ -170,8 +182,11 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 //Si el enemigo empieza con ventaja. Incapacitat sempre ser� true en aquest cas.
                 if (estado != null && estado.Incapacitat && estado.Torns > 0)
                 {
+                    Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {estado.Nom}");
                     estado.Torns--;
+                    playerBase.estadosAlterados = null;
                     //TODO: Mirar qu� passa
+                    StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
                     ChangeState(CombatStates.WAITING);
                     break;
                 }
@@ -302,6 +317,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
         }
     }
+
+    
 
     //Accions Menu
     internal void AccioAtacar()

@@ -33,7 +33,6 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void Awake()
     {
-        this._enemySO.EstadosAlterados = new EstadosAlterados("", false, 0, 0, 0, 0, 0);
         this._hp = _enemySO.hp;
         _animator = GetComponent<Animator>();
         _animator.runtimeAnimatorController = _enemySO.animator;
