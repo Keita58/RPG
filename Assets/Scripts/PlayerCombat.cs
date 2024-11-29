@@ -216,7 +216,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
-                EsperarIActuar(0, () => AcabarTorn());
+                StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 entroSeleccionado = false;
