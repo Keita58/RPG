@@ -38,7 +38,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
     GameObject target;
-    public event Action<Scene> onMuerto;
+    public event Action<string> onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
     public event Action OnOcultarAccions;
@@ -67,7 +67,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public void RebreMal(AtacSO atac)
     {
         Debug.Log($"VIDA ABANS ATAC{this.hp}");
-      
+
+        ChangeState(PlayerAnimations.HURT);
 
         if (atac.mal > def)
         {
@@ -83,7 +84,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         if (this.hp <= 0)
         {
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            onMuerto?.Invoke(SceneManager.GetSceneByName("Overworld"));
+            onMuerto?.Invoke("Overworld");
         }
     }
 
