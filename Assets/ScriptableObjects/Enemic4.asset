@@ -18,8 +18,8 @@ MonoBehaviour:
   atk:
   - {fileID: 11400000, guid: fea5e6efc0112034d80dfcc5531b0cbe, type: 2}
   mana: 0
-  animator: {fileID: 9100000, guid: 83687e23e4575f04180a605a9403097f, type: 2}
-  clipIdle: {fileID: 0}
-  clipMove: {fileID: 0}
-  clipAttack: {fileID: 0}
-  clipAttack2: {fileID: 0}
+  animator: {fileID: 9100000, guid: b18e9d1e1cd9136409faacf292aafe59, type: 2}
+  clipIdle: {fileID: 7400000, guid: 79596095d8baa174e966b52ce32cd75d, type: 2}
+  clipMove: {fileID: 7400000, guid: 9ad51f99eb8eefa4287a7c9b94f6d47d, type: 2}
+  clipAttack: {fileID: 7400000, guid: 6c4d12bdff9eb1d43adbd07e44c1f72d, type: 2}
+  clipAttack2: {fileID: 7400000, guid: 7c980514af8a38a47b44a17da342e577, type: 2}
