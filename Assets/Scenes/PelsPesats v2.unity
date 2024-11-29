@@ -902,7 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25621cc7c3389d249ad9ea252c135b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  estadoAlteradoSO: {fileID: 11400000, guid: 21b85b36563c1e84fbbcb8de3f04fffe, type: 2}
+  estadoAlteradoSO: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
 --- !u!1 &1110815635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25621cc7c3389d249ad9ea252c135b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  estadoAlteradoSO: {fileID: 11400000, guid: 21b85b36563c1e84fbbcb8de3f04fffe, type: 2}
+  estadoAlteradoSO: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
