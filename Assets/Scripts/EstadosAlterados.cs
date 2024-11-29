@@ -18,9 +18,9 @@ public class EstadosAlterados
     public int ModSpd { get => modSpd; set => modSpd = value; }
     public string Nom { get => nom; set => nom = value; }
 
-    public void IniciarEstadoAlterado(EstadoAlteradoSO estadoSo)
+    public EstadosAlterados IniciarEstadoAlterado(EstadoAlteradoSO estadoSo)
     {
-        EstadosAlterados estado = new EstadosAlterados(estadoSo.nom, estadoSo.incapacitat, estadoSo.torns, estadoSo.hp, estadoSo.modAtk, estadoSo.modDef, estadoSo.modDef);
+       return new EstadosAlterados(estadoSo.nom, estadoSo.incapacitat, estadoSo.torns, estadoSo.hp, estadoSo.modAtk, estadoSo.modDef, estadoSo.modDef);
     }
 
     public EstadosAlterados(string nom, bool incapacitat, int torns, int hp, int modAtk, int modDef, int modSpd)
