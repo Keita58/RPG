@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(Animator))]
@@ -37,7 +38,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
     GameObject target;
-    public event Action onMuerto;
+    public event Action<Scene> onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
     public event Action OnOcultarAccions;
@@ -65,21 +66,24 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
     public void RebreMal(AtacSO atac)
     {
-        if (this.hp <= 0)
-        {
-            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            onMuerto?.Invoke();
-        }
+        Debug.Log($"VIDA ABANS ATAC{this.hp}");
+      
 
         if (atac.mal > def)
         {
             int hprestat = atac.mal - def;
             hp -= hprestat;
+            Debug.Log($"VIDA DESPRÉS ATAC{this.hp}");
         }
 
         if (atac.estat != null && estado==null)
         {
             estado.IniciarEstadoAlterado(atac.estat);
+        }
+        if (this.hp <= 0)
+        {
+            //INVOKE GAME MANAGER CAMBIAR DE ESCENA
+            onMuerto?.Invoke(SceneManager.GetSceneByName("Overworld"));
         }
     }
 

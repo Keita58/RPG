@@ -27,7 +27,7 @@ public class GameManagerArena : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
 
-        //_Jugador.GetComponent<PlayerCombat>().onMuerto += OnSceneUnloaded;
+        _Jugador.GetComponent<PlayerCombat>().onMuerto += OnSceneUnloaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
