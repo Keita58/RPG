@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   incapacitat: 2
   torns: 2
-  hp: 0
+  hp: 5
   modAtk: 0
   modDef: 0
   modSpd: 0
-  nom: 
+  nom: Veneno

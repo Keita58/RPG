@@ -49,6 +49,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
+        IniState(PlayerAnimations.IDLE);
+        Iniciar(playerBase);
     }
 
     public void Iniciar(PlayerSO player)
@@ -209,7 +211,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
-                AcabarTorn();
+                EsperarIActuar(0, () => AcabarTorn());
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 entroSeleccionado = false;
@@ -289,12 +291,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
             default:
                 break;
         }
-    }
-
-    private void Start()
-    {
-        IniState(PlayerAnimations.IDLE);
-        Iniciar(playerBase);
     }
 
     //Accions Menu
