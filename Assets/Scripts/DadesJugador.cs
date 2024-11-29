@@ -10,4 +10,6 @@ public class DadesJugador
     public int Lvl;
     public int Def;
     public int Spd;
+    public float PosX;
+    public float PosY;
 }
