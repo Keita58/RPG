@@ -26,7 +26,7 @@ public class GameManagerArena : MonoBehaviour
     private void Start()
     {
         _Jugador.GetComponent<PlayerCombat>().onMuerto += PlayerMort;
-        _Jugador.GetComponent<PlayerCombat>().onFugir += PlayerFugir;
+        _Jugador.GetComponent<PlayerCombat>().OnFugir += PlayerFugir;
         int numEnemics = UnityEngine.Random.Range(1, _OrdreAtac.Count + 1);
         PilaEnemics = new List<GameObject>();
 
