@@ -39,7 +39,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
     GameObject target;
-    public event Action<Scene> onMuerto;
+    public event Action onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
     public event Action OnOcultarAccions;
@@ -82,8 +82,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         if (this.hp <= 0)
         {
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            print(SceneManager.GetSceneByName("Overworld").IsUnityNull());
-            onMuerto?.Invoke(SceneManager.GetSceneByName("Overworld"));
+            onMuerto?.Invoke();
         }
     }
 
@@ -130,15 +129,18 @@ public class PlayerCombat : MonoBehaviour, Tornable
     }
 
     public void AcabarTorn()
-    {
+    { 
         ProcessarEstat();
+        Debug.Log($"{gameObject}/{this}: He acabat el torn");
         GameManagerArena.Instance.BucleJoc();
-        Debug.Log("He acabat el torn");
     }
 
     IEnumerator EsperarIActuar(float tempsDespera, Action accio)
     {
-        yield return new WaitForSeconds(tempsDespera);
+        if(tempsDespera > 0)
+            yield return new WaitForSeconds(tempsDespera);
+        else
+            yield return null;
         accio();
     }
 
@@ -215,7 +217,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
-                AcabarTorn();
+                StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 entroSeleccionado = false;
