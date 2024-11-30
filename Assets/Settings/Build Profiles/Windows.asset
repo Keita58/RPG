@@ -16,18 +16,24 @@ MonoBehaviour:
   m_Subtarget: 2
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
-    rid: 2822676811648335872
+    rid: 8726855871079907328
   m_Scenes:
   - m_enabled: 1
     m_path: Assets/Scenes/Overworld.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Arena.unity
   - m_enabled: 1
+<<<<<<< HEAD
+=======
+    m_path: Assets/Scenes/PelsPesats v2.unity
+  - m_enabled: 1
+>>>>>>> origin/hector
     m_path: Assets/Scenes/GAMEOVER.unity
   - m_enabled: 1
     m_path: Assets/Scenes/INICIO.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
+<<<<<<< HEAD
     m_Settings:
     - line: '| PlayerSettings:'
     - line: '|   m_ObjectHideFlags: 0'
@@ -825,6 +831,13 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 2822676811648335872
+=======
+    m_Settings: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8726855871079907328
+>>>>>>> origin/hector
       type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
       data:
         m_Development: 0

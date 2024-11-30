@@ -18,4 +18,13 @@ public interface Tornable
     public void AcabarTorn();
 }
 
+public interface Avisable
+{
+    public event Action<string> OnIniciarTornUI;
+    public event Action<string, string> OnRebreEstadoAlteradoUI;
+    public event Action<string, int> OnRebreMalUI;
+    public event Action<string> OnEmpezarVentajaUI;
+    public event Action OnSeleccionarTargetUI;
+}
+
 
