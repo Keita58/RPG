@@ -217,7 +217,7 @@ public class EnemyStateMachine : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = Color.grey;
         yield return new WaitForSeconds(0.5f);
     }
-    public void ReceiveDamage(float damage)
+    /*public void ReceiveDamage(float damage)
     {
         this._hp -= damage;
         //  this.slider.value = _hp;
@@ -226,7 +226,7 @@ public class EnemyStateMachine : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
-    }
+    }*/
     private void PerseguirDetected(GameObject personatge)
     {
         if (personatge.name == "PJ" && _enemySO.clipAttack.length <= _StateTime)

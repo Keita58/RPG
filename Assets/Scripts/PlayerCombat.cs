@@ -80,8 +80,14 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
         if (this.hp <= 0)
         {
+            print(SceneManager.sceneCountInBuildSettings);
+            Scene sc = SceneManager.GetSceneByName("Overworld");
+            print(SceneManager.GetSceneByBuildIndex(0).name);
+            print(SceneManager.GetSceneByBuildIndex(1).name);
+            print(SceneManager.GetSceneByBuildIndex(2).name);
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            onMuerto?.Invoke(SceneManager.GetSceneByName("Overworld"));
+            print(sc);
+            onMuerto?.Invoke(sc);
         }
     }
 
