@@ -12,16 +12,20 @@ public class GuardarInfo : MonoBehaviour
     
     public void Guardar()
     {
-        DadesJugador dadesJugador = new DadesJugador();
-        dadesJugador.Spd = JugadorSO.Spd;
-        dadesJugador.Mana = JugadorSO.Mana;
-        dadesJugador.DamageAtk = JugadorSO.DamageAtk;
-        dadesJugador.Def = JugadorSO.Def;
-        dadesJugador.Lvl = JugadorSO.Lvl;
-        dadesJugador.Hp = JugadorSO.Hp;
-        dadesJugador.PosX = JugadorEscena.transform.position.x;
-        dadesJugador.PosY = JugadorEscena.transform.position.y;
-
+        DadesJugador dadesJugador = new()
+        {
+            Hp = JugadorSO.Hp,
+            Mana = JugadorSO.Mana,
+            Spd = JugadorSO.Spd,
+            DamageAtk = JugadorSO.DamageAtk,
+            Lvl = JugadorSO.Lvl,
+            Def = JugadorSO.Def,
+            Xp = JugadorSO.Xp,
+            PosX = JugadorEscena.transform.position.x,
+            PosY = JugadorEscena.transform.position.y,
+            AtacsJugador = JugadorSO.listaAtaques
+        };
+        print(dadesJugador.AtacsJugador);
         string infoAGuardar = JsonUtility.ToJson(dadesJugador);
         File.WriteAllText("./Assets/Json/save.json", infoAGuardar);
         Missatge.text = "Has guardat la partida!";

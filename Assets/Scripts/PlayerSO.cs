@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSO", menuName = "Scriptable Objects/PlayerSO")]
 public class PlayerSO : ScriptableObject
 {
-    [SerializeField]private int hp;
+    [SerializeField] private int hp;
     [SerializeField] private int damageAtk;
     [SerializeField] private int mana;
     [SerializeField] private int lvl;
@@ -23,5 +23,17 @@ public class PlayerSO : ScriptableObject
     public int Xp { get => xp; set => xp = value; }
 
     public EstadoAlteradoSO estadosAlterados;
+
+    public PlayerSO(int hp, int damageAtk, int mana, int lvl, int def, int spd, int xp, List<AtacSO> listaAtaques)
+    {
+        Hp = hp;
+        DamageAtk = damageAtk;
+        Mana = mana;
+        Lvl = lvl;
+        Def = def;
+        Spd = spd;
+        Xp = xp;
+        this.listaAtaques = listaAtaques;
+    }
     //poner el inventario y todo.
 }
