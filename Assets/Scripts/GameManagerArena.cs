@@ -98,6 +98,7 @@ public class GameManagerArena : MonoBehaviour
 
     private void ChangeScene(string escena)
     {
+        //Pujar xp del jugador (PlayerCombat)
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
         foreach(EnemySO e in _Enemics)
         {

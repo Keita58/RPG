@@ -16,6 +16,9 @@ public class EVENTOSINICIO : MonoBehaviour
     {
         Application.Quit();
     }
-
+    public void Menu()
+    {
+        SceneManager.LoadScene("INICIO");
+    }
   
 }

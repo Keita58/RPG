@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class DadesJugador
@@ -10,6 +11,6 @@ public class DadesJugador
     public int Lvl;
     public int Def;
     public int Spd;
-    public float PosX;
-    public float PosY;
+    public int Xp;
+    public List<AtacSO> AtacsJugador;
 }

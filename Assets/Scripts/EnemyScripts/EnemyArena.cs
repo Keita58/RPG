@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandler
+public class EnemyArena : MonoBehaviour,  IPointerDownHandler
 {
     [SerializeField] HealthBar vidaPantalla;
     public GameObject Seleccionat;
@@ -105,16 +105,16 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         }
     }
 
-    public void RebreMal(AtacSO atac)
+    public void RebreMal(AtacSO atac, int damageAtackPlayer)
     {
         if (atac.mal > this.def)
         {
             StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
-            this.hp -= atac.mal - this.def;
+            this.hp -= (atac.mal*damageAtackPlayer) - this.def;
             Debug.Log("Vida despr�s mal: " + this.hp);
             if (atac.estat != null)
-                this.estadosAlterados.IniciarEstadoAlterado(atac.estat);
+                this.estadosAlterados= new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
             vidaPantalla.UpdateHealth(atac.mal);
         }
         if (this.hp <= 0)

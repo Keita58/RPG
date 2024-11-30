@@ -5,25 +5,30 @@ using UnityEngine;
 
 public class GuardarInfo : MonoBehaviour
 {
+    private const string saveFileName = "savegame.json";
     [SerializeField] TextAsset json;
     [SerializeField] PlayerSO JugadorSO;
-    [SerializeField] GameObject JugadorEscena;
     [SerializeField] TextMeshProUGUI Missatge;
     
     public void Guardar()
     {
-        DadesJugador dadesJugador = new DadesJugador();
-        dadesJugador.Spd = JugadorSO.Spd;
-        dadesJugador.Mana = JugadorSO.Mana;
-        dadesJugador.DamageAtk = JugadorSO.DamageAtk;
-        dadesJugador.Def = JugadorSO.Def;
-        dadesJugador.Lvl = JugadorSO.Lvl;
-        dadesJugador.Hp = JugadorSO.Hp;
-        dadesJugador.PosX = JugadorEscena.transform.position.x;
-        dadesJugador.PosY = JugadorEscena.transform.position.y;
+        string filePath = "./Assets/Json/" + saveFileName;
+        GameObject JugadorEscena = GameObject.FindGameObjectWithTag("Player");
+        
+        DadesJugador dadesJugador = new()
+        {
+            Hp = JugadorSO.Hp,
+            Mana = JugadorSO.Mana,
+            Spd = JugadorSO.Spd,
+            DamageAtk = JugadorSO.DamageAtk,
+            Lvl = JugadorSO.Lvl,
+            Def = JugadorSO.Def,
+            Xp = JugadorSO.Xp,
+            AtacsJugador = JugadorSO.listaAtaques
+        };
 
-        string infoAGuardar = JsonUtility.ToJson(dadesJugador);
-        File.WriteAllText("./Assets/Json/save.json", infoAGuardar);
+        string infoAGuardar = JsonUtility.ToJson(dadesJugador, true);
+        File.WriteAllText(filePath, infoAGuardar);
         Missatge.text = "Has guardat la partida!";
         StartCoroutine(EsperaCanviText());
     }
