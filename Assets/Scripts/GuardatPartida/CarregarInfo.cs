@@ -1,14 +1,17 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CarregarInfo : MonoBehaviour
 {
     [SerializeField] TextAsset Json;
+    [SerializeField] TextMeshProUGUI Missatges;
 
     public void Carrega()
     {
         DadesJugador Jugador;
-        if (JsonUtility.FromJson<DadesJugador>(Json.ToString()) != null)
+        if(!Json.ToString().Equals(""))
         {
             Jugador = JsonUtility.FromJson<DadesJugador>(Json.ToString());
             GameManagerOW.Instance.JugadorSO.Hp = Jugador.Hp;
@@ -19,8 +22,18 @@ public class CarregarInfo : MonoBehaviour
             GameManagerOW.Instance.JugadorSO.Spd = Jugador.Spd;
             GameManagerOW.Instance.JugadorSO.Xp = Jugador.Xp;
 
-            GameManagerOW.Instance.Jugador.transform.position = new Vector3(Jugador.PosX, Jugador.PosY, 0);
-            SceneManager.LoadScene("Overwold");
+            SceneManager.LoadScene("Overworld");
         }
+        else
+        {
+            Missatges.text = "No hi ha cap partida guardada!";
+            StartCoroutine(EsborrarText());
+        }
+    }
+
+    IEnumerator EsborrarText()
+    {
+        yield return new WaitForSeconds(2);
+        Missatges.text = "";
     }
 }
