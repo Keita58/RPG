@@ -13,6 +13,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
     public int id { get; private set; }
     public bool selected { get; set; }
     public int hp { get; private set; }
+    public int HP;
     public AtacSO[] atk { get; private set; }
     public int def { get; private set; }
     public int spd { get; private set; }
@@ -42,6 +43,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
         Assert.IsNull(EnemySO, $"Ja hi ha un EnemicSO al {gameObject}");
         this.EnemySO = enemic;
         this.hp = this.EnemySO.hp;
+        this.HP = hp;
         this.atk = this.EnemySO.atk;
         this.def = this.EnemySO.def;
         this.spd = this.EnemySO.spd;
@@ -117,12 +119,12 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
 
     public void RebreMal(AtacSO atac, int damageAtackPlayer)
     {
-        if (atac.mal > this.def)
+        if (atac.mal > this.def && this.hp>0)
         {
             OnRebreMalUI?.Invoke("L'enemic", atac.mal);
             StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
-            this.hp -= (atac.mal*damageAtackPlayer) - this.def;
+            this.hp -= atac.mal - this.def;
             Debug.Log("Vida despr�s mal: " + this.hp);
             if (atac.estat != null)
                 this.estadosAlterados= new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
