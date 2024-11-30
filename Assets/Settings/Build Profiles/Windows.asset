@@ -19,11 +19,13 @@ MonoBehaviour:
     rid: 2822676811648335872
   m_Scenes:
   - m_enabled: 1
+    m_path: Assets/Scenes/Overworld.unity
+  - m_enabled: 1
     m_path: Assets/Scenes/Arena.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/PelsPesats v2.unity
+    m_path: Assets/Scenes/GAMEOVER.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/Overworld.unity
+    m_path: Assets/Scenes/INICIO.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:
