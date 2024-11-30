@@ -35,6 +35,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int def;
     int damageAtk;
     int spd;
+    int xp;
+    public int Xp { get => xp; set => xp = value; }
     public bool entroSeleccionado { get; private set; }
     EstadosAlterados estado=null;
     [SerializeField] List<AtacSO> atacsBase;
@@ -60,11 +62,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public void Iniciar(PlayerSO player)
     {
         this.hp = playerBase.Hp;
+        this.xp = playerBase.Xp;
         this.lvl = playerBase.Lvl;
         this.mana = playerBase.Mana;
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
         this.spd = playerBase.Spd;
+        this.atacs = playerBase.listaAtaques;
         vidaPantalla.IniciarBarra(this.hp);
         manaPantalla.IniciarBarra(this.mana);
         if (player.estadosAlterados != null)
@@ -90,7 +94,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
 
         if (atac.estat != null && estado==null)
         {
-            estado.IniciarEstadoAlterado(atac.estat);
+            this.estado=new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
         }
         if (this.hp <= 0)
         {
@@ -132,6 +136,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
         playerBase.Def = this.def;
         playerBase.DamageAtk = this.damageAtk;
         playerBase.Lvl = this.lvl;
+        playerBase.listaAtaques = this.atacs;
+        playerBase.Xp = this.xp;
     }
 
 
@@ -202,7 +208,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
                 manaPantalla.UpdateHealth(atacSeleccionat.mana);
-                target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat);
+                target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat, this.damageAtk);
                 break;
             case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));

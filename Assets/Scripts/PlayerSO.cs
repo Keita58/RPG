@@ -10,6 +10,7 @@ public class PlayerSO : ScriptableObject
     [SerializeField] private int lvl;
     [SerializeField] private int def;
     [SerializeField] private int spd;
+    [SerializeField] private int xp;
     [SerializeField] private EstadosAlterados EstadosAlterados;
 
     public List<AtacSO> listaAtaques;
@@ -19,6 +20,7 @@ public class PlayerSO : ScriptableObject
     public int Lvl { get => lvl; set => lvl = value; }
     public int Def { get => def; set => def = value; }
     public int Spd {  get => spd; set => spd = value;}
+    public int Xp { get => xp; set => xp = value; }
 
     public EstadoAlteradoSO estadosAlterados;
     //poner el inventario y todo.
