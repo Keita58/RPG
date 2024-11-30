@@ -19,3 +19,4 @@ MonoBehaviour:
   def: 0
   spd: 9
   listaAtaques: []
+  estadosAlterados: {fileID: 0}

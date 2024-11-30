@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,11 +35,11 @@ public class PlayerCombat : MonoBehaviour, Tornable
     int damageAtk;
     int spd;
     public bool entroSeleccionado { get; private set; }
-    EstadosAlterados estado;
+    EstadosAlterados estado=null;
     [SerializeField] List<AtacSO> atacsBase;
     AtacSO atacSeleccionat;
     GameObject target;
-    public event Action<Scene> onMuerto;
+    public event Action onMuerto;
     //Accions GUI
     public event Action OnMostrarAccions;
     public event Action OnOcultarAccions;
@@ -46,10 +47,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public event Action OnOcultarMagia;
     public event Action OnDeshabilitarAccions;
     public event Action OnEntrarSeleccionarTarget;
+    public event Action OnFugir;
 
     private void Awake()
     {
         this.animator = GetComponent<Animator>();
+        IniState(PlayerAnimations.IDLE);
+        Iniciar(playerBase);
     }
 
     public void Iniciar(PlayerSO player)
@@ -60,6 +64,18 @@ public class PlayerCombat : MonoBehaviour, Tornable
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
         this.spd = playerBase.Spd;
+        Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {player.estadosAlterados.nom}");
+        if (player.estadosAlterados != null)
+        {
+            //this.estado=estado.IniciarEstadoAlterado(player.estadosAlterados);
+            this.estado = new EstadosAlterados(player.estadosAlterados.nom, player.estadosAlterados.incapacitat,player.estadosAlterados.torns, player.estadosAlterados.hp, player.estadosAlterados.modAtk, player.estadosAlterados.modDef, player.estadosAlterados.modSpd);
+
+        }
+        else
+        {
+            Debug.Log($"{gameObject}/{this}: ESTADO ALTERADO NULL: {player.estadosAlterados.nom}");
+
+        }
     }
 
     public void RebreMal(AtacSO atac)
@@ -86,8 +102,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             print(SceneManager.GetSceneByBuildIndex(1).name);
             print(SceneManager.GetSceneByBuildIndex(2).name);
             //INVOKE GAME MANAGER CAMBIAR DE ESCENA
-            print(sc);
-            onMuerto?.Invoke(sc);
+            onMuerto?.Invoke();
         }
     }
 
@@ -134,15 +149,18 @@ public class PlayerCombat : MonoBehaviour, Tornable
     }
 
     public void AcabarTorn()
-    {
+    { 
         ProcessarEstat();
+        Debug.Log($"{gameObject}/{this}: He acabat el torn");
         GameManagerArena.Instance.BucleJoc();
-        Debug.Log("He acabat el torn");
     }
 
     IEnumerator EsperarIActuar(float tempsDespera, Action accio)
     {
-        yield return new WaitForSeconds(tempsDespera);
+        if(tempsDespera > 0)
+            yield return new WaitForSeconds(tempsDespera);
+        else
+            yield return null;
         accio();
     }
 
@@ -169,8 +187,11 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 //Si el enemigo empieza con ventaja. Incapacitat sempre ser� true en aquest cas.
                 if (estado != null && estado.Incapacitat && estado.Torns > 0)
                 {
+                    Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {estado.Nom}");
                     estado.Torns--;
+                    playerBase.estadosAlterados = null;
                     //TODO: Mirar qu� passa
+                    StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
                     ChangeState(CombatStates.WAITING);
                     break;
                 }
@@ -194,7 +215,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_RUN:
                 //AVISAR AL GAMEMANAGER PARA CANVIAR DE ESCENA.
-                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
+                StartCoroutine(EsperarIActuar(0, () => OnFugir?.Invoke()));
+                ChangeState(CombatStates.WAITING);
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 entroSeleccionado = true;
@@ -219,7 +241,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
-                AcabarTorn();
+                StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
                 entroSeleccionado = false;
@@ -301,11 +323,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
-    private void Start()
-    {
-        IniState(PlayerAnimations.IDLE);
-        Iniciar(playerBase);
-    }
+    
 
     //Accions Menu
     internal void AccioAtacar()

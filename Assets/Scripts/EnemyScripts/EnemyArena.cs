@@ -127,11 +127,6 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
         this.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    private void OnDestroy()
-    {
-        //GameManager.instance.ActivarAtac -= EscollirAtac();
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!this.selected && _Jugador.GetComponent<PlayerCombat>().entroSeleccionado)

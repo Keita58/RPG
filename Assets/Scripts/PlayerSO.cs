@@ -20,6 +20,6 @@ public class PlayerSO : ScriptableObject
     public int Def { get => def; set => def = value; }
     public int Spd {  get => spd; set => spd = value;}
 
-    public EstadosAlterados estadosAlterados { get => EstadosAlterados; set => EstadosAlterados = value; } 
+    public EstadoAlteradoSO estadosAlterados;
     //poner el inventario y todo.
 }
