@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class EnemyArena : MonoBehaviour,  IPointerDownHandler
+public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
 {
     [SerializeField] HealthBar vidaPantalla;
     public GameObject Seleccionat;
@@ -19,8 +19,15 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler
     public int mana { get; private set; }
     public event Action<AtacSO> onDamaged;
     public event Action<AtacSO> atacar;
+    public event Action<string> OnIniciarTornUI;
+    public event Action<string, string> OnRebreEstadoAlteradoUI;
+    public event Action<string, int> OnRebreMalUI;
+    public event Action<string> OnEmpezarVentajaUI;
+    public event Action OnSeleccionarTargetUI;
+
     EstadosAlterados estadosAlterados;
     [SerializeField] private GameObject _Jugador;
+
 
     public AtacSO atac { set => value = escollit; }
 
@@ -47,6 +54,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler
     {
         if (EnemySO.EstadosAlterados != null && EnemySO.EstadosAlterados.incapacitat)
         {
+            OnEmpezarVentajaUI?.Invoke("jugador");
             Debug.Log($"{gameObject}/{this}: INICIA VENTAJA ESTADO ALTERADO: {EnemySO.EstadosAlterados.nom}");
             this.estadosAlterados = new EstadosAlterados(EnemySO.EstadosAlterados.nom, EnemySO.EstadosAlterados.incapacitat, EnemySO.EstadosAlterados.torns, EnemySO.EstadosAlterados.hp, EnemySO.EstadosAlterados.modAtk, EnemySO.EstadosAlterados.modDef, EnemySO.EstadosAlterados.modSpd);
             estadosAlterados.Torns--;
@@ -54,6 +62,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler
                 GameManagerArena.Instance.BucleJoc();
             //TODO: Mirar que passa
         }
+        OnIniciarTornUI?.Invoke("enemic");
         bool sortir = false;
         AtacSO at = null;
         while (!sortir)
@@ -92,6 +101,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler
     {
         if (estadosAlterados != null)
         {
+            OnRebreEstadoAlteradoUI?.Invoke("enemic", estadosAlterados.Nom);
             this.hp -= estadosAlterados.Hp;
             this.def += estadosAlterados.ModDef;
             this.spd += estadosAlterados.ModSpd;
@@ -109,6 +119,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler
     {
         if (atac.mal > this.def)
         {
+            OnRebreMalUI?.Invoke("L'enemic", atac.mal);
             StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
             this.hp -= (atac.mal*damageAtackPlayer) - this.def;
@@ -129,6 +140,8 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler
         yield return new WaitForSeconds(1);
         this.GetComponent<SpriteRenderer>().color = Color.white;
     }
+
+
 
     public void OnPointerDown(PointerEventData eventData)
     {

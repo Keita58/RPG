@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -10,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(Animator))]
-public class PlayerCombat : MonoBehaviour, Tornable
+public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 {
     [SerializeField] PlayerSO playerBase;
     [SerializeField] HealthBar vidaPantalla;
@@ -51,6 +52,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public event Action OnDeshabilitarAccions;
     public event Action OnEntrarSeleccionarTarget;
     public event Action OnFugir;
+    public event Action<string> OnIniciarTornUI;
+    public event Action<string, string> OnRebreEstadoAlteradoUI;
+    public event Action<string, int> OnRebreMalUI;
+    public event Action<string> OnEmpezarVentajaUI;
+    public event Action OnSeleccionarTargetUI;
+    public event Action OnSeleccionatTargetUI;
+    public event Action OnFallarHuirUI;
 
     private void Awake()
     {
@@ -82,10 +90,12 @@ public class PlayerCombat : MonoBehaviour, Tornable
     public void RebreMal(AtacSO atac)
     {
         Debug.Log($"VIDA ABANS ATAC{this.hp}");
-      
+
 
         if (atac.mal > def)
         {
+            ChangeState(PlayerAnimations.HURT);
+            OnRebreMalUI?.Invoke("player", atac.mal);
             int hprestat = atac.mal - def;
             hp -= hprestat;
             Debug.Log($"VIDA DESPRÉS ATAC{this.hp}");
@@ -186,17 +196,19 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 //Si el enemigo empieza con ventaja. Incapacitat sempre ser� true en aquest cas.
                 if (estado != null && estado.Incapacitat && estado.Torns > 0)
                 {
+                    OnEmpezarVentajaUI?.Invoke("enemic");
                     Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {estado.Nom}");
                     estado.Torns--;
                     playerBase.estadosAlterados = null;
                     //TODO: Mirar qu� passa
-                    StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
+                    StartCoroutine(EsperarIActuar(3, () => AcabarTorn()));
                     ChangeState(CombatStates.WAITING);
                     break;
                 }
                 else
                 {
                     OnMostrarAccions?.Invoke();
+                    OnIniciarTornUI?.Invoke("jugador");
                 }
                 break;
       
@@ -215,10 +227,12 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_RUN:
                 //AVISAR AL GAMEMANAGER PARA CANVIAR DE ESCENA.
+              
                 StartCoroutine(EsperarIActuar(0, () => OnFugir?.Invoke()));
                 ChangeState(CombatStates.WAITING);
                 break;
             case CombatStates.SELECCIONAR_TARGET:
+                OnSeleccionarTargetUI?.Invoke();
                 entroSeleccionado = true;
                 GameManagerArena.Instance.OnSeleccionarTarget += TargetSeleccionat;
                 OnDeshabilitarAccions.Invoke();
@@ -241,13 +255,12 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
             case CombatStates.ACTION_MAGIC:
             case CombatStates.ACTION_OBJECTS:
-                StartCoroutine(EsperarIActuar(0, () => AcabarTorn()));
+                StartCoroutine(EsperarIActuar(1, () => AcabarTorn()));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
+                OnSeleccionatTargetUI?.Invoke();
                 entroSeleccionado = false;
                 break;
-
-
         }
     }
 
@@ -257,6 +270,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
         //DARLE A UNA VUELTA POR SI HACEMOS QUE LA VIDA SEA NEGATIVA EN CASO DE QUE QUITE VIDA.
         if (estado != null)
         {
+            OnRebreEstadoAlteradoUI?.Invoke("player", estado.Nom);
             this.hp -= estado.Hp;
             this.def += estado.ModDef;
             this.damageAtk += estado.ModAtk;
@@ -277,7 +291,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
         ChangeState(CombatStates.WAITING);
     }
 
-    
 
     //FSM ANIMACIONS
     private void ChangeState(PlayerAnimations newstate)
@@ -323,7 +336,6 @@ public class PlayerCombat : MonoBehaviour, Tornable
         }
     }
 
-    
 
     //Accions Menu
     internal void AccioAtacar()
@@ -350,7 +362,17 @@ public class PlayerCombat : MonoBehaviour, Tornable
     internal void AccioFugir()
     {
         Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� fugir quan no s'est� esperant una selecci�.");
-        ChangeState(CombatStates.ACTION_RUN);
+        int random = UnityEngine.Random.Range(1, 101);
+        if (random <= 50)
+        {
+            ChangeState(CombatStates.ACTION_RUN);
+        }
+        else
+        {
+            OnFallarHuirUI?.Invoke();
+            ChangeState(CombatStates.WAITING);
+            StartCoroutine(EsperarIActuar(2, () => AcabarTorn()));
+        }
     }
 
     public void AccioCancelar()
