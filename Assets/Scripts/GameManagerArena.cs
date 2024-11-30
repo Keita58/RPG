@@ -106,7 +106,7 @@ public class GameManagerArena : MonoBehaviour
         SceneManager.LoadScene(escena);
     }
 
-    private void PlayerMort() => ChangeScene("Overworld");
+    private void PlayerMort() => ChangeScene("GAMEOVER");
     private void PlayerFugir() => ChangeScene("Overworld");
 
     public GameObject getJugador()

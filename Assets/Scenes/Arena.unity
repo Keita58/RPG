@@ -1719,9 +1719,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60b8ec976f43eb6439c518693ae6de1e, type: 2}
   - {fileID: 11400000, guid: 592a27ac1aae0904bb7e12b16fc9ff04, type: 2}
   - {fileID: 11400000, guid: 6b218158131c93e469371b08f0f8c550, type: 2}
-  _OrdreAtac:
-  - {fileID: 17201673}
+  _EnemicsGOPantalla:
   - {fileID: 1648050451}
+  - {fileID: 17201673}
   - {fileID: 468815187}
   - {fileID: 342930853}
   _EnemicPrincipal: {fileID: 11400000, guid: 081adc04e0b0e7a4589023f469d60c85, type: 2}
