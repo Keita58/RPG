@@ -65,6 +65,8 @@ public class PlayerCombat : MonoBehaviour, Tornable
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
         this.spd = playerBase.Spd;
+        vidaPantalla.IniciarBarra(this.hp);
+        manaPantalla.IniciarBarra(this.mana);
         if (player.estadosAlterados != null)
         {
             //this.estado=estado.IniciarEstadoAlterado(player.estadosAlterados);
@@ -83,6 +85,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             int hprestat = atac.mal - def;
             hp -= hprestat;
             Debug.Log($"VIDA DESPRÉS ATAC{this.hp}");
+            vidaPantalla.UpdateHealth(atac.mal);
         }
 
         if (atac.estat != null && estado==null)
@@ -192,12 +195,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
       
             case CombatStates.SELECT_MAGIC:
-                OnMostrarMagia?.Invoke(atacsBase);
+                OnMostrarMagia?.Invoke(atacs);
                 OnDeshabilitarAccions?.Invoke();
                 break;
             case CombatStates.ACTION_MAGIC:
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
+                manaPantalla.UpdateHealth(atacSeleccionat.mana);
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat);
                 break;
             case CombatStates.ACTION_OBJECTS:

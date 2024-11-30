@@ -289,11 +289,11 @@ GameObject:
   - component: {fileID: 4336744286554231678}
   - component: {fileID: 4849916572501526408}
   - component: {fileID: 8934839371410006003}
-  - component: {fileID: 8900756535242803606}
+  - component: {fileID: 3091355932304487090}
   - component: {fileID: 1691305683235275349}
   - component: {fileID: 157965564438307825}
   m_Layer: 7
-  m_Name: Player
+  m_Name: PlayerCombat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,7 +396,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8900756535242803606
+--- !u!114 &3091355932304487090
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -405,15 +405,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6624852397130263062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc2d1375c98bad5489c8974ec0d88260, type: 3}
+  m_Script: {fileID: 11500000, guid: 190d62c0f0a211e45ba084694ebe4e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  attackClip: {fileID: 7400000, guid: cc84a94cabfaece448242e92a84d35cb, type: 2}
-  hurtClip: {fileID: 7400000, guid: 5ec214c1b2a6d854c8cdba71f03bd5cd, type: 2}
-  player: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
+  playerBase: {fileID: 0}
+  vidaPantalla: {fileID: 0}
+  manaPantalla: {fileID: 0}
+  atacs: []
+  atacClip: {fileID: 0}
+  hurtClip: {fileID: 0}
+  textoTarget: {fileID: 0}
+  ataqueBasico: {fileID: 0}
+  combatState: 0
   actualState: 0
   stateTime: 0
+  atacsBase: []
 --- !u!61 &1691305683235275349
 BoxCollider2D:
   m_ObjectHideFlags: 0
