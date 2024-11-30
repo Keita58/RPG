@@ -45,11 +45,14 @@ public class EnemyArena : MonoBehaviour, IAttack, IDamageable, IPointerDownHandl
 
     public void EscollirAtac()
     {
-        if (estadosAlterados != null && estadosAlterados.Incapacitat && estadosAlterados.Torns > 0)
+        if (EnemySO.EstadosAlterados != null && EnemySO.EstadosAlterados.incapacitat)
         {
+            Debug.Log($"{gameObject}/{this}: INICIA VENTAJA ESTADO ALTERADO: {EnemySO.EstadosAlterados.nom}");
+            this.estadosAlterados = new EstadosAlterados(EnemySO.EstadosAlterados.nom, EnemySO.EstadosAlterados.incapacitat, EnemySO.EstadosAlterados.torns, EnemySO.EstadosAlterados.hp, EnemySO.EstadosAlterados.modAtk, EnemySO.EstadosAlterados.modDef, EnemySO.EstadosAlterados.modSpd);
             estadosAlterados.Torns--;
-            GameManagerArena.Instance.BucleJoc();
-            //TODO: Mirar qu� passa
+            if(estadosAlterados.Torns > 0)
+                GameManagerArena.Instance.BucleJoc();
+            //TODO: Mirar que passa
         }
         bool sortir = false;
         AtacSO at = null;

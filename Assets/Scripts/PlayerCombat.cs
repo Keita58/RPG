@@ -13,7 +13,8 @@ using UnityEngine.SceneManagement;
 public class PlayerCombat : MonoBehaviour, Tornable
 {
     [SerializeField] PlayerSO playerBase;
-
+    [SerializeField] HealthBar vidaPantalla;
+    [SerializeField] ManaBar manaPantalla;
     [SerializeField]List<AtacSO> atacs;
     public event Action<AtacSO> onAttack;
     Animator animator;
@@ -64,17 +65,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
         this.def = playerBase.Def;
         this.damageAtk = playerBase.DamageAtk;
         this.spd = playerBase.Spd;
-        Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {player.estadosAlterados.nom}");
+        vidaPantalla.IniciarBarra(this.hp);
+        manaPantalla.IniciarBarra(this.mana);
         if (player.estadosAlterados != null)
         {
             //this.estado=estado.IniciarEstadoAlterado(player.estadosAlterados);
             this.estado = new EstadosAlterados(player.estadosAlterados.nom, player.estadosAlterados.incapacitat,player.estadosAlterados.torns, player.estadosAlterados.hp, player.estadosAlterados.modAtk, player.estadosAlterados.modDef, player.estadosAlterados.modSpd);
-
-        }
-        else
-        {
-            Debug.Log($"{gameObject}/{this}: ESTADO ALTERADO NULL: {player.estadosAlterados.nom}");
-
+            Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {player.estadosAlterados.nom}");
         }
     }
 
@@ -88,6 +85,7 @@ public class PlayerCombat : MonoBehaviour, Tornable
             int hprestat = atac.mal - def;
             hp -= hprestat;
             Debug.Log($"VIDA DESPRÉS ATAC{this.hp}");
+            vidaPantalla.UpdateHealth(atac.mal);
         }
 
         if (atac.estat != null && estado==null)
@@ -202,12 +200,13 @@ public class PlayerCombat : MonoBehaviour, Tornable
                 break;
       
             case CombatStates.SELECT_MAGIC:
-                OnMostrarMagia?.Invoke(atacsBase);
+                OnMostrarMagia?.Invoke(atacs);
                 OnDeshabilitarAccions?.Invoke();
                 break;
             case CombatStates.ACTION_MAGIC:
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
+                manaPantalla.UpdateHealth(atacSeleccionat.mana);
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat);
                 break;
             case CombatStates.ACTION_OBJECTS:

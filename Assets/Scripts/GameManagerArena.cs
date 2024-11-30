@@ -9,9 +9,9 @@ public class GameManagerArena : MonoBehaviour
     [SerializeField] GameObject _Jugador;
     [SerializeField] PlayerSO _JugadorSO;
     [SerializeField] List<EnemySO> _Enemics; // Llista de tots els tipus diferents d'enemics 
-    [SerializeField] List<GameObject> _OrdreAtac; // Llista de tots els enemics a l'inici de l'escena
+    [SerializeField] List<GameObject> _EnemicsGOPantalla; // Llista de tots els enemics a l'inici de l'escena
     [SerializeField] EnemySO _EnemicPrincipal; // Enemic que hem trobat al OW
-    private List<GameObject> PilaEnemics = new List<GameObject>();
+    private List<GameObject> OrdreJoc = new List<GameObject>();
     private GameObject enemicSeleccionat;
     public event Action<GameObject> OnSeleccionarTarget;
 
@@ -27,30 +27,33 @@ public class GameManagerArena : MonoBehaviour
     {
         _Jugador.GetComponent<PlayerCombat>().onMuerto += PlayerMort;
         //_Jugador.GetComponent<PlayerCombat>().onFugir += PlayerFugir;
-        int numEnemics = UnityEngine.Random.Range(1, _OrdreAtac.Count + 1);
-        PilaEnemics = new List<GameObject>();
+        int numEnemics = UnityEngine.Random.Range(1, _EnemicsGOPantalla.Count + 1);
+        OrdreJoc = new List<GameObject>();
 
-        _OrdreAtac[0].gameObject.SetActive(true);
-        _OrdreAtac[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
-        _OrdreAtac[0].transform.Rotate(0, 180, 0);
-        PilaEnemics.Add(_OrdreAtac[0]);
+        _EnemicsGOPantalla[0].gameObject.SetActive(true);
+        _EnemicsGOPantalla[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
+        _EnemicsGOPantalla[0].transform.Rotate(0, 180, 0);
+        OrdreJoc.Add(_EnemicsGOPantalla[0]);
 
         for (int i = 1; i < numEnemics; i++)
         {
-            _OrdreAtac[i].gameObject.SetActive(true);
-            _OrdreAtac[i].GetComponent<EnemyArena>().Iniciar(_Enemics[UnityEngine.Random.Range(0, _Enemics.Count)]);
-            _OrdreAtac[i].transform.Rotate(0, 180, 0);
-            PilaEnemics.Add(_OrdreAtac[i]);
+            if(_EnemicPrincipal.EstadosAlterados.incapacitat)
+                _Enemics[i].EstadosAlterados = _EnemicPrincipal.EstadosAlterados;
+
+            _EnemicsGOPantalla[i].gameObject.SetActive(true);
+            _EnemicsGOPantalla[i].GetComponent<EnemyArena>().Iniciar(_Enemics[UnityEngine.Random.Range(0, _Enemics.Count)]);
+            _EnemicsGOPantalla[i].transform.Rotate(0, 180, 0);
+            OrdreJoc.Add(_EnemicsGOPantalla[i]);
         }
 
         //Aix� ordena la llista dels enemics per la seva velocitat (una passada)
-        PilaEnemics = PilaEnemics.OrderByDescending(enemic => enemic.GetComponent<EnemyArena>().spd).ToList();
+        OrdreJoc = OrdreJoc.OrderByDescending(enemic => enemic.GetComponent<EnemyArena>().spd).ToList();
 
-        for (int i = 0; i < PilaEnemics.Count; i++)
+        for (int i = 0; i < OrdreJoc.Count; i++)
         {
-            if (PilaEnemics[i].GetComponent<EnemyArena>().spd <= _JugadorSO.Spd)
+            if (OrdreJoc[i].GetComponent<EnemyArena>().spd <= _JugadorSO.Spd)
             {
-                PilaEnemics.Insert(i, _Jugador);
+                OrdreJoc.Insert(i, _Jugador);
                 break;
             }
         }
@@ -59,26 +62,26 @@ public class GameManagerArena : MonoBehaviour
 
     public void BucleJoc()
     {
-        for (int i = 0; i < PilaEnemics.Count; i++)
+        for (int i = 0; i < OrdreJoc.Count; i++)
         {
-            if (PilaEnemics[i].TryGetComponent<EnemyArena>(out EnemyArena e))
+            if (OrdreJoc[i].TryGetComponent<EnemyArena>(out EnemyArena e))
             {
                 if (e.hp <= 0)
                 {
-                    PilaEnemics.Remove(PilaEnemics[i]);
+                    OrdreJoc.Remove(OrdreJoc[i]);
                 }
             }
         }
-        print($"{gameObject}/{this}: Nombre d'entitats a l'escena - {PilaEnemics.Count}");
+        print($"{gameObject}/{this}: Nombre d'entitats a l'escena - {OrdreJoc.Count}");
 
-        if (PilaEnemics.Count == 1 && PilaEnemics[0] == _Jugador)
+        if (OrdreJoc.Count == 1 && OrdreJoc[0] == _Jugador)
             ChangeScene("Overworld");
         else
         {
             Debug.Log("Canvi de torn");
-            GameObject aux = PilaEnemics[0];
-            PilaEnemics.RemoveAt(0);
-            PilaEnemics.Add(aux);
+            GameObject aux = OrdreJoc[0];
+            OrdreJoc.RemoveAt(0);
+            OrdreJoc.Add(aux);
             print("AUX: " + aux);
             if (aux.TryGetComponent<PlayerCombat>(out PlayerCombat p))
             {
@@ -96,10 +99,14 @@ public class GameManagerArena : MonoBehaviour
     private void ChangeScene(string escena)
     {
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
+        foreach(EnemySO e in _Enemics)
+        {
+            e.EstadosAlterados = null;
+        }
         SceneManager.LoadScene(escena);
     }
 
-    private void PlayerMort() => ChangeScene("Overworld");
+    private void PlayerMort() => ChangeScene("GAMEOVER");
     private void PlayerFugir() => ChangeScene("Overworld");
 
     public GameObject getJugador()
@@ -109,13 +116,13 @@ public class GameManagerArena : MonoBehaviour
 
     public List<GameObject> getEnemics()
     {
-        return _OrdreAtac;
+        return _EnemicsGOPantalla;
     }
 
     public void CanviaEnemicSelected(GameObject GO)
     {
         print("Canvi de seleccionat");
-        foreach (GameObject go in _OrdreAtac)
+        foreach (GameObject go in _EnemicsGOPantalla)
         {
             if (GO != go)
             {
