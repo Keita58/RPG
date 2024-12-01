@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameManagerOW : MonoBehaviour
 {
@@ -29,11 +30,16 @@ public class GameManagerOW : MonoBehaviour
         {
             case "Overworld":
                 GameObject jugador = Instantiate(Jugador);
-
                 break;
-            case "INICIO":
-
+            case "LVLUP":
+                StartCoroutine(canviaEscena());
                 break;
         }
+    }
+
+    IEnumerator canviaEscena()
+    {
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene("Overworld");
     }
 }

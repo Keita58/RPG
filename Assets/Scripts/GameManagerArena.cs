@@ -81,7 +81,7 @@ public class GameManagerArena : MonoBehaviour
         print($"{gameObject}/{this}: Nombre d'entitats a l'escena - {OrdreJoc.Count}");
 
         if (OrdreJoc.Count == 1 && OrdreJoc[0] == _Jugador)
-            ChangeScene("Overworld");
+            ChangeScene("Victoria");
         else
         {
             Debug.Log("Canvi de torn");
@@ -105,12 +105,18 @@ public class GameManagerArena : MonoBehaviour
     private void ChangeScene(string escena)
     {
         //Pujar xp del jugador (PlayerCombat)
-        if(escena.Equals("Overworld"))
+        if(escena.Equals("Victoria"))
         {
             _Jugador.GetComponent<PlayerCombat>().Xp += (int) (_Jugador.GetComponent<PlayerCombat>().Xp * 1.5);
+            if(_Jugador.GetComponent<PlayerCombat>().Xp >= _Jugador.GetComponent<PlayerCombat>().lvl * 20)
+            {
+                _Jugador.GetComponent<PlayerCombat>().lvlUP();
+                _Jugador.GetComponent<PlayerCombat>().Xp = 0;
+                escena = "LVLUP";
+            }
         }
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
-        foreach(EnemySO e in _Enemics)
+        foreach (EnemySO e in _Enemics)
         {
             e.EstadosAlterados = null;
         }
