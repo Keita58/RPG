@@ -31,7 +31,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     [SerializeField] PlayerAnimations actualState;
     [SerializeField] float stateTime;
     int hp;
-    int lvl;
+    public int lvl;
     int mana;
     int def;
     int damageAtk;

@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameManagerOW : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManagerOW : MonoBehaviour
     [SerializeField] public GameObject Enemic;
     [SerializeField] public PlayerSO JugadorSO;
     [SerializeField] List<GameObject> ListEnemics;
+    bool lvlUP;
 
     public static GameManagerOW Instance { get; private set; }
 
@@ -19,6 +21,7 @@ public class GameManagerOW : MonoBehaviour
             Instance = this;
 
         DontDestroyOnLoad(gameObject);
+        lvlUP = false;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -29,11 +32,16 @@ public class GameManagerOW : MonoBehaviour
         {
             case "Overworld":
                 GameObject jugador = Instantiate(Jugador);
-
                 break;
-            case "INICIO":
-
+            case "LVLUP":
+                StartCoroutine(canviaEscena());
                 break;
         }
+    }
+
+    IEnumerator canviaEscena()
+    {
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene("Overworld");
     }
 }

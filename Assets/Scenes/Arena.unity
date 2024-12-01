@@ -1016,6 +1016,7 @@ MonoBehaviour:
   - {fileID: 468815187}
   - {fileID: 342930853}
   _EnemicPrincipal: {fileID: 11400000, guid: 081adc04e0b0e7a4589023f469d60c85, type: 2}
+  _XpJugador: {fileID: 11400000, guid: 7144e64aea829b14d9c5ccfdc418dc6d, type: 2}
 --- !u!4 &520149229
 Transform:
   m_ObjectHideFlags: 0
@@ -1345,11 +1346,11 @@ PrefabInstance:
     - target: {fileID: 3091355932304487090, guid: d1ad44bfae08cef48ba0cdff38e02d6c, type: 3}
       propertyPath: 'atacsBase.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 72aa7ba4577edc94abdd98eeed2b6474, type: 2}
+      objectReference: {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
     - target: {fileID: 3091355932304487090, guid: d1ad44bfae08cef48ba0cdff38e02d6c, type: 3}
       propertyPath: 'atacsBase.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
+      objectReference: {fileID: 11400000, guid: 31305168ec972d941b31b41644f547f0, type: 2}
     - target: {fileID: 3091355932304487090, guid: d1ad44bfae08cef48ba0cdff38e02d6c, type: 3}
       propertyPath: 'atacsBase.Array.data[2]'
       value: 
@@ -1357,7 +1358,7 @@ PrefabInstance:
     - target: {fileID: 3091355932304487090, guid: d1ad44bfae08cef48ba0cdff38e02d6c, type: 3}
       propertyPath: 'atacsBase.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 31305168ec972d941b31b41644f547f0, type: 2}
+      objectReference: {fileID: 11400000, guid: 72aa7ba4577edc94abdd98eeed2b6474, type: 2}
     - target: {fileID: 4336744286554231678, guid: d1ad44bfae08cef48ba0cdff38e02d6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.4457984
