@@ -201,7 +201,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
                 //Si el enemigo empieza con ventaja. Incapacitat sempre ser� true en aquest cas.
                 if (estado != null && estado.Incapacitat && estado.Torns > 0)
                 {
-                    OnEmpezarVentajaUI?.Invoke("enemic");
+                    OnEmpezarVentajaUI?.Invoke("L'enemic");
                     Debug.Log($"{gameObject}/{this}: INICIO ESTADO ALTERADO: {estado.Nom}");
                     estado.Torns--;
                     playerBase.estadosAlterados = null;

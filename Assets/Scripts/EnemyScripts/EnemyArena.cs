@@ -124,7 +124,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
             OnRebreMalUI?.Invoke("L'enemic", atac.mal);
             StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
-            this.hp -= atac.mal - this.def;
+            this.hp -= (atac.mal*damageAtackPlayer) - this.def;
             Debug.Log("Vida despr�s mal: " + this.hp);
             if (atac.estat != null)
                 this.estadosAlterados= new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);

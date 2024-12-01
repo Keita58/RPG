@@ -1,12 +1,10 @@
 {
-    "Hp": 20,
-    "DamageAtk": 0,
+    "Hp": 99952,
+    "DamageAtk": 1,
     "Mana": 30,
     "Lvl": 0,
     "Def": 0,
     "Spd": 9,
     "Xp": 0,
-    "PosX": 15.084981918334961,
-    "PosY": 5.158384799957275,
     "AtacsJugador": []
 }
