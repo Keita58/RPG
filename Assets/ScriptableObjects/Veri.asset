@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c16cf457745ff46a03b275e66209de, type: 3}
   m_Name: Veri
   m_EditorClassIdentifier: 
-  incapacitat: 2
+  incapacitat: 0
   torns: 2
   hp: 5
   modAtk: 0

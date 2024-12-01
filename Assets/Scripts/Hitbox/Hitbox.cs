@@ -9,11 +9,12 @@ public class Hitbox : MonoBehaviour
   
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("debug moment");
         if (collision.TryGetComponent<EnemyStateMachine>(out EnemyStateMachine enemy))
         {
+            Debug.Log($"{gameObject}/{this}: COLISIONO CON ENEMIGO: {collision.gameObject}");
             enemy._enemySO.EstadosAlterados = estadoAlteradoSO;
             SceneManager.LoadScene("Arena");
+            Destroy(collision.gameObject);
         }
         else if(collision.TryGetComponent<Player>(out Player player))
         {

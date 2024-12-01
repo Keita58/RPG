@@ -12,7 +12,7 @@ public class GuardarInfo : MonoBehaviour
     
     public void Guardar()
     {
-        string filePath = "./Assets/Json/" + saveFileName;
+        string filePath = Application.persistentDataPath +"/"+ saveFileName;
         GameObject JugadorEscena = GameObject.FindGameObjectWithTag("Player");
         
         DadesJugador dadesJugador = new()

@@ -1,10 +1,14 @@
 {
-    "Hp": 99952,
-    "DamageAtk": 1,
-    "Mana": 30,
-    "Lvl": 0,
-    "Def": 0,
-    "Spd": 9,
+    "Hp": 110,
+    "DamageAtk": 4,
+    "Mana": 50,
+    "Lvl": 4,
+    "Def": 8,
+    "Spd": 10,
     "Xp": 0,
-    "AtacsJugador": []
+    "AtacsJugador": [
+        {
+            "instanceID": 44232
+        }
+    ]
 }

@@ -27,6 +27,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
     public event Action OnSeleccionarTargetUI;
 
     EstadosAlterados estadosAlterados;
+    [SerializeField] string estadoNom;
     [SerializeField] private GameObject _Jugador;
 
 
@@ -36,6 +37,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
     {
         _Jugador = GameManagerArena.Instance.getJugador();
         animator = GetComponent<Animator>();
+        
     }
 
     public void Iniciar(EnemySO enemic)
@@ -101,10 +103,19 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
     }
     public void ProcessarEstadoAlterado(AtacSO at)
     {
+
         if (estadosAlterados != null)
         {
+            estadoNom = estadosAlterados.Nom;
+            Debug.Log($"{gameObject}/{this}: INICIA ESTADO ALTERADO: {estadosAlterados.Nom}");
+
             OnRebreEstadoAlteradoUI?.Invoke("enemic", estadosAlterados.Nom);
             this.hp -= estadosAlterados.Hp;
+            if (estadosAlterados.Nom != "Ventaja")
+            {
+                StartCoroutine(AnimacioMal());
+            }
+            vidaPantalla.UpdateHealth(estadosAlterados.Hp);
             this.def += estadosAlterados.ModDef;
             this.spd += estadosAlterados.ModSpd;
             at.mal += estadosAlterados.ModAtk;
@@ -127,8 +138,11 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
             this.hp -= (atac.mal*damageAtackPlayer) - this.def;
             Debug.Log("Vida despr�s mal: " + this.hp);
             if (atac.estat != null)
-                this.estadosAlterados= new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
-            vidaPantalla.UpdateHealth(atac.mal);
+            {
+                Debug.Log($"{gameObject}/{this}: INICIA ESTADO ALTERADO REBRE MAL: {atac.estat.nom}");
+                this.estadosAlterados = new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
+            }
+            vidaPantalla.UpdateHealth(atac.mal*damageAtackPlayer);
         }
         if (this.hp <= 0)
         {

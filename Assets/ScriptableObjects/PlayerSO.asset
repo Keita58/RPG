@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2712ab3bcddc5094bbd04bbb6cfdbb43, type: 3}
   m_Name: PlayerSO
   m_EditorClassIdentifier: 
-  hp: 100000
-  damageAtk: 1
-  mana: 30
-  lvl: 0
-  def: 0
-  spd: 9
+  hp: 100
+  damageAtk: 2
+  mana: 40
+  lvl: 1
+  def: 1
+  spd: 10
   xp: 0
   listaAtaques: []
   estadosAlterados: {fileID: 0}

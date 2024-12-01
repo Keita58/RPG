@@ -23,6 +23,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Huir.unity
     guid: 8bb4ba9d96c3c8d418b49376e3ddbfac
+  - enabled: 1
+    path: Assets/Scenes/LVLUP.unity
+    guid: 70e333351d405b348a907403d2776d5f
+  - enabled: 1
+    path: Assets/Scenes/Victoria.unity
+    guid: 12e544f0708f43849ba2a35c2ed26584
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
