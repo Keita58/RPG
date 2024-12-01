@@ -113,7 +113,6 @@ public class GameManagerArena : MonoBehaviour
             {
                 _Jugador.GetComponent<PlayerCombat>().lvlUP();
                 _Jugador.GetComponent<PlayerCombat>().Xp = 0;
-                escena = "LVLUP";
                 GameManagerOW.Instance.lvlUP = true;
             }
         }
