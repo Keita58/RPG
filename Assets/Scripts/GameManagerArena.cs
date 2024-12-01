@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -104,6 +105,10 @@ public class GameManagerArena : MonoBehaviour
     private void ChangeScene(string escena)
     {
         //Pujar xp del jugador (PlayerCombat)
+        if(escena.Equals("Overworld"))
+        {
+            _Jugador.GetComponent<PlayerCombat>().Xp += (int) (_Jugador.GetComponent<PlayerCombat>().Xp * 1.5);
+        }
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
         foreach(EnemySO e in _Enemics)
         {
