@@ -11,6 +11,7 @@ public class GameManagerOW : MonoBehaviour
     [SerializeField] public GameObject Enemic;
     [SerializeField] public PlayerSO JugadorSO;
     [SerializeField] List<GameObject> ListEnemics;
+    bool lvlUP;
 
     public static GameManagerOW Instance { get; private set; }
 
@@ -20,6 +21,7 @@ public class GameManagerOW : MonoBehaviour
             Instance = this;
 
         DontDestroyOnLoad(gameObject);
+        lvlUP = false;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
