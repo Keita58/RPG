@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2712ab3bcddc5094bbd04bbb6cfdbb43, type: 3}
-  m_Name: PlayerSO
+  m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
+  m_Name: BasicoEnemy
   m_EditorClassIdentifier: 
-  hp: 100000
-  damageAtk: 1
-  mana: 30
-  lvl: 0
-  def: 0
-  spd: 9
-  xp: 0
-  listaAtaques: []
-  estadosAlterados: {fileID: 0}
+  nom: BasicoEnemy
+  mal: 4
+  estat: {fileID: 0}
+  mana: 0

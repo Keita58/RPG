@@ -27,7 +27,7 @@ public class GameManagerArena : MonoBehaviour
     private void Start()
     {
         _Jugador.GetComponent<PlayerCombat>().onMuerto += PlayerMort;
-        //_Jugador.GetComponent<PlayerCombat>().onFugir += PlayerFugir;
+        _Jugador.GetComponent<PlayerCombat>().OnFugir += PlayerFugir;
         int numEnemics = UnityEngine.Random.Range(1, _EnemicsGOPantalla.Count + 1);
         OrdreJoc = new List<GameObject>();
 
@@ -38,8 +38,13 @@ public class GameManagerArena : MonoBehaviour
 
         for (int i = 1; i < numEnemics; i++)
         {
-            if(_EnemicPrincipal.EstadosAlterados.incapacitat)
-                _Enemics[i].EstadosAlterados = _EnemicPrincipal.EstadosAlterados;
+            if (_EnemicPrincipal.EstadosAlterados != null)
+            {
+                if (_EnemicPrincipal.EstadosAlterados.incapacitat)
+                    _Enemics[i].EstadosAlterados = _EnemicPrincipal.EstadosAlterados;
+            }
+                
+                
 
             _EnemicsGOPantalla[i].gameObject.SetActive(true);
             _EnemicsGOPantalla[i].GetComponent<EnemyArena>().Iniciar(_Enemics[UnityEngine.Random.Range(0, _Enemics.Count)]);
@@ -113,7 +118,7 @@ public class GameManagerArena : MonoBehaviour
     }
 
     private void PlayerMort() => ChangeScene("GAMEOVER");
-    private void PlayerFugir() => ChangeScene("Overworld");
+    private void PlayerFugir() => ChangeScene("Huir");
 
     public GameObject getJugador()
     {
