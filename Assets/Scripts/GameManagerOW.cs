@@ -11,7 +11,7 @@ public class GameManagerOW : MonoBehaviour
     [SerializeField] public GameObject Enemic;
     [SerializeField] public PlayerSO JugadorSO;
     [SerializeField] List<GameObject> ListEnemics;
-    bool lvlUP;
+    public bool lvlUP;
 
     public static GameManagerOW Instance { get; private set; }
 
@@ -36,12 +36,21 @@ public class GameManagerOW : MonoBehaviour
             case "LVLUP":
                 StartCoroutine(canviaEscena());
                 break;
+            case "Victoria":
+                StartCoroutine(canviaEscena());
+                break;
         }
     }
 
     IEnumerator canviaEscena()
     {
         yield return new WaitForSeconds(4);
-        SceneManager.LoadScene("Overworld");
+        if (lvlUP)
+        {
+            lvlUP = false;
+            SceneManager.LoadScene("LVLUP");
+        }
+        else
+            SceneManager.LoadScene("Overworld");
     }
 }

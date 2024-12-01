@@ -106,13 +106,15 @@ public class GameManagerArena : MonoBehaviour
         //Pujar xp del jugador (PlayerCombat)
         if(escena.Equals("Victoria"))
         {
-            _Jugador.GetComponent<PlayerCombat>().Xp += (int) (_Jugador.GetComponent<PlayerCombat>().Xp * 1.5);
-            _XpJugador.xpGuanyat = (int)(_Jugador.GetComponent<PlayerCombat>().Xp * 1.5);
+            int xp = UnityEngine.Random.Range(10, 60);
+            _Jugador.GetComponent<PlayerCombat>().Xp += xp;
+            _XpJugador.xpGuanyat = xp;
             if (_Jugador.GetComponent<PlayerCombat>().Xp >= _Jugador.GetComponent<PlayerCombat>().lvl * 20)
             {
                 _Jugador.GetComponent<PlayerCombat>().lvlUP();
                 _Jugador.GetComponent<PlayerCombat>().Xp = 0;
                 escena = "LVLUP";
+                GameManagerOW.Instance.lvlUP = true;
             }
         }
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
