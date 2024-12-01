@@ -107,7 +107,7 @@ public class GameManagerArena : MonoBehaviour
         //Pujar xp del jugador (PlayerCombat)
         if(escena.Equals("Overworld"))
         {
-            _Jugador.GetComponent<PlayerCombat>().Xp += (int) (_Jugador.GetComponent<PlayerCombat>().Xp * 1.15);
+            _Jugador.GetComponent<PlayerCombat>().Xp += (int) (_Jugador.GetComponent<PlayerCombat>().Xp * 1.5);
         }
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();
         foreach(EnemySO e in _Enemics)
