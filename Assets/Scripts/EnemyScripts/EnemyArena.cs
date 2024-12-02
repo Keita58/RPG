@@ -3,13 +3,13 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
+public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
 {
     [SerializeField] HealthBar vidaPantalla;
     public GameObject Seleccionat;
     private AtacSO escollit;
     private Animator animator;
-    private EnemySO EnemySO;
+    [SerializeField] private EnemySO EnemySO;
     public int id { get; private set; }
     public bool selected { get; set; }
     public int hp { get; private set; }
@@ -37,7 +37,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
     {
         _Jugador = GameManagerArena.Instance.getJugador();
         animator = GetComponent<Animator>();
-        
+
     }
 
     public void Iniciar(EnemySO enemic)
@@ -106,7 +106,7 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
                     GameManagerArena.Instance.BucleJoc();
                 }));
         }
-        
+
     }
     IEnumerator EsperarIActuar(float tempsDespera, Action accio)
     {
@@ -125,12 +125,12 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
             this.hp -= estadosAlterados.Hp;
             if (estadosAlterados.Nom != "Ventaja")
             {
-                StartCoroutine(AnimacioMal());
+                this.animator.Play(this.EnemySO.clipHurt.name);
             }
             vidaPantalla.UpdateHealth(estadosAlterados.Hp);
             this.def += estadosAlterados.ModDef;
             this.spd += estadosAlterados.ModSpd;
-            if(at != null)
+            if (at != null)
                 at.mal += estadosAlterados.ModAtk;
             estadosAlterados.Torns--;
             if (estadosAlterados.Torns <= 0)
@@ -143,21 +143,21 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
 
     public void RebreMal(AtacSO atac, int damageAtackPlayer)
     {
-        if (atac.mal > this.def && this.hp>0)
+        if (atac.mal > this.def && this.hp > 0)
         {
             OnRebreMalUI?.Invoke("L'enemic", atac.mal);
             Debug.Log("Vida abans mal: " + this.hp);
-            this.hp -= (atac.mal*damageAtackPlayer) - this.def;
+            this.hp -= (atac.mal * damageAtackPlayer) - this.def;
+            vidaPantalla.UpdateHealth(atac.mal * damageAtackPlayer);
             if (this.hp > 0)
                 this.animator.Play(this.EnemySO.clipHurt.name);
             else
             {
                 this.animator.Play(this.EnemySO.clipDeath.name);
-                StartCoroutine(EsperarIActuar(EnemySO.clipDeath.length+0.20f,
-            () =>
-            {
+                StartCoroutine(EsperarIActuar(EnemySO.clipDeath.length + 0.20f, () =>
+                {
                     this.gameObject.SetActive(false);
-            }));
+                }));
             }
             Debug.Log("Vida despr�s mal: " + this.hp);
             if (atac.estat != null)
@@ -165,27 +165,13 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
                 Debug.Log($"{gameObject}/{this}: INICIA ESTADO ALTERADO REBRE MAL: {atac.estat.nom}");
                 this.estadosAlterados = new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
             }
-            vidaPantalla.UpdateHealth(atac.mal*damageAtackPlayer);
         }
-  /*      if (this.hp <= 0)
-        {
-            this.gameObject.SetActive(false);
-        }*/
     }
-
-    IEnumerator AnimacioMal()
-    {
-        this.GetComponent<SpriteRenderer>().color = Color.red;
-        yield return new WaitForSeconds(1);
-        this.GetComponent<SpriteRenderer>().color = Color.white;
-    }
-
-
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!this.selected && _Jugador.GetComponent<PlayerCombat>().entroSeleccionado)
-        {   
+        {
             this.selected = true;
             Seleccionat.SetActive(true);
         }

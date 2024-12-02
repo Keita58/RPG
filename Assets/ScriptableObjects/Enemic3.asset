@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemic3
   m_EditorClassIdentifier: 
   hp: 15
-  spd: 15
+  spd: 5
   def: 0
   atk:
   - {fileID: 11400000, guid: 468de79718e11f2469c517b8bb3eecb4, type: 2}

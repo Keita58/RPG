@@ -13,8 +13,8 @@ public class Hitbox : MonoBehaviour
         {
             Debug.Log($"{gameObject}/{this}: COLISIONO CON ENEMIGO: {collision.gameObject}");
             enemy._enemySO.EstadosAlterados = estadoAlteradoSO;
-            SceneManager.LoadScene("Arena");
             GameManagerOW.Instance.EnemicPrincipal = enemy._enemySO;
+            SceneManager.LoadScene("Arena");
             Destroy(collision.gameObject);
         }
         else if(collision.TryGetComponent<Player>(out Player player))
