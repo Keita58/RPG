@@ -6,7 +6,7 @@ public class Hitbox : MonoBehaviour
 {
     [SerializeField] private EstadoAlteradoSO estadoAlteradoSO;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-  
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<EnemyStateMachine>(out EnemyStateMachine enemy))
@@ -14,6 +14,7 @@ public class Hitbox : MonoBehaviour
             Debug.Log($"{gameObject}/{this}: COLISIONO CON ENEMIGO: {collision.gameObject}");
             enemy._enemySO.EstadosAlterados = estadoAlteradoSO;
             SceneManager.LoadScene("Arena");
+            GameManagerOW.Instance.EnemicPrincipal = enemy._enemySO;
             Destroy(collision.gameObject);
         }
         else if(collision.TryGetComponent<Player>(out Player player))

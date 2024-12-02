@@ -16,6 +16,7 @@ public class GameManagerArena : MonoBehaviour
     private List<GameObject> OrdreJoc = new List<GameObject>();
     private GameObject enemicSeleccionat;
     public event Action<GameObject> OnSeleccionarTarget;
+    public event Action<EnemySO> OnAgafarEnemicPrincipal;
 
     public static GameManagerArena Instance { get; private set; }
 
@@ -27,6 +28,7 @@ public class GameManagerArena : MonoBehaviour
 
     private void Start()
     {
+        _EnemicPrincipal = GameManagerOW.Instance.EnemicPrincipal;
         _Jugador.GetComponent<PlayerCombat>().onMuerto += PlayerMort;
         _Jugador.GetComponent<PlayerCombat>().OnFugir += PlayerFugir;
         int numEnemics = UnityEngine.Random.Range(1, _EnemicsGOPantalla.Count + 1);
@@ -53,15 +55,18 @@ public class GameManagerArena : MonoBehaviour
 
         //Aix� ordena la llista dels enemics per la seva velocitat (una passada)
         OrdreJoc = OrdreJoc.OrderByDescending(enemic => enemic.GetComponent<EnemyArena>().spd).ToList();
-
+        bool personatgeDins = false;
         for (int i = 0; i < OrdreJoc.Count; i++)
         {
             if (OrdreJoc[i].GetComponent<EnemyArena>().spd <= _JugadorSO.Spd)
             {
                 OrdreJoc.Insert(i, _Jugador);
+                personatgeDins = true;
                 break;
             }
         }
+        if (!personatgeDins)
+            OrdreJoc.Insert(OrdreJoc.Count, _Jugador);
         BucleJoc();
     }
 
@@ -77,7 +82,7 @@ public class GameManagerArena : MonoBehaviour
                 }
             }
         }
-        print($"{gameObject}/{this}: Nombre d'entitats a l'escena - {OrdreJoc.Count}");
+        //print($"{gameObject}/{this}: Nombre d'entitats a l'escena - {OrdreJoc.Count}");
 
         if (OrdreJoc.Count == 1 && OrdreJoc[0] == _Jugador)
             ChangeScene("Victoria");
@@ -87,7 +92,7 @@ public class GameManagerArena : MonoBehaviour
             GameObject aux = OrdreJoc[0];
             OrdreJoc.RemoveAt(0);
             OrdreJoc.Add(aux);
-            print("AUX: " + aux);
+            //print("AUX: " + aux);
             if (aux.TryGetComponent<PlayerCombat>(out PlayerCombat p))
             {
                 Debug.Log("Canvi de torn Jugador");

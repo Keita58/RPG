@@ -56,45 +56,57 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
 
     public void EscollirAtac()
     {
-        if (EnemySO.EstadosAlterados != null && EnemySO.EstadosAlterados.incapacitat)
+        if (EnemySO.EstadosAlterados != null)
         {
-            OnEmpezarVentajaUI?.Invoke("jugador");
             Debug.Log($"{gameObject}/{this}: INICIA VENTAJA ESTADO ALTERADO: {EnemySO.EstadosAlterados.nom}");
             this.estadosAlterados = new EstadosAlterados(EnemySO.EstadosAlterados.nom, EnemySO.EstadosAlterados.incapacitat, EnemySO.EstadosAlterados.torns, EnemySO.EstadosAlterados.hp, EnemySO.EstadosAlterados.modAtk, EnemySO.EstadosAlterados.modDef, EnemySO.EstadosAlterados.modSpd);
-            estadosAlterados.Torns--;
-            if(estadosAlterados.Torns > 0)
-                GameManagerArena.Instance.BucleJoc();
-            //TODO: Mirar que passa
+            if (this.estadosAlterados.Incapacitat)
+            {
+                OnEmpezarVentajaUI?.Invoke("jugador");
+                Debug.Log($"{gameObject}/{this}: TURNOS VENTAJA ANTES DE APLICAR: {estadosAlterados.Torns}");
+                if (estadosAlterados.Torns > 0)
+                {
+                    GameManagerArena.Instance.BucleJoc();
+                    estadosAlterados.Torns--;
+                    Debug.Log($"{gameObject}/{this}: TURNOS VENTAJA DESPUES DE APLICAR: {estadosAlterados.Torns}");
+                    EnemySO.EstadosAlterados = null;
+                }
+                //TODO: Mirar que passa
+            }
         }
-        OnIniciarTornUI?.Invoke("enemic");
-        bool sortir = false;
-        AtacSO at = null;
-        while (!sortir)
+        else
         {
-            print("Sigo dentro");
-            at = atk[UnityEngine.Random.Range(0, atk.Length)];
-            if (at.mana < this.mana)
+            OnIniciarTornUI?.Invoke("enemic");
+            bool sortir = false;
+            AtacSO at = null;
+            while (!sortir)
             {
-                this.mana -= at.mana;
-                sortir = true;
+                print("Sigo dentro");
+                at = atk[UnityEngine.Random.Range(0, atk.Length)];
+                if (at.mana < this.mana)
+                {
+                    this.mana -= at.mana;
+                    sortir = true;
+                }
+                else
+                {
+                    break;
+                }
             }
-            else
-            {
-                break;
-            }
-        }
-        print("He salido, no teneis razon");
-        this.animator.Play(EnemySO.clipAttack.name);
+            print("He salido, no teneis razon");
+            this.animator.Play(EnemySO.clipAttack.name);
 
-        StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length,
-            () =>
-            {
-                this.animator.Play(EnemySO.clipIdle.name);
-                this.escollit = at;
-                _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
-                ProcessarEstadoAlterado(at);
-                GameManagerArena.Instance.BucleJoc();
-            }));
+            StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length,
+                () =>
+                {
+                    this.animator.Play(EnemySO.clipIdle.name);
+                    this.escollit = at;
+                    _Jugador.GetComponent<PlayerCombat>().RebreMal(this.escollit);
+                    ProcessarEstadoAlterado(at);
+                    GameManagerArena.Instance.BucleJoc();
+                }));
+        }
+        
     }
     IEnumerator EsperarIActuar(float tempsDespera, Action accio)
     {
@@ -118,7 +130,8 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
             vidaPantalla.UpdateHealth(estadosAlterados.Hp);
             this.def += estadosAlterados.ModDef;
             this.spd += estadosAlterados.ModSpd;
-            at.mal += estadosAlterados.ModAtk;
+            if(at != null)
+                at.mal += estadosAlterados.ModAtk;
             estadosAlterados.Torns--;
             if (estadosAlterados.Torns <= 0)
             {

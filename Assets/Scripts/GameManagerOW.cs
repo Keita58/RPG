@@ -10,7 +10,9 @@ public class GameManagerOW : MonoBehaviour
     [SerializeField] public GameObject Jugador;
     [SerializeField] public GameObject Enemic;
     [SerializeField] public PlayerSO JugadorSO;
-    [SerializeField] List<GameObject> ListEnemics;
+    //[SerializeField] List<GameObject> ListEnemics;
+    [SerializeField] HpMaxJugador HpMax;
+    public EnemySO EnemicPrincipal;
     public bool lvlUP;
 
     public static GameManagerOW Instance { get; private set; }
@@ -24,6 +26,7 @@ public class GameManagerOW : MonoBehaviour
         lvlUP = false;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -40,6 +43,12 @@ public class GameManagerOW : MonoBehaviour
                 StartCoroutine(canviaEscena());
                 break;
         }
+    }
+
+    void OnSceneUnloaded(Scene scene)
+    {
+        if (scene.name.Equals("INICIO"))
+            HpMax.hpMax = JugadorSO.Hp;
     }
 
     IEnumerator canviaEscena()

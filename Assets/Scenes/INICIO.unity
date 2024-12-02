@@ -1224,6 +1224,8 @@ MonoBehaviour:
   Enemic: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
   JugadorSO: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
   ListEnemics: []
+  HpMax: {fileID: 11400000, guid: cf0815fa8ce54254ca8ca7ceb39e7099, type: 2}
+  lvlUP: 0
 --- !u!4 &1679918451
 Transform:
   m_ObjectHideFlags: 0
@@ -1974,7 +1976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37b76699ef1f3b4391bf62ae981c003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Json: {fileID: 4900000, guid: ef9d0129b71ca484f98951f95b29f37b, type: 3}
   Missatges: {fileID: 2001267740}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

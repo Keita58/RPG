@@ -20,6 +20,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     [SerializeField] TextMeshProUGUI textoTarget;
 
     [SerializeField] AtacSO ataqueBasico;
+    [SerializeField] HpMaxJugador HpMax;
 
     enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_OBJECTS, ACTION_RUN, SELECCIONAR_TARGET }
     [SerializeField] CombatStates combatState;
@@ -73,7 +74,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         this.damageAtk = playerBase.DamageAtk;
         this.spd = playerBase.Spd;
         this.atacs = playerBase.listaAtaques;
-        vidaPantalla.IniciarBarra(this.hp);
+        vidaPantalla.IniciarBarra(HpMax.hpMax);
+        vidaPantalla.UpdateHealth(HpMax.hpMax - this.hp);
         manaPantalla.IniciarBarra(this.mana);
         if (player.estadosAlterados != null)
         {
@@ -85,31 +87,34 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
     public void RebreMal(AtacSO atac)
     {
-        Debug.Log($"{gameObject}/{this}VIDA ABANS ATAC{this.hp}");
-
-        if (this.hp <= 0)
-        {
-            onMuerto?.Invoke();
-        }
+        Debug.Log($"{gameObject}/{this} VIDA ABANS REBRE MAL: {this.hp}");
 
         ChangeState(PlayerAnimations.HURT);
         OnRebreMalUI?.Invoke("player", atac.mal);
-        int hprestat = atac.mal - (def / 2);
-        hp -= hprestat;
-        Debug.Log($"VIDA DESPRÉS ATAC{this.hp}");
-        vidaPantalla.UpdateHealth(atac.mal);
-
-        if (atac.estat != null && estado == null)
+        int hprestat = atac.mal;
+        this.hp -= hprestat;
+        if (this.hp <= 0)
         {
-            this.estado = new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
+            Debug.Log($"{gameObject}/{this} He mort!");
+            onMuerto?.Invoke();
         }
+        else
+        {
+            Debug.Log($"VIDA DESPRÉS REBRE MAL: {this.hp}");
+            vidaPantalla.UpdateHealth(atac.mal);
 
+            if (atac.estat != null && estado == null)
+            {
+                this.estado = new EstadosAlterados(atac.estat.nom, atac.estat.incapacitat, atac.estat.torns, atac.estat.hp, atac.estat.modAtk, atac.estat.modDef, atac.estat.modSpd);
+            }
+        }
     }
 
     public void lvlUP()
     {
         lvl++;
         hp += 10;
+        HpMax.hpMax += 10;
         mana += 10;
         def += 2;
         damageAtk += 1;
