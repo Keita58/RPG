@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   damageAtk: 2
-  mana: 40
-  lvl: 1
-  def: 1
-  spd: 10
+  mana: 25
+  lvl: 2
+  def: 3
+  spd: 2
   xp: 0
-  listaAtaques: []
-  estadosAlterados: {fileID: 0}
+  listaAtaques:
+  - {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
+  estadosAlterados: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
