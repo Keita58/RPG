@@ -22,5 +22,4 @@ public class EVENTOSINICIO : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("INICIO");
     }
-  
 }

@@ -133,9 +133,19 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
         if (atac.mal > this.def && this.hp>0)
         {
             OnRebreMalUI?.Invoke("L'enemic", atac.mal);
-            StartCoroutine(AnimacioMal());
             Debug.Log("Vida abans mal: " + this.hp);
             this.hp -= (atac.mal*damageAtackPlayer) - this.def;
+            if (this.hp > 0)
+                this.animator.Play(this.EnemySO.clipHurt.name);
+            else
+            {
+                this.animator.Play(this.EnemySO.clipDeath.name);
+                StartCoroutine(EsperarIActuar(EnemySO.clipDeath.length+0.20f,
+            () =>
+            {
+                    this.gameObject.SetActive(false);
+            }));
+            }
             Debug.Log("Vida despr�s mal: " + this.hp);
             if (atac.estat != null)
             {
@@ -144,10 +154,10 @@ public class EnemyArena : MonoBehaviour,  IPointerDownHandler, Avisable
             }
             vidaPantalla.UpdateHealth(atac.mal*damageAtackPlayer);
         }
-        if (this.hp <= 0)
+  /*      if (this.hp <= 0)
         {
             this.gameObject.SetActive(false);
-        }
+        }*/
     }
 
     IEnumerator AnimacioMal()

@@ -23,4 +23,6 @@ MonoBehaviour:
   clipMove: {fileID: 7400000, guid: 6819c2ce54bf75f49984898d3d70315e, type: 2}
   clipAttack: {fileID: 7400000, guid: a7c67f932d1695a439f88b529f931492, type: 2}
   clipAttack2: {fileID: 7400000, guid: fe58e30824bb36642a12bff4eb55c077, type: 2}
+  clipHurt: {fileID: 7400000, guid: 798bd20e373e4404ea0c9f6952abd699, type: 2}
+  clipDeath: {fileID: 7400000, guid: 7f96706129012164eb0a8c63142e4ba2, type: 2}
   EstadosAlterados: {fileID: 0}
