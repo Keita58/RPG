@@ -25,5 +25,18 @@ public class Inventari : MonoBehaviour
             Dibuix.GetComponent<Image>().sprite = TancaMenu;
         }
     }
-
+    bool a = false;
+    public void Pause()
+    {
+        if (a)
+        {
+            a = false;
+            Time.timeScale = 1.0f;
+        }
+        else
+        {
+            a = true;
+            Time.timeScale = 0f;
+        }
+    }
 }

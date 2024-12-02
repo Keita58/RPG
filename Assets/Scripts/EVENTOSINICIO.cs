@@ -14,11 +14,12 @@ public class EVENTOSINICIO : MonoBehaviour
     }
     public void Sortir()
     {
+
         Application.Quit();
     }
     public void Menu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("INICIO");
     }
-  
 }

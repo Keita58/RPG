@@ -44,7 +44,6 @@ public class DragObjecte : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             cellCollider.GetComponent<Cell>().empty = true;
             cellCollider.GetComponent<Collider2D>().enabled = true;
-
         }
     }
 
@@ -55,8 +54,8 @@ public class DragObjecte : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Vector3 mousePos = eventData.position;
         //print("Posicio: " + mousePos);
         // print("Em moc");
-        this.transform.position = eventData.pointerCurrentRaycast.worldPosition;// new Vector3(mousePos.x, mousePos.y, this.transform.position.z);
-            //transform.position = new Vector3(InventariMap.WorldToCell((Vector3)Camera.main.ScreenToWorldPoint(Input.mousePosition)).x, InventariMap.WorldToCell((Vector3)Camera.main.ScreenToWorldPoint(Input.mousePosition)).y, this.transform.position.z);
+        this.transform.position = eventData.pointerCurrentRaycast.worldPosition*Time.unscaledDeltaTime;// new Vector3(mousePos.x, mousePos.y, this.transform.position.z);
+        //transform.position = new Vector3(InventariMap.WorldToCell((Vector3)Camera.main.ScreenToWorldPoint(Input.mousePosition)).x, InventariMap.WorldToCell((Vector3)Camera.main.ScreenToWorldPoint(Input.mousePosition)).y, this.transform.position.z)
     }
 
 }

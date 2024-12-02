@@ -14,5 +14,7 @@ public class EnemySO : ScriptableObject
     public AnimationClip clipMove;
     public AnimationClip clipAttack;
     public AnimationClip clipAttack2;
+    public AnimationClip clipHurt;
+    public AnimationClip clipDeath;
     public EstadoAlteradoSO EstadosAlterados;
 }
