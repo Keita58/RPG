@@ -42,6 +42,9 @@ public class GameManagerOW : MonoBehaviour
             case "Victoria":
                 StartCoroutine(canviaEscena());
                 break;
+            case "GAMEOVER":
+                JugadorSO.Hp = HpMax.hpMax;
+                break;
         }
     }
 

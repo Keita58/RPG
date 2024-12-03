@@ -40,17 +40,20 @@ public class GameManagerArena : MonoBehaviour
         OrdreJoc.Add(_EnemicsGOPantalla[0]);
 
         for (int i = 1; i < numEnemics; i++)
-        {
-            if (_EnemicPrincipal.EstadosAlterados != null)
-            {
-                if (_EnemicPrincipal.EstadosAlterados.incapacitat)
-                    _Enemics[i].EstadosAlterados = _EnemicPrincipal.EstadosAlterados;
-            }
-            
+        {            
             _EnemicsGOPantalla[i].gameObject.SetActive(true);
             _EnemicsGOPantalla[i].GetComponent<EnemyArena>().Iniciar(_Enemics[UnityEngine.Random.Range(0, _Enemics.Count)]);
             _EnemicsGOPantalla[i].transform.Rotate(0, 180, 0);
+
+            if (_EnemicPrincipal.EstadosAlterados != null)
+            {
+                if (_EnemicPrincipal.EstadosAlterados.incapacitat)
+                    _EnemicsGOPantalla[i].GetComponent<EnemyArena>().EnemySO.EstadosAlterados = _EnemicPrincipal.EstadosAlterados;
+            }
+
             OrdreJoc.Add(_EnemicsGOPantalla[i]);
+
+            print("Bueno he generat un enemic " + _Enemics[i].name + "amb estat alterat Bueno " + _Enemics[i].EstadosAlterados);
         }
 
         //Aix� ordena la llista dels enemics per la seva velocitat (una passada)

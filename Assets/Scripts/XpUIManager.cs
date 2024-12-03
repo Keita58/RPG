@@ -7,7 +7,7 @@ public class XpUIManager : MonoBehaviour
     [SerializeField] XpJugadorVictoria _XpJugador;
     void Start()
     {
-        xp.text ="Experiència guanyada: "+ _XpJugador.xpGuanyat.ToString();
+        xp.text ="Experiència guanyada: "+ _XpJugador.xpGuanyat.ToString() + "XP";
     }
 
 }

@@ -9,7 +9,7 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
     public GameObject Seleccionat;
     private AtacSO escollit;
     private Animator animator;
-    [SerializeField] private EnemySO EnemySO;
+    [SerializeField] public EnemySO EnemySO;
     public int id { get; private set; }
     public bool selected { get; set; }
     public int hp { get; private set; }
@@ -56,6 +56,7 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
 
     public void EscollirAtac()
     {
+        print("femboy "+this.transform.name+" inicia en estado femboy "+ EnemySO.EstadosAlterados);
         if (EnemySO.EstadosAlterados != null)
         {
             Debug.Log($"{gameObject}/{this}: INICIA VENTAJA ESTADO ALTERADO: {EnemySO.EstadosAlterados.nom}");
@@ -96,7 +97,7 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
             print("He salido, no teneis razon");
             this.animator.Play(EnemySO.clipAttack.name);
 
-            StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length,
+            StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length+0.10f,
                 () =>
                 {
                     this.animator.Play(EnemySO.clipIdle.name);
@@ -150,9 +151,18 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
             this.hp -= (atac.mal * damageAtackPlayer) - this.def;
             vidaPantalla.UpdateHealth(atac.mal * damageAtackPlayer);
             if (this.hp > 0)
+            {
                 this.animator.Play(this.EnemySO.clipHurt.name);
+                new WaitForSeconds(this.EnemySO.clipHurt.length + 0.10f);
+                this.animator.Play(this.EnemySO.clipIdle.name);
+
+            }
             else
             {
+                if (this.hp < 0)
+                {
+                    vidaPantalla.BuidaBarra();
+                }
                 this.animator.Play(this.EnemySO.clipDeath.name);
                 StartCoroutine(EsperarIActuar(EnemySO.clipDeath.length + 0.20f, () =>
                 {
