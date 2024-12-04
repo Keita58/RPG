@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] AnimationClip attackClip;
     [SerializeField] AnimationClip hurtClip;
     [SerializeField] public PlayerSO player;
+    public event Action ActivaCamera;
 
     int hp;
     int lvl;
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
         inputAction.FindActionMap("Player").FindAction("Attack").performed += OnAttack;
         moviment = inputAction.FindActionMap("Player").FindAction("Move");
         inputAction.FindActionMap("Player").Enable();
-
+        ActivaCamera?.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -15,6 +15,7 @@ public class GameManagerArena : MonoBehaviour
     [SerializeField] XpJugadorVictoria _XpJugador;
     private List<GameObject> OrdreJoc = new List<GameObject>();
     private GameObject enemicSeleccionat;
+    private int _NumEnemics;
     public event Action<GameObject> OnSeleccionarTarget;
     public event Action<EnemySO> OnAgafarEnemicPrincipal;
 
@@ -38,6 +39,7 @@ public class GameManagerArena : MonoBehaviour
         _EnemicsGOPantalla[0].GetComponent<EnemyArena>().Iniciar(_EnemicPrincipal);
         _EnemicsGOPantalla[0].transform.Rotate(0, 180, 0);
         OrdreJoc.Add(_EnemicsGOPantalla[0]);
+        _NumEnemics++;
 
         for (int i = 1; i < numEnemics; i++)
         {            
@@ -53,7 +55,8 @@ public class GameManagerArena : MonoBehaviour
 
             OrdreJoc.Add(_EnemicsGOPantalla[i]);
 
-            print("Bueno he generat un enemic " + _Enemics[i].name + "amb estat alterat Bueno " + _Enemics[i].EstadosAlterados);
+            //print("Bueno he generat un enemic " + _Enemics[i].name + "amb estat alterat Bueno " + _Enemics[i].EstadosAlterados);
+            _NumEnemics++;
         }
 
         //Aix� ordena la llista dels enemics per la seva velocitat (una passada)
@@ -114,7 +117,7 @@ public class GameManagerArena : MonoBehaviour
         //Pujar xp del jugador (PlayerCombat)
         if(escena.Equals("Victoria"))
         {
-            int xp = UnityEngine.Random.Range(10, 60);
+            int xp = (_NumEnemics*10) + UnityEngine.Random.Range(1, 10);
             _Jugador.GetComponent<PlayerCombat>().Xp += xp;
             _XpJugador.xpGuanyat = xp;
             if (_Jugador.GetComponent<PlayerCombat>().Xp >= _Jugador.GetComponent<PlayerCombat>().lvl * 20)

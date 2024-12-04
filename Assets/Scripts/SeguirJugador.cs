@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SeguirJugador : MonoBehaviour
 {
-    private GameObject Jugador;
+    [SerializeField] GameObject Jugador;
+    
 
     private void Start()
     {
