@@ -1223,8 +1223,8 @@ MonoBehaviour:
   Jugador: {fileID: 6624852397130263062, guid: e71076edd5a191141912ac55bdde2888, type: 3}
   Enemic: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
   JugadorSO: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
-  ListEnemics: []
   HpMax: {fileID: 11400000, guid: cf0815fa8ce54254ca8ca7ceb39e7099, type: 2}
+  EnemicPrincipal: {fileID: 11400000, guid: 081adc04e0b0e7a4589023f469d60c85, type: 2}
   lvlUP: 0
 --- !u!4 &1679918451
 Transform:
