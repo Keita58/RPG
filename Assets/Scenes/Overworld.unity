@@ -11317,6 +11317,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: estadoAlteradoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
     - target: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: m_Name
       value: EnemicOw (1)
@@ -13540,6 +13544,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: estadoAlteradoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
     - target: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: m_Name
       value: EnemicOw
@@ -14468,6 +14476,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: estadoAlteradoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
     - target: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: m_Name
       value: EnemicOw (3)
@@ -14533,6 +14545,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: estadoAlteradoSO
+      value: 
+      objectReference: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
     - target: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: m_Name
       value: EnemicOw (2)
