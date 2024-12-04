@@ -10,10 +10,10 @@ public class GameManagerOW : MonoBehaviour
     [SerializeField] public GameObject Jugador;
     [SerializeField] public GameObject Enemic;
     [SerializeField] public PlayerSO JugadorSO;
-    //[SerializeField] List<GameObject> ListEnemics;
     [SerializeField] HpMaxJugador HpMax;
     public EnemySO EnemicPrincipal;
     public bool lvlUP;
+    private GameObject JugadorOW;
 
     public static GameManagerOW Instance { get; private set; }
 
@@ -33,9 +33,6 @@ public class GameManagerOW : MonoBehaviour
     {
         switch (scene.name)
         {
-            case "Overworld":
-                GameObject jugador = Instantiate(Jugador);
-                break;
             case "LVLUP":
                 StartCoroutine(canviaEscena());
                 break;
