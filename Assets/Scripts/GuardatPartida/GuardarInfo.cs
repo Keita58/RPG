@@ -35,7 +35,7 @@ public class GuardarInfo : MonoBehaviour
 
     IEnumerator EsperaCanviText()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSecondsRealtime(2f);
         Missatge.text = "";
     }
 }
