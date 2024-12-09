@@ -12,5 +12,7 @@ public class DadesJugador
     public int Def;
     public int Spd;
     public int Xp;
-    public List<AtacSO> AtacsJugador;
+    public int MaxHp;
+    public int MaxMana;
+    public int[] AtacsJugador;
 }

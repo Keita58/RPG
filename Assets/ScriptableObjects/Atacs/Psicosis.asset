@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
   m_Name: Psicosis
   m_EditorClassIdentifier: 
+  id: 3
   nom: Psicosis
   mal: 15
   estat: {fileID: 0}

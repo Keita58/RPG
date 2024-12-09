@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5905485d15275e24b858d2e4358550b2, type: 3}
+  m_Name: BDAtacs
+  m_EditorClassIdentifier: 
+  ScriptableExemples:
+  - {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
+  - {fileID: 11400000, guid: e9f3d78870a9cf94bb54404d8df0fc7a, type: 2}
+  - {fileID: 11400000, guid: 31305168ec972d941b31b41644f547f0, type: 2}
+  - {fileID: 11400000, guid: 72aa7ba4577edc94abdd98eeed2b6474, type: 2}

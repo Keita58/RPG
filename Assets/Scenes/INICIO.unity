@@ -1977,6 +1977,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Missatges: {fileID: 2001267740}
+  HpMaxJugador: {fileID: 11400000, guid: cf0815fa8ce54254ca8ca7ceb39e7099, type: 2}
+  Atacs: {fileID: 11400000, guid: 8490dc2a43102b0469fc2f91effd8378, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
