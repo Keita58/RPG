@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab2d88735c15c944a883fff79dc60aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Jugador: {fileID: 6624852397130263062, guid: e71076edd5a191141912ac55bdde2888, type: 3}
+  Jugador: {fileID: 8953451993318258451, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
   Enemic: {fileID: 9038106469137289281, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
   JugadorSO: {fileID: 11400000, guid: 3c2aecb01ee880545aae4175596e7dc5, type: 2}
   HpMax: {fileID: 11400000, guid: cf0815fa8ce54254ca8ca7ceb39e7099, type: 2}
