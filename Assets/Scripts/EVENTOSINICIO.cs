@@ -3,18 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class EVENTOSINICIO : MonoBehaviour
 {
+    [SerializeField] PosicioOW PosJugador;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartGame()
     {
+        PosJugador.posJugador = Vector2.zero;
         SceneManager.LoadScene("Overworld");
     }
-    public void LoadData()
-    {
 
-    }
     public void Sortir()
     {
-
         Application.Quit();
     }
     public void Menu()

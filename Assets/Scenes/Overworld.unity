@@ -11318,6 +11318,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: PosicioJugadorOw
+      value: 
+      objectReference: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: estadoAlteradoSO
       value: 
       objectReference: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
@@ -12175,7 +12179,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 173894600630163370, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.00000012817327
+      value: 0.00000015762635
       objectReference: {fileID: 0}
     - target: {fileID: 1013881941224614796, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12219,32 +12223,61 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3218683525767839557, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.21267867
+      value: 0.21267873
       objectReference: {fileID: 0}
     - target: {fileID: 3218683525767839557, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.012115089
+      value: 0.012115079
       objectReference: {fileID: 0}
     - target: {fileID: 3758571505203824018, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5584474209508070072, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
+      propertyPath: PosicioJugadorOw
+      value: 
+      objectReference: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
     - target: {fileID: 5668977829443284970, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.000000014668331
+      value: 0.000000015250409
       objectReference: {fileID: 0}
     - target: {fileID: 8953451993318258451, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
       propertyPath: m_Name
       value: PJ
       objectReference: {fileID: 0}
+    - target: {fileID: 9012748016060589605, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
+      propertyPath: PosicioJugadorOw
+      value: 
+      objectReference: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8953451993318258451, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 567084377}
   m_SourcePrefab: {fileID: 100100000, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
 --- !u!1 &567084376 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8953451993318258451, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
+  m_PrefabInstance: {fileID: 567084375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &567084377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567084376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371aa76bea7541649b196f7271990317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PosicioJugadorOw: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
+--- !u!1 &567084378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 161109564044282096, guid: 73d06055bd070ba409f94cb8005733c8, type: 3}
   m_PrefabInstance: {fileID: 567084375}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
@@ -12890,6 +12923,7 @@ MonoBehaviour:
   Missatge: {fileID: 1983780862}
   HpMax: {fileID: 11400000, guid: cf0815fa8ce54254ca8ca7ceb39e7099, type: 2}
   Atacs: {fileID: 11400000, guid: 8490dc2a43102b0469fc2f91effd8378, type: 2}
+  JugadorOw: {fileID: 567084378}
 --- !u!1 &762738257
 GameObject:
   m_ObjectHideFlags: 0
@@ -13210,6 +13244,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: PosicioJugadorOw
+      value: 
+      objectReference: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
     - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: estadoAlteradoSO
       value: 
@@ -14143,6 +14181,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: PosicioJugadorOw
+      value: 
+      objectReference: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: estadoAlteradoSO
       value: 
       objectReference: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
@@ -14211,6 +14253,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
+      propertyPath: PosicioJugadorOw
+      value: 
+      objectReference: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
     - target: {fileID: 7309488799473956994, guid: a7a8262a76a2648419979b13172c86ef, type: 3}
       propertyPath: estadoAlteradoSO
       value: 
@@ -17305,6 +17351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217f96df8abafd74ab89152ff0ede4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PosJugador: {fileID: 0}
 --- !u!114 &2136595116
 MonoBehaviour:
   m_ObjectHideFlags: 0

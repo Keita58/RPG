@@ -536,6 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217f96df8abafd74ab89152ff0ede4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PosJugador: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
 --- !u!1 &523181445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,6 +1271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217f96df8abafd74ab89152ff0ede4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PosJugador: {fileID: 0}
 --- !u!4 &1851569868
 Transform:
   m_ObjectHideFlags: 0
@@ -1979,6 +1981,7 @@ MonoBehaviour:
   Missatges: {fileID: 2001267740}
   HpMaxJugador: {fileID: 11400000, guid: cf0815fa8ce54254ca8ca7ceb39e7099, type: 2}
   Atacs: {fileID: 11400000, guid: 8490dc2a43102b0469fc2f91effd8378, type: 2}
+  PosicioJugador: {fileID: 11400000, guid: 24f3aafefbe52f847be19a998ec98037, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

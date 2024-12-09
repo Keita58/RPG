@@ -15,4 +15,5 @@ public class DadesJugador
     public int MaxHp;
     public int MaxMana;
     public int[] AtacsJugador;
+    public Vector2 PosJugador;
 }

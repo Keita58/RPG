@@ -77,7 +77,10 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         vidaPantalla.IniciarBarra(HpMax.hpMax);
         vidaPantalla.UpdateHealth(HpMax.hpMax - this.hp);
         manaPantalla.IniciarBarra(HpMax.manaMax);
-        manaPantalla.UpdateHealth(HpMax.manaMax - this.mana);
+        if (HpMax.manaMax > 0)
+            manaPantalla.UpdateHealth(HpMax.manaMax - this.mana);
+        else
+            manaPantalla.BuidaBarra();
         if (player.estadosAlterados != null)
         {
             //this.estado=estado.IniciarEstadoAlterado(player.estadosAlterados);

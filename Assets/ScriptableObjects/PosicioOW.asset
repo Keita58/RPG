@@ -9,16 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2712ab3bcddc5094bbd04bbb6cfdbb43, type: 3}
-  m_Name: PlayerSO
+  m_Script: {fileID: 11500000, guid: 8809043eada529749a4b94d502ea1a8e, type: 3}
+  m_Name: PosicioOW
   m_EditorClassIdentifier: 
-  hp: 300
-  damageAtk: 4
-  mana: 5
-  lvl: 4
-  def: 11
-  spd: 2
-  xp: 49
-  listaAtaques:
-  - {fileID: 11400000, guid: 86bdb121f357229499695d3205853187, type: 2}
-  estadosAlterados: {fileID: 0}
+  posJugador: {x: 0, y: 0}

@@ -12,6 +12,7 @@ public class GuardarInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI Missatge;
     [SerializeField] HpMaxJugador HpMax;
     [SerializeField] BDAtacs Atacs;
+    [SerializeField] GameObject JugadorOw;
 
     [Serializable]
     private class SaveDataInfo
@@ -36,6 +37,7 @@ public class GuardarInfo : MonoBehaviour
             AtacsJugador = Atacs.ToIDs(JugadorSO.listaAtaques.AsReadOnly()),
             MaxHp = HpMax.hpMax,
             MaxMana = HpMax.manaMax,
+            PosJugador = new Vector2(JugadorOw.transform.position.x, JugadorOw.transform.position.y),
         };
 
         string infoAGuardar = JsonUtility.ToJson(dadesJugador, true);

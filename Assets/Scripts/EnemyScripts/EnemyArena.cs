@@ -56,7 +56,6 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
 
     public void EscollirAtac()
     {
-        print("femboy "+this.transform.name+" inicia en estado femboy "+ EnemySO.EstadosAlterados);
         if (EnemySO.EstadosAlterados != null)
         {
             Debug.Log($"{gameObject}/{this}: INICIA VENTAJA ESTADO ALTERADO: {EnemySO.EstadosAlterados.nom}");
@@ -82,7 +81,6 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
             AtacSO at = null;
             while (!sortir)
             {
-                print("Sigo dentro");
                 at = atk[UnityEngine.Random.Range(0, atk.Length)];
                 if (at.mana < this.mana)
                 {
@@ -94,7 +92,6 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                     break;
                 }
             }
-            print("He salido, no teneis razon");
             this.animator.Play(EnemySO.clipAttack.name);
 
             StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length+0.10f,

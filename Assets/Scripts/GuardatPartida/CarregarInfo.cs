@@ -9,6 +9,7 @@ public class CarregarInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI Missatges;
     [SerializeField] HpMaxJugador HpMaxJugador;
     [SerializeField] BDAtacs Atacs;
+    [SerializeField] PosicioOW PosicioJugador;
 
     public void Carrega()
     {
@@ -30,6 +31,8 @@ public class CarregarInfo : MonoBehaviour
             GameManagerOW.Instance.JugadorSO.Spd = Jugador.Spd;
             GameManagerOW.Instance.JugadorSO.Xp = Jugador.Xp;
             GameManagerOW.Instance.JugadorSO.listaAtaques = Atacs.FromIDs(Jugador.AtacsJugador);
+            PosicioJugador.posJugador = Jugador.PosJugador;
+
 
             SceneManager.LoadScene("Overworld");
         }
