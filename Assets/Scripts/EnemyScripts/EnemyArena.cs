@@ -121,6 +121,15 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
 
             OnRebreEstadoAlteradoUI?.Invoke("enemic", estadosAlterados.Nom);
             this.hp -= estadosAlterados.Hp;
+            if (this.hp < 0)
+            {
+                vidaPantalla.BuidaBarra();
+                this.animator.Play(this.EnemySO.clipDeath.name);
+                StartCoroutine(EsperarIActuar(EnemySO.clipDeath.length + 0.20f, () =>
+                {
+                    this.gameObject.SetActive(false);
+                }));
+            }
             if (estadosAlterados.Nom != "Ventaja")
             {
                 this.animator.Play(this.EnemySO.clipHurt.name);
