@@ -145,9 +145,9 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
         {
             OnRebreMalUI?.Invoke("L'enemic", atac.mal);
             Debug.Log("Vida abans mal: " + this.hp);
-            float hpRestat = (atac.mal-def) * damageAtackPlayer; 
-            this.hp -=(int) hpRestat;
-            vidaPantalla.UpdateHealth((atac.mal - def) * damageAtackPlayer);
+            
+            this.hp -= (atac.mal*damageAtackPlayer)-def;
+            vidaPantalla.UpdateHealth((atac.mal*damageAtackPlayer)-def);
             if (this.hp > 0)
             {
                 this.animator.Play(this.EnemySO.clipHurt.name);

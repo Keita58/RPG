@@ -95,8 +95,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
         ChangeState(PlayerAnimations.HURT);
         OnRebreMalUI?.Invoke("player", atac.mal);
-        int hprestat =atac.mal-def;
-        this.hp -= hprestat;
+       
+        this.hp -= (atac.mal-def);
         if (this.hp <= 0)
         {
             Debug.Log($"{gameObject}/{this} He mort!");
@@ -105,7 +105,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         else
         {
             Debug.Log($"VIDA DESPRÉS REBRE MAL: {this.hp}");
-            vidaPantalla.UpdateHealth(atac.mal);
+            vidaPantalla.UpdateHealth((atac.mal-def));
 
             if (atac.estat != null && estado == null)
             {
