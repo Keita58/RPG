@@ -79,6 +79,12 @@ public class UITextos : MonoBehaviour
         StartCoroutine(EsperarIActuar(3, DesctivarTexto));
     }
 
+    public void NoMana()
+    {
+        text.text = "No tens suficient mana!";
+        StartCoroutine(EsperarIActuar(3, DesctivarTexto));
+    }
+
     public void DesactivarSeleccionarTarget()
     {
         text.gameObject.SetActive(false);

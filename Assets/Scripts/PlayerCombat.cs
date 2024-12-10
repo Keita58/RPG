@@ -22,7 +22,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     [SerializeField] AtacSO ataqueBasico;
     [SerializeField] HpMaxJugador HpMax;
 
-    enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_OBJECTS, ACTION_RUN, SELECCIONAR_TARGET }
+    enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_RUN, SELECCIONAR_TARGET }
     [SerializeField] CombatStates combatState;
     enum PlayerAnimations { IDLE, HURT, ATTACK }
     [SerializeField] PlayerAnimations actualState;
@@ -235,12 +235,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
                 manaPantalla.UpdateHealth(atacSeleccionat.mana);
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat, this.damageAtk);
                 break;
-            case CombatStates.ACTION_OBJECTS:
-                StartCoroutine(EsperarIActuar(1, () => ChangeState(CombatStates.WAITING)));
-                break;
             case CombatStates.ACTION_RUN:
-                //AVISAR AL GAMEMANAGER PARA CANVIAR DE ESCENA.
-
                 StartCoroutine(EsperarIActuar(0, () => OnFugir?.Invoke()));
                 ChangeState(CombatStates.WAITING);
                 break;
@@ -267,7 +262,6 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
                 OnOcultarMagia?.Invoke();
                 break;
             case CombatStates.ACTION_MAGIC:
-            case CombatStates.ACTION_OBJECTS:
                 StartCoroutine(EsperarIActuar(1, () => AcabarTorn()));
                 break;
             case CombatStates.SELECCIONAR_TARGET:
@@ -365,12 +359,6 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     {
         Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� magia quan no s'est� esperant una selecci�.");
         ChangeState(CombatStates.SELECT_MAGIC);
-    }
-
-    internal void AccioObjecte()
-    {
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� objecte quan no s'est� esperant una selecci�.");
-        ChangeState(CombatStates.ACTION_OBJECTS);
     }
 
     internal void AccioFugir()

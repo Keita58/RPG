@@ -47,11 +47,6 @@ public class UICombat : MonoBehaviour
         player.AccioSeleccionarMagia();
     }
 
-    public void OnBotoObjecte()
-    {
-        player.AccioObjecte();
-    }
-
     public void OnBotoFugir()
     {
         player.AccioFugir();
