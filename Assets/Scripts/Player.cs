@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     InputActionAsset inputAction;
     InputAction moviment;
 
+    
     [SerializeField] AnimationClip attackClip;
     [SerializeField] AnimationClip hurtClip;
     [SerializeField] public PlayerSO player;
@@ -58,7 +59,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        this.transform.position = Vector3.zero;
         ChangeState(PlayerStates.IDLE);
     }
 

@@ -16,6 +16,11 @@ public class ManaBar : MonoBehaviour
         this.transform.localScale -= new Vector3(restarBarra * mal, 0, 0);
     }
 
+    public void BuidaBarra()
+    {
+        this.transform.localScale = new Vector3(0, 0, 0);
+    }
+
     public void RetornALaPull()
     {
         transform.localScale = escalaBarra;

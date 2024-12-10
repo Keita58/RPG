@@ -41,6 +41,7 @@ public class GameManagerOW : MonoBehaviour
                 break;
             case "GAMEOVER":
                 JugadorSO.Hp = HpMax.hpMax;
+                JugadorSO.Mana = HpMax.manaMax;
                 break;
         }
     }
@@ -48,7 +49,10 @@ public class GameManagerOW : MonoBehaviour
     void OnSceneUnloaded(Scene scene)
     {
         if (scene.name.Equals("INICIO"))
+        {
             HpMax.hpMax = JugadorSO.Hp;
+            HpMax.manaMax = JugadorSO.Mana;
+        }
     }
 
     IEnumerator canviaEscena()

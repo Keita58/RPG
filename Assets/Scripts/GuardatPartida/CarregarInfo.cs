@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class CarregarInfo : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI Missatges;
+    [SerializeField] HpMaxJugador HpMaxJugador;
+    [SerializeField] BDAtacs Atacs;
+    [SerializeField] PosicioOW PosicioJugador;
 
     public void Carrega()
     {
@@ -17,6 +20,9 @@ public class CarregarInfo : MonoBehaviour
         {
             string jsonContent = File.ReadAllText(filePath);
             Jugador = JsonUtility.FromJson<DadesJugador>(jsonContent); // Deserializar el contenido JSON
+            HpMaxJugador.hpMax = Jugador.MaxHp;
+            HpMaxJugador.manaMax = Jugador.MaxMana;
+
             GameManagerOW.Instance.JugadorSO.Hp = Jugador.Hp;
             GameManagerOW.Instance.JugadorSO.DamageAtk = Jugador.DamageAtk;
             GameManagerOW.Instance.JugadorSO.Mana = Jugador.Mana;
@@ -24,6 +30,9 @@ public class CarregarInfo : MonoBehaviour
             GameManagerOW.Instance.JugadorSO.Def = Jugador.Def;
             GameManagerOW.Instance.JugadorSO.Spd = Jugador.Spd;
             GameManagerOW.Instance.JugadorSO.Xp = Jugador.Xp;
+            GameManagerOW.Instance.JugadorSO.listaAtaques = Atacs.FromIDs(Jugador.AtacsJugador);
+            PosicioJugador.posJugador = Jugador.PosJugador;
+
 
             SceneManager.LoadScene("Overworld");
         }

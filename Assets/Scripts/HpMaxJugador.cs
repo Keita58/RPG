@@ -4,4 +4,5 @@ using UnityEngine;
 public class HpMaxJugador : ScriptableObject
 {
     public int hpMax;
+    public int manaMax;
 }
