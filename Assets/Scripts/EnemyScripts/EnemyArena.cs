@@ -153,8 +153,9 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
             if (this.hp > 0)
             {
                 this.animator.Play(this.EnemySO.clipHurt.name);
-                new WaitForSeconds(this.EnemySO.clipHurt.length + 0.10f);
-                this.animator.Play(this.EnemySO.clipIdle.name);
+                StartCoroutine(EsperarIActuar(EnemySO.clipHurt.length + 0.1f, () => {
+                    this.animator.Play(this.EnemySO.clipIdle.name);
+                }));
 
             }
             else

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AtacSO
   m_EditorClassIdentifier: 
   nom: Basic
-  mal: 5
+  mal: 1
   estat: {fileID: 0}
   mana: 0
