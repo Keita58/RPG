@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
@@ -118,11 +119,14 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
         {
             estadoNom = estadosAlterados.Nom;
             Debug.Log($"{gameObject}/{this}: INICIA ESTADO ALTERADO: {estadosAlterados.Nom}");
-
+            Debug.Log($"{gameObject}/{this}: VIDA ABANS ESTADO ALTERADO: {this.hp}");
             OnRebreEstadoAlteradoUI?.Invoke("enemic", estadosAlterados.Nom);
             this.hp -= estadosAlterados.Hp;
-            if (this.hp < 0)
+            Debug.Log($"{gameObject}/{this}: VIDA DEPSUES ESTADO ALTERADO: {this.hp}");
+            if (this.hp <= 0)
             {
+                Debug.Log($"{gameObject}/{this}: ENTRO MORICION: {this.hp}");
+
                 vidaPantalla.BuidaBarra();
                 this.animator.Play(this.EnemySO.clipDeath.name);
                 StartCoroutine(EsperarIActuar(EnemySO.clipDeath.length + 0.20f, () =>
@@ -136,10 +140,11 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                 StartCoroutine(EsperarIActuar(EnemySO.clipHurt.length + 0.1f, () => {
                     this.animator.Play(this.EnemySO.clipIdle.name);
                 }));
-            }
-            if (estadosAlterados.Nom != "Ventaja")
-            {
-                this.animator.Play(this.EnemySO.clipHurt.name);
+                
+                if (estadosAlterados.Nom != "Ventaja")
+                {
+                    this.animator.Play(this.EnemySO.clipHurt.name);
+                }
             }
             vidaPantalla.UpdateHealth(estadosAlterados.Hp);
             this.def += estadosAlterados.ModDef;
