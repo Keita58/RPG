@@ -154,13 +154,15 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
         {
             OnRebreMalUI?.Invoke("L'enemic", atac.mal);
             Debug.Log("Vida abans mal: " + this.hp);
-            this.hp -= (atac.mal * damageAtackPlayer) - this.def;
-            vidaPantalla.UpdateHealth(atac.mal * damageAtackPlayer);
+            
+            this.hp -= (atac.mal*damageAtackPlayer)-def;
+            vidaPantalla.UpdateHealth((atac.mal*damageAtackPlayer)-def);
             if (this.hp > 0)
             {
                 this.animator.Play(this.EnemySO.clipHurt.name);
-                new WaitForSeconds(this.EnemySO.clipHurt.length + 0.10f);
-                this.animator.Play(this.EnemySO.clipIdle.name);
+                StartCoroutine(EsperarIActuar(EnemySO.clipHurt.length + 0.1f, () => {
+                    this.animator.Play(this.EnemySO.clipIdle.name);
+                }));
 
             }
             else

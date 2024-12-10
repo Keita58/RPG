@@ -125,6 +125,16 @@ public class GameManagerArena : MonoBehaviour
                 _Jugador.GetComponent<PlayerCombat>().lvlUP();
                 _Jugador.GetComponent<PlayerCombat>().Xp = 0;
                 GameManagerOW.Instance.lvlUP = true;
+                foreach(EnemySO e in _Enemics)
+                {
+                    e.hp += 10;
+                    e.def += 2;
+                    foreach (AtacSO a in e.atk)
+                    {
+                        a.mal += 10;
+                    }
+                    e.spd += 2;
+                }
             }
         }
         _Jugador.GetComponent<PlayerCombat>().SavePlayer();

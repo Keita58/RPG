@@ -594,6 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   estadoAlteradoSO: {fileID: 11400000, guid: bc6ba41af8e2d8d46b6244f5502d32c3, type: 2}
+  PosicioJugadorOw: {fileID: 0}
 --- !u!1 &2035053867117364064
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +773,7 @@ GameObject:
   - component: {fileID: 8059239744278153932}
   - component: {fileID: 3218683525767839557}
   - component: {fileID: 3126442374522129356}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Lantern 1 - Beonze and Orange_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
