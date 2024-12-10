@@ -95,8 +95,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
         ChangeState(PlayerAnimations.HURT);
         OnRebreMalUI?.Invoke("player", atac.mal);
-        int hprestat = atac.mal;
-        this.hp -= hprestat;
+        float hprestat =atac.mal/def;
+        this.hp -= (int)hprestat;
         if (this.hp <= 0)
         {
             Debug.Log($"{gameObject}/{this} He mort!");
@@ -121,8 +121,14 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         mana += 10;
         HpMax.hpMax += 10;
         HpMax.manaMax += 10;
-        def += 2;
-        damageAtk += 1;
+        def += 1;
+
+        foreach (AtacSO a in atacs)
+        {
+            a.mal += 8;
+        }
+        ataqueBasico.mal += 5;
+
         if (lvl == 2)
         {
             atacs.Add(atacsBase[0]);
@@ -130,15 +136,19 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         else if (lvl == 5)
         {
             atacs.Add(atacsBase[1]);
+            damageAtk += 1;
         }
         else if (lvl == 10)
         {
             atacs.Add(atacsBase[2]);
+            damageAtk += 1;
         }
         else if (lvl == 15)
         {
             atacs.Add(atacsBase[3]);
+            damageAtk += 1;
         }
+        
     }
 
     public void SavePlayer()
