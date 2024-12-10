@@ -130,6 +130,13 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                     this.gameObject.SetActive(false);
                 }));
             }
+            else
+            {
+                this.animator.Play(this.EnemySO.clipHurt.name);
+                StartCoroutine(EsperarIActuar(EnemySO.clipHurt.length + 0.1f, () => {
+                    this.animator.Play(this.EnemySO.clipIdle.name);
+                }));
+            }
             if (estadosAlterados.Nom != "Ventaja")
             {
                 this.animator.Play(this.EnemySO.clipHurt.name);
@@ -163,7 +170,6 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                 StartCoroutine(EsperarIActuar(EnemySO.clipHurt.length + 0.1f, () => {
                     this.animator.Play(this.EnemySO.clipIdle.name);
                 }));
-
             }
             else
             {
