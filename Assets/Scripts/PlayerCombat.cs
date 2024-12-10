@@ -118,10 +118,11 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     {
         lvl++;
         hp += 10;
-        mana += 10;
+        mana += 5;
         HpMax.hpMax += 10;
-        HpMax.manaMax += 10;
+        HpMax.manaMax += 5;
         def += 1;
+        spd += 2;
 
         foreach (AtacSO a in atacs)
         {

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
   m_Name: BasicoEnemy
   m_EditorClassIdentifier: 
+  id: 0
   nom: BasicoEnemy
-  mal: 4
+  mal: 6
   estat: {fileID: 0}
   mana: 0

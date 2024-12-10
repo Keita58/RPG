@@ -15,5 +15,5 @@ MonoBehaviour:
   id: 1
   nom: Basic
   mal: 5
-  estat: {fileID: 11400000, guid: 21b85b36563c1e84fbbcb8de3f04fffe, type: 2}
+  estat: {fileID: 0}
   mana: 0
