@@ -95,8 +95,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
         ChangeState(PlayerAnimations.HURT);
         OnRebreMalUI?.Invoke("player", atac.mal);
-        float hprestat =atac.mal/def;
-        this.hp -= (int)hprestat;
+        int hprestat =atac.mal-def;
+        this.hp -= hprestat;
         if (this.hp <= 0)
         {
             Debug.Log($"{gameObject}/{this} He mort!");
