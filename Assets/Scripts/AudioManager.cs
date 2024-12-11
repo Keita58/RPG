@@ -40,16 +40,52 @@ public class AudioManager : MonoBehaviour
 
     public void AtacEspadatxi()
     {
-
+        int numAtac = Random.Range(1, 4);
+        switch (numAtac)
+        {
+            case 1:
+                _AtacEspadatxi.Play();
+                break;
+            case 2:
+                _AtacEspadatxi2.Play();
+                break;
+            case 3:
+                _AtacEspadatxi3.Play();
+                break;
+        }
     }
 
     public void AtacGoblin()
     {
-
+        int numAtac = Random.Range(1, 4);
+        switch (numAtac)
+        {
+            case 1:
+                _AtacGoblin.Play();
+                break;
+            case 2:
+                _AtacGoblin2.Play();
+                break;
+            case 3:
+                _AtacGoblin3.Play();
+                break;
+        }
     }
 
     public void AtacMac()
     {
-
+        int numAtac = Random.Range(1, 4);
+        switch (numAtac)
+        {
+            case 1:
+                _AtacMac.Play();
+                break;
+            case 2:
+                _AtacMac2.Play();
+                break;
+            case 3:
+                _AtacMac3.Play();
+                break;
+        }
     }
 }

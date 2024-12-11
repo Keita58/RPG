@@ -11,6 +11,7 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
     private AtacSO escollit;
     private Animator animator;
     [SerializeField] public EnemySO EnemySO;
+    [SerializeField] AudioManager audios;
     public int id { get; private set; }
     public bool selected { get; set; }
     public int hp { get; private set; }
@@ -94,7 +95,19 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                 }
             }
             this.animator.Play(EnemySO.clipAttack.name);
-
+            switch(EnemySO.clipAttack.name)
+            {
+                case "EvilWizardAttack":
+                    audios.AtacMac();
+                    break;
+                case "EvilKnightAttack":
+                    audios.AtacEspadatxi();
+                    break;
+                case "OrcAttack":
+                    audios.AtacGoblin();
+                    break;
+            }
+            
             StartCoroutine(EsperarIActuar(EnemySO.clipAttack.length+0.10f,
                 () =>
                 {
