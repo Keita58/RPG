@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
-  m_Name: BasicoEnemy
+  m_Name: BasicoEnemy2
   m_EditorClassIdentifier: 
   id: 0
-  nom: BasicoEnemy
+  nom: Basico2Enemuy
   mal: 6
   estat: {fileID: 0}
   mana: 0

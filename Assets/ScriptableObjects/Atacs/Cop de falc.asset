@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   nom: "Cop de fal\xE7"
-  mal: 10
+  mal: 13
   estat: {fileID: 0}
-  mana: 5
+  mana: 8

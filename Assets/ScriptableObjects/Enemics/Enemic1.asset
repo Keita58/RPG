@@ -16,7 +16,7 @@ MonoBehaviour:
   spd: 5
   def: 1
   atk:
-  - {fileID: 11400000, guid: 468de79718e11f2469c517b8bb3eecb4, type: 2}
+  - {fileID: 11400000, guid: aeb88f96f79626a4db1bcb670e67b015, type: 2}
   mana: 0
   animator: {fileID: 9100000, guid: b18e9d1e1cd9136409faacf292aafe59, type: 2}
   clipIdle: {fileID: 7400000, guid: 79596095d8baa174e966b52ce32cd75d, type: 2}

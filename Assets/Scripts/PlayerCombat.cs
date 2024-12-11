@@ -126,9 +126,9 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
         foreach (AtacSO a in atacs)
         {
-            a.mal += 8;
+            a.mal += 5;
         }
-        ataqueBasico.mal += 5;
+        ataqueBasico.mal += 7;
 
         if (lvl == 2)
         {

@@ -127,8 +127,8 @@ public class GameManagerArena : MonoBehaviour
                 GameManagerOW.Instance.lvlUP = true;
                 foreach(EnemySO e in _Enemics)
                 {
-                    e.hp += 10;
-                    e.def += 2;
+                    e.hp += 8;
+                    e.def += 1;
                     foreach (AtacSO a in e.atk)
                     {
                         a.mal += 10;

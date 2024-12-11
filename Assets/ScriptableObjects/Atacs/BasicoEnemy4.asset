@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 213cbc7449a9ea042b5b1e0b05f01ba3, type: 3}
-  m_Name: Armagedon
+  m_Name: BasicoEnemy4
   m_EditorClassIdentifier: 
-  id: 5
-  nom: Armaggedon
-  mal: 30
+  id: 0
+  nom: Basico4Enemuy
+  mal: 12
   estat: {fileID: 0}
-  mana: 20
+  mana: 0

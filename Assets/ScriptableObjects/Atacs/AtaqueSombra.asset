@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   nom: Ataque de las sombras
-  mal: 15
+  mal: 20
   estat: {fileID: 11400000, guid: 21b85b36563c1e84fbbcb8de3f04fffe, type: 2}
   mana: 10
