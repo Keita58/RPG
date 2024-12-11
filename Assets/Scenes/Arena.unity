@@ -3789,6 +3789,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32356ca35db7a30438a2662a9c4d6e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1924287061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1924287063}
+  - component: {fileID: 1924287062}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1924287062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924287061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727de8c42d541fc4daf317a3a333c7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Atac: {fileID: 0}
+  _Atac2: {fileID: 0}
+  _Mort: {fileID: 0}
+  _AtacEnemic: {fileID: 0}
+  _AtacEnemic2: {fileID: 0}
+  _OWMusica: {fileID: 0}
+  _ArenaMusica: {fileID: 0}
+--- !u!4 &1924287063
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924287061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5684601, y: -0.13209191, z: 2.571334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1946420109
 GameObject:
   m_ObjectHideFlags: 0
@@ -4184,3 +4235,4 @@ SceneRoots:
   - {fileID: 505979033}
   - {fileID: 539029024}
   - {fileID: 599586258}
+  - {fileID: 1924287063}
