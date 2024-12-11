@@ -119,6 +119,7 @@ public class GameManagerArena : MonoBehaviour
         {
             int xp = (_NumEnemics*10) + UnityEngine.Random.Range(1, 10);
             _Jugador.GetComponent<PlayerCombat>().Xp += xp;
+            _JugadorSO.Hp += UnityEngine.Random.Range(7, 16);
             _XpJugador.xpGuanyat = xp;
             if (_Jugador.GetComponent<PlayerCombat>().Xp >= _Jugador.GetComponent<PlayerCombat>().lvl * 20)
             {
