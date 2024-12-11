@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5612b977ec0c2643ba4c9ce39695f5b, type: 3}
   m_Name: Enemic1
   m_EditorClassIdentifier: 
-  hp: 13
+  hp: 12
   spd: 5
-  def: 1
+  def: 2
   atk:
   - {fileID: 11400000, guid: aeb88f96f79626a4db1bcb670e67b015, type: 2}
   mana: 0
