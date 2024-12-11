@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Inventari : MonoBehaviour
 {
-    [SerializeField] GameObject InventariGO;
     [SerializeField] GameObject Botons;
     [SerializeField] GameObject Dibuix;
     [SerializeField] Sprite TancaMenu;
@@ -22,15 +21,13 @@ public class Inventari : MonoBehaviour
 
     public void mostraInventari()
     {
-        if (InventariGO.activeSelf)
+        if (Botons.activeSelf)
         {
-            InventariGO.SetActive(false);
             Botons.SetActive(false);
             Dibuix.GetComponent<Image>().sprite = ObreMenu;
         }
         else
         {
-            InventariGO.SetActive(true);
             Botons.SetActive(true);
             Dibuix.GetComponent<Image>().sprite = TancaMenu;
         }
