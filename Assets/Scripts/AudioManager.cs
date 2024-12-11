@@ -11,7 +11,6 @@ public class AudioManager : MonoBehaviour
     [Header("Enemic-Espadatxi")]
     [SerializeField] private AudioSource _AtacEspadatxi;
     [SerializeField] private AudioSource _AtacEspadatxi2;
-    [SerializeField] private AudioSource _AtacEspadatxi3;
     [SerializeField] private AudioSource _MalEspadatxi;
     [SerializeField] private AudioSource _MortEspadatxi;
 
@@ -24,23 +23,36 @@ public class AudioManager : MonoBehaviour
 
     [Header("Enemic-Mac")]
     [SerializeField] private AudioSource _AtacMac;
-    [SerializeField] private AudioSource _AtacMac2;
-    [SerializeField] private AudioSource _AtacMac3;
     [SerializeField] private AudioSource _MalMac;
     [SerializeField] private AudioSource _MortMac;
 
     [Header("Musica")]
     [SerializeField] private AudioSource _OWMusica;
     [SerializeField] private AudioSource _ArenaMusica;
+    [SerializeField] private AudioSource _Menu;
+    [SerializeField] private AudioSource _Victoria;
+    [SerializeField] private AudioSource _XP;
+    [SerializeField] private AudioSource _GameOver;
+    [SerializeField] private AudioSource _Fugir;
 
     public void AtacJugador()
     {
         _Atac.Play();
     }
 
+    public void MalJugador()
+    {
+        _Mal.Play();
+    }
+
+    public void MortJugador()
+    {
+        _Mort.Play();
+    }
+
     public void AtacEspadatxi()
     {
-        int numAtac = Random.Range(1, 4);
+        int numAtac = Random.Range(1, 3);
         switch (numAtac)
         {
             case 1:
@@ -49,10 +61,17 @@ public class AudioManager : MonoBehaviour
             case 2:
                 _AtacEspadatxi2.Play();
                 break;
-            case 3:
-                _AtacEspadatxi3.Play();
-                break;
         }
+    }
+
+    public void MalEspadatxi()
+    {
+        _MalEspadatxi.Play();
+    }
+
+    public void MortEspadatxi()
+    {
+        _MortEspadatxi.Play();
     }
 
     public void AtacGoblin()
@@ -72,20 +91,28 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void MalGoblin()
+    {
+        _MalGoblin.Play();
+    }
+
+    public void MortGoblin()
+    {
+        _MortGoblin.Play();
+    }
+
     public void AtacMac()
     {
-        int numAtac = Random.Range(1, 4);
-        switch (numAtac)
-        {
-            case 1:
-                _AtacMac.Play();
-                break;
-            case 2:
-                _AtacMac2.Play();
-                break;
-            case 3:
-                _AtacMac3.Play();
-                break;
-        }
+        _AtacMac.Play();
+    }
+
+    public void MalMac()
+    {
+        _MalMac.Play();
+    }
+
+    public void MortMac()
+    {
+        _MortMac.Play();
     }
 }

@@ -188,9 +188,33 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                 StartCoroutine(EsperarIActuar(EnemySO.clipHurt.length + 0.1f, () => {
                     this.animator.Play(this.EnemySO.clipIdle.name);
                 }));
+                switch (EnemySO.clipAttack.name)
+                {
+                    case "EvilWizardHit":
+                        audios.MalMac();
+                        break;
+                    case "EvilKnightHit":
+                        audios.MalEspadatxi();
+                        break;
+                    case "OrcHit": 
+                        audios.MalGoblin();
+                        break;
+                }
             }
             else
             {
+                switch (EnemySO.clipAttack.name)
+                {
+                    case "EvilWizardDeath":
+                        audios.MortMac();
+                        break;
+                    case "EvilKnightDeath":
+                        audios.MortEspadatxi();
+                        break;
+                    case "OrcDeath":
+                        audios.MortGoblin();
+                        break;
+                }
                 if (this.hp < 0)
                 {
                     vidaPantalla.BuidaBarra();
