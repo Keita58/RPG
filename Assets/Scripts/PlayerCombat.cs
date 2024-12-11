@@ -22,6 +22,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     [SerializeField] AtacSO ataqueBasico;
     [SerializeField] HpMaxJugador HpMax;
 
+    [SerializeField] AudioManager audios;
+
     enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_RUN, SELECCIONAR_TARGET }
     [SerializeField] CombatStates combatState;
     enum PlayerAnimations { IDLE, HURT, ATTACK }
@@ -233,6 +235,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
             case CombatStates.ACTION_MAGIC:
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
+                audios.AtacJugador();
                 manaPantalla.UpdateHealth(atacSeleccionat.mana);
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat, this.damageAtk);
                 break;
