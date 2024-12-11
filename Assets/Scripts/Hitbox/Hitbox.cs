@@ -29,6 +29,7 @@ public class Hitbox : MonoBehaviour
             PosicioJugadorOw.posJugador = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
             //Debug.Log($"{gameObject}/{this}: COLISIONO CON JUGADOR: {collision.gameObject}");
             player.player.estadosAlterados=estadoAlteradoSO;
+            GameManagerOW.Instance.EnemicPrincipal = this.GetComponentInParent<EnemyStateMachine>()._enemySO;
             print(player.player.estadosAlterados);
             SceneManager.LoadScene("Arena");
         }

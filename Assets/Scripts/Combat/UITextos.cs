@@ -41,27 +41,23 @@ public class UITextos : MonoBehaviour
     {
       text.text=nom+ " comença amb avantatge!";
       text.gameObject.SetActive(true);
-      StartCoroutine(EsperarIActuar(3, DesctivarTexto));
     }
 
     private void FallarHuida()
     {
         text.text= "Els enemics t'han atrapat!";
         text.gameObject.SetActive(true);
-        StartCoroutine(EsperarIActuar(3, DesctivarTexto));
     }
 
     private void SeleccionarTarget()
     {
         text.text= "Has de seleccionar un target!";
-        text.gameObject.SetActive(true);
     }
 
     private void RebreMal(string nom, int dmg)
     {
         text.text = nom + " ha rebut " + dmg + " punts de dany!";
         text.gameObject.SetActive(true);
-        StartCoroutine(EsperarIActuar(3, DesctivarTexto));
 
     }
 
@@ -69,20 +65,18 @@ public class UITextos : MonoBehaviour
     {
         text.text=nom+ " pateix un estat alterat: "+nomEstat+"!";
         text.gameObject.SetActive(true);
-        StartCoroutine(EsperarIActuar(3, DesctivarTexto));
     }
 
     public void InciTorn(string nom)
     {
         text.text = "És el torn de "+nom+"!";
         text.gameObject.SetActive(true);
-        StartCoroutine(EsperarIActuar(3, DesctivarTexto));
     }
 
     public void NoMana()
     {
         text.text = "No tens suficient mana!";
-        StartCoroutine(EsperarIActuar(3, DesctivarTexto));
+        text.gameObject.SetActive(true);
     }
 
     public void DesactivarSeleccionarTarget()

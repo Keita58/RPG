@@ -22,6 +22,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     [SerializeField] AtacSO ataqueBasico;
     [SerializeField] HpMaxJugador HpMax;
 
+    [SerializeField] AudioManager audios;
+
     enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_RUN, SELECCIONAR_TARGET }
     [SerializeField] CombatStates combatState;
     enum PlayerAnimations { IDLE, HURT, ATTACK }
@@ -95,8 +97,8 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
         ChangeState(PlayerAnimations.HURT);
         OnRebreMalUI?.Invoke("player", atac.mal);
-        int hprestat =atac.mal-def;
-        this.hp -= hprestat;
+       
+        this.hp -= (atac.mal-def);
         if (this.hp <= 0)
         {
             Debug.Log($"{gameObject}/{this} He mort!");
@@ -105,7 +107,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         else
         {
             Debug.Log($"VIDA DESPRÉS REBRE MAL: {this.hp}");
-            vidaPantalla.UpdateHealth(atac.mal);
+            vidaPantalla.UpdateHealth((atac.mal-def));
 
             if (atac.estat != null && estado == null)
             {
@@ -118,10 +120,11 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     {
         lvl++;
         hp += 10;
-        mana += 10;
+        mana += 5;
         HpMax.hpMax += 10;
-        HpMax.manaMax += 10;
+        HpMax.manaMax += 5;
         def += 1;
+        spd += 2;
 
         foreach (AtacSO a in atacs)
         {
@@ -232,6 +235,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
             case CombatStates.ACTION_MAGIC:
                 ChangeState(PlayerAnimations.ATTACK);
                 this.mana -= atacSeleccionat.mana;
+                audios.AtacJugador();
                 manaPantalla.UpdateHealth(atacSeleccionat.mana);
                 target.GetComponent<EnemyArena>().RebreMal(atacSeleccionat, this.damageAtk);
                 break;

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   nom: Basic
-  mal: 1
+  mal: 5
   estat: {fileID: 0}
   mana: 0

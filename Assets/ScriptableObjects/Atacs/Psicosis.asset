@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   nom: Psicosis
-  mal: 15
+  mal: 50
   estat: {fileID: 0}
-  mana: 25
+  mana: 50
