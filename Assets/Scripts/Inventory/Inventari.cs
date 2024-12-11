@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -9,6 +10,15 @@ public class Inventari : MonoBehaviour
     [SerializeField] GameObject Dibuix;
     [SerializeField] Sprite TancaMenu;
     [SerializeField] Sprite ObreMenu;
+    [SerializeField] TextMeshProUGUI LvlPersonatge;
+    [SerializeField] PlayerSO PersonatgeSO;
+
+    bool a = false;
+
+    private void Start()
+    {
+        LvlPersonatge.text = "Lvl. " + PersonatgeSO.Lvl;
+    }
 
     public void mostraInventari()
     {
@@ -25,7 +35,7 @@ public class Inventari : MonoBehaviour
             Dibuix.GetComponent<Image>().sprite = TancaMenu;
         }
     }
-    bool a = false;
+
     public void Pause()
     {
         if (a)
