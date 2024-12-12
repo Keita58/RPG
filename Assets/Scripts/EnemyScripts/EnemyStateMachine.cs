@@ -9,27 +9,13 @@ public class EnemyStateMachine : MonoBehaviour
     public LayerMask ly;
     [SerializeField] public EnemySO _enemySO;
     private Animator _animator;
-    //    [SerializeField] private Hitbox hitbox;
-    //   [SerializeField] private RangeDetection _rangPerseguir;
-    //   [SerializeField] private RangeDetection _rangAtac;
-    // [SerializeField] private UnityEngine.UI.Slider slider;
+
+    [SerializeField] AudioManager audios;
 
     void OnEnable()
     {
-        //     this.slider.maxValue = this._enemySO.hp;
-        //    this.slider.value = _enemySO.hp;
         this.ChangeState(SkeletonStates.IDLE);
         this.cooldown = false;
-
-        //       this._rangAtac.GetComponent<CircleCollider2D>().radius = this._enemySO.rangeAttack;
-        //       _rangPerseguir.OnEnter += PerseguirDetected;
-        //       _rangPerseguir.OnStay += PerseguirDetected;
-        //       _rangPerseguir.OnExit += PerseguirUndetected;
-        //       _rangAtac.OnEnter += AtacarDetected;
-        //       _rangAtac.OnStay += AtacarDetected;
-        //       _rangAtac.OnExit += AtacarUndetected;
-        //       StartCoroutine(patrullar());
-        // StartCoroutine(mirarPersonaje());
     }
     private void Awake()
     {
@@ -85,11 +71,6 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        // ChangeState(SkeletonStates.IDLE);
-    }
-
     private void ChangeState(SkeletonStates newState)
     {
         //tornar al mateix estat o no
@@ -113,16 +94,25 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
             case SkeletonStates.MOVE:
                 _animator.Play(_enemySO.clipMove.name);
-
                 break;
 
             case SkeletonStates.ATTACK:
                 _animator.Play(_enemySO.clipAttack.name);
-                //   hitbox.Damage = _enemySO.dmg;
+                switch (_enemySO.clipAttack.name)
+                {
+                    case "EvilWizardAttack":
+                        audios.AtacMac();
+                        break;
+                    case "EvilKnightAttack":
+                        audios.AtacEspadatxi();
+                        break;
+                    case "OrcAttack":
+                        audios.AtacGoblin();
+                        break;
+                }
                 break;
             case SkeletonStates.ATTACK2:
                 _animator.Play(_enemySO.clipAttack2.name);
-                //   hitbox.Damage = _enemySO.dmg2;
                 break;
             default:
                 break;
@@ -173,10 +163,7 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
         }
     }
-    private void LateUpdate()
-    {
-        //this.slider.transform.eulerAngles = Vector3.zero;
-    }
+
     private void ExitState(SkeletonStates exitState)
     {
         switch (exitState)
@@ -211,21 +198,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         UpdateState(_CurrentState);
     }
-    IEnumerator DamagedColor()
-    {
-        this.GetComponent<SpriteRenderer>().color = Color.grey;
-        yield return new WaitForSeconds(0.5f);
-    }
-    /*public void ReceiveDamage(float damage)
-    {
-        this._hp -= damage;
-        //  this.slider.value = _hp;
-        StartCoroutine(DamagedColor());
-        if (this._hp <= 0)
-        {
-            this.gameObject.SetActive(false);
-        }
-    }*/
+
     private void PerseguirDetected(GameObject personatge)
     {
         if (personatge.name == "PJ" && _enemySO.clipAttack.length <= _StateTime)
@@ -234,6 +207,7 @@ public class EnemyStateMachine : MonoBehaviour
             this.GetComponent<Rigidbody2D>().velocity = (personatge.gameObject.transform.position - this.transform.position).normalized;
         }
     }
+
     bool detected = false;
     IEnumerator patrullar()
     {
@@ -253,6 +227,7 @@ public class EnemyStateMachine : MonoBehaviour
             }
         }
     }
+
     private void PerseguirUndetected(GameObject personatge)
     {
         detected = false;
@@ -261,6 +236,7 @@ public class EnemyStateMachine : MonoBehaviour
             StartCoroutine(patrullar());
         }
     }
+
     public bool cooldown = false;
     private void AtacarDetected(GameObject personatge)
     {
@@ -279,13 +255,10 @@ public class EnemyStateMachine : MonoBehaviour
             }
         }
     }
+
     IEnumerator cooldownFalse()
     {
         yield return new WaitForSeconds(2f);
         cooldown = false;
-    }
-    private void AtacarUndetected(GameObject personatge)
-    {
-
     }
 }

@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
-using NUnit.Framework;
-using System.Collections.Generic;
 using System.Collections;
 
 public class GameManagerOW : MonoBehaviour

@@ -6,20 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/INICIO.unity
+    guid: 92e72ac03afadd148a3f8a61c0379f70
+  - enabled: 1
     path: Assets/Scenes/Arena.unity
     guid: b1f88782f14bc78438b1b318a1eb2e3e
   - enabled: 1
     path: Assets/Scenes/Overworld.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PelsPesats v2.unity
     guid: 4c319b9a538e5ee4c8fddd90061f7817
   - enabled: 1
     path: Assets/Scenes/GAMEOVER.unity
     guid: d024e457f4c234746ab7c02962e92cb1
-  - enabled: 1
-    path: Assets/Scenes/INICIO.unity
-    guid: 92e72ac03afadd148a3f8a61c0379f70
   - enabled: 1
     path: Assets/Scenes/Huir.unity
     guid: 8bb4ba9d96c3c8d418b49376e3ddbfac

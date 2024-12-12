@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using System;
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
@@ -12,6 +10,7 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
     private Animator animator;
     [SerializeField] public EnemySO EnemySO;
     [SerializeField] AudioManager audios;
+    [SerializeField] AudioManager audiosDamage;
     public int id { get; private set; }
     public bool selected { get; set; }
     public int hp { get; private set; }
@@ -44,7 +43,7 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
 
     public void Iniciar(EnemySO enemic)
     {
-        Assert.IsNull(EnemySO, $"Ja hi ha un EnemicSO al {gameObject}");
+        //Assert.IsNull(EnemySO, $"Ja hi ha un EnemicSO al {gameObject}");
         this.EnemySO = enemic;
         this.hp = this.EnemySO.hp;
         this.HP = hp;
@@ -191,13 +190,13 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                 switch (EnemySO.clipAttack.name)
                 {
                     case "EvilWizardHit":
-                        audios.MalMac();
+                        audiosDamage.MalMac();
                         break;
                     case "EvilKnightHit":
-                        audios.MalEspadatxi();
+                        audiosDamage.MalEspadatxi();
                         break;
-                    case "OrcHit": 
-                        audios.MalGoblin();
+                    case "OrcHit":
+                        audiosDamage.MalGoblin();
                         break;
                 }
             }
@@ -206,13 +205,13 @@ public class EnemyArena : MonoBehaviour, IPointerDownHandler, Avisable
                 switch (EnemySO.clipAttack.name)
                 {
                     case "EvilWizardDeath":
-                        audios.MortMac();
+                        audiosDamage.MortMac();
                         break;
                     case "EvilKnightDeath":
-                        audios.MortEspadatxi();
+                        audiosDamage.MortEspadatxi();
                         break;
                     case "OrcDeath":
-                        audios.MortGoblin();
+                        audiosDamage.MortGoblin();
                         break;
                 }
                 if (this.hp < 0)

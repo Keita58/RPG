@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +22,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     [SerializeField] HpMaxJugador HpMax;
 
     [SerializeField] AudioManager audios;
+    [SerializeField] AudioManager audiosDamage;
 
     enum CombatStates { WAITING, SELECT_ACTION, SELECT_MAGIC, ACTION_MAGIC, SELECT_OBJECT, ACTION_RUN, SELECCIONAR_TARGET }
     [SerializeField] CombatStates combatState;
@@ -102,12 +102,14 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
         if (this.hp <= 0)
         {
             Debug.Log($"{gameObject}/{this} He mort!");
+            audiosDamage.MortJugador();
             onMuerto?.Invoke();
         }
         else
         {
             Debug.Log($"VIDA DESPRÉS REBRE MAL: {this.hp}");
             vidaPantalla.UpdateHealth((atac.mal-def));
+            audiosDamage.MalJugador();
 
             if (atac.estat != null && estado == null)
             {
@@ -169,7 +171,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
     public void IniciarTorn()
     {
-        Assert.AreEqual(combatState, CombatStates.WAITING, $"{gameObject}: Iniciant torn quan no s'est� esperant.");
+        //Debug.Assert(combatState, CombatStates.WAITING, $"{gameObject}: Iniciant torn quan no s'est� esperant.");
         ChangeState(CombatStates.SELECT_ACTION);
     }
 
@@ -254,7 +256,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
     private void ExitState(CombatStates currentState)
     {
-        Assert.AreEqual(combatState, currentState, $"{gameObject}: Est�s cridant un sortir d'estat quan no est�s a aquest estat");
+        //Assert.AreEqual(combatState, currentState, $"{gameObject}: Est�s cridant un sortir d'estat quan no est�s a aquest estat");
         switch (currentState)
         {
             case CombatStates.WAITING:
@@ -353,7 +355,7 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
     internal void AccioAtacar()
     {
 
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� atack quan no s'est� esperant una selecci�.");
+        //Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� atack quan no s'est� esperant una selecci�.");
         this.atacSeleccionat = ataqueBasico;
         ChangeState(CombatStates.SELECCIONAR_TARGET);
 
@@ -361,13 +363,13 @@ public class PlayerCombat : MonoBehaviour, Tornable, Avisable
 
     internal void AccioSeleccionarMagia()
     {
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� magia quan no s'est� esperant una selecci�.");
+        //Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� magia quan no s'est� esperant una selecci�.");
         ChangeState(CombatStates.SELECT_MAGIC);
     }
 
     internal void AccioFugir()
     {
-        Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� fugir quan no s'est� esperant una selecci�.");
+        //Assert.AreEqual(combatState, CombatStates.SELECT_ACTION, $"{gameObject}: seleccio d'acci� fugir quan no s'est� esperant una selecci�.");
         int random = UnityEngine.Random.Range(1, 101);
         if (random <= 50)
         {

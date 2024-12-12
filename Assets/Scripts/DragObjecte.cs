@@ -1,10 +1,6 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
-using UnityEngine.Rendering;
 
 public class DragObjecte : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {

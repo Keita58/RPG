@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d493f2df835133a4a93c58ebe7e0a36e, type: 3}
   m_Name: HpMaxJugadorSO
   m_EditorClassIdentifier: 
-  hpMax: 28
+  hpMax: 0
+  manaMax: 0

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
@@ -22,7 +21,9 @@ public class Player : MonoBehaviour
 
     int hp;
     int lvl;
-    
+
+    [SerializeField] AudioManager audios;
+
     //LISTA ESTADOS ALTERADOS SUFRIDOS
     //LISTA DE ATAQUES
     //LISTA DE OBJETOS
@@ -31,7 +32,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        //playerso.hp = hp;
         this.hp = player.Hp;
         this.lvl=player.Lvl;
         rb = GetComponent<Rigidbody2D>();
@@ -84,6 +84,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerStates.ATTACK:
                 animator.Play("Attack");
+                audios.AtacJugador();
                 break;
             case PlayerStates.RECEIVEDAMAGE:
                 animator.Play("Hurt");
@@ -126,12 +127,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Atacar afegir a la llista un nou alterar
-    //private void RebreMal(AttackSO attackSO) 
-    //{
-    //}
-
-
     private void ExitState(PlayerStates exitState)
     {
         switch (exitState)
@@ -139,7 +134,8 @@ public class Player : MonoBehaviour
             case PlayerStates.IDLE:
                 break;
             case PlayerStates.MOVE:
-                rb.velocity = Vector2.zero;
+                if(rb != null)
+                    rb.velocity = Vector2.zero;
                 break;
             case PlayerStates.ATTACK:
                 break;
